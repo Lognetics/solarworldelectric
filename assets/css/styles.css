@@ -479,29 +479,12 @@ section{position:relative}
 .chat__chips button{border:1px solid var(--line);background:#fff;border-radius:100px;padding:.45em .9em;font-size:.78rem;font-family:var(--font-alt);color:var(--charcoal);transition:.2s}
 .chat__chips button:hover{background:var(--charcoal);color:#fff;border-color:var(--charcoal)}
 
-/* ---------- Mobile type scale ---------- */
+/* ---------- Mobile type scale: uniform ~20% smaller ---------- */
 @media(max-width:600px){
-  body{font-size:15px}
+  html{font-size:80%}          /* scales every rem-based font down by 20% */
+  body{font-size:1rem}         /* was 16px → now scales with root */
   .hero h1{font-size:clamp(2rem,8.4vw,2.6rem)}
-  .hero p.sub{font-size:1rem}
   .hero__text{min-height:clamp(150px,40vh,230px)}
-  .phero h1{font-size:clamp(1.8rem,7.4vw,2.3rem)}
-  .phero p,.lead{font-size:1rem}
-  .section-head h2{font-size:clamp(1.55rem,6.4vw,2rem)}
-  .section-head p{font-size:1rem}
-  .cta h2{font-size:clamp(1.7rem,7vw,2.2rem)}
-  .cta p{font-size:1rem}
-  .fin-banner h2{font-size:clamp(1.5rem,6.6vw,2rem)}
-  .stat .n{font-size:clamp(2rem,11vw,2.7rem)}
-  .price__p{font-size:1.9rem}
-  .prod h3{font-size:1.4rem}
-  .tl .yr{font-size:1.35rem}
-  .card h3,.tile__body h3{font-size:1.1rem}
-  .hero__stats .n{font-size:1.5rem}
-}
-@media(max-width:380px){
-  .hero h1{font-size:1.85rem}
-  .section-head h2{font-size:1.45rem}
 }
 
 /* utilities */
