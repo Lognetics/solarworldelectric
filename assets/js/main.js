@@ -220,6 +220,82 @@
     setTimeout(() => { btn.textContent = old; btn.disabled = false; f.reset(); }, 3500);
   }));
 
+  /* ---------- Scroll progress bar ---------- */
+  const sb = $('#scrollbar');
+  if (sb) {
+    const upd = () => {
+      const h = document.documentElement;
+      const p = h.scrollTop / (h.scrollHeight - h.clientHeight || 1);
+      sb.style.width = (p * 100) + '%';
+    };
+    window.addEventListener('scroll', upd, { passive: true });
+    window.addEventListener('resize', upd);
+    upd();
+  }
+
+  /* ---------- 3D tilt + glare ---------- */
+  if (window.matchMedia('(pointer:fine)').matches) {
+    $$('.tilt-zone .card, [data-tilt]').forEach(el => {
+      el.setAttribute('data-tilt', '');
+      const g = document.createElement('div'); g.className = 'tilt-glare'; el.appendChild(g);
+      const MAX = 7;
+      el.addEventListener('pointermove', e => {
+        const r = el.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+        el.style.transform = `perspective(900px) rotateX(${(py - .5) * -2 * MAX}deg) rotateY(${(px - .5) * 2 * MAX}deg) translateY(-6px)`;
+        g.style.setProperty('--gx', px * 100 + '%'); g.style.setProperty('--gy', py * 100 + '%');
+      });
+      el.addEventListener('pointerleave', () => { el.style.transform = ''; });
+    });
+  }
+
+  /* ---------- Live Energy Dashboard ---------- */
+  const dash = $('#dash');
+  if (dash) {
+    const N = 44, line = $('#d-line'), area = $('#d-area');
+    const $homes = $('#d-homes'), $kwh = $('#d-kwh'), $co2 = $('#d-co2'), $out = $('#d-out');
+    let series = [], homes = 12480, kwh = 84230, co2 = 58.4;
+    for (let i = 0; i < N; i++) { const x = i / (N - 1); series.push(0.35 + 0.5 * Math.exp(-Math.pow((x - 0.55) * 2.4, 2))); }
+    const fmt = (n, d) => n.toLocaleString('en-NG', { minimumFractionDigits: d, maximumFractionDigits: d });
+    function draw() {
+      const pts = series.map((v, i) => [(i / (N - 1) * 100).toFixed(2), (40 - v * 33 - 3).toFixed(2)]);
+      const d = pts.map((p, i) => (i ? 'L' : 'M') + p[0] + ' ' + p[1]).join(' ');
+      line.setAttribute('d', d); area.setAttribute('d', d + ' L100 40 L0 40 Z');
+    }
+    function tick() {
+      series.shift();
+      let nv = series[series.length - 1] + (Math.random() - 0.5) * 0.13;
+      nv = Math.max(0.26, Math.min(0.95, nv)); series.push(nv); draw();
+      const out = nv * 92;
+      homes += Math.random() * 7; kwh += out * 1.4; co2 += out * 0.0008;
+      $out.textContent = fmt(out, 1) + ' MW';
+      $homes.textContent = fmt(Math.floor(homes), 0);
+      $kwh.textContent = fmt(Math.floor(kwh), 0);
+      $co2.textContent = fmt(co2, 1) + ' t';
+    }
+    draw(); tick();
+    let dt = setInterval(tick, 1600);
+    document.addEventListener('visibilitychange', () => { clearInterval(dt); if (!document.hidden) dt = setInterval(tick, 1600); });
+  }
+
+  /* ---------- Testimonial rotator ---------- */
+  const trot = $('#trotator');
+  if (trot) {
+    const quotes = $$('.tquote', trot), dotsWrap = $('#trotDots');
+    let ti = 0, tt;
+    quotes.forEach((q, i) => { const b = document.createElement('button'); b.setAttribute('aria-label', 'Testimonial ' + (i + 1)); b.addEventListener('click', () => { tshow(i); rest(); }); dotsWrap.appendChild(b); });
+    const tdots = $$('button', dotsWrap);
+    function tshow(n) { ti = (n + quotes.length) % quotes.length; quotes.forEach((q, i) => q.classList.toggle('is-active', i === ti)); tdots.forEach((d, i) => d.classList.toggle('is-active', i === ti)); }
+    const tn = $('#trotNext'), tp = $('#trotPrev');
+    tn && tn.addEventListener('click', () => { tshow(ti + 1); rest(); });
+    tp && tp.addEventListener('click', () => { tshow(ti - 1); rest(); });
+    function start() { tt = setInterval(() => tshow(ti + 1), 5500); }
+    function rest() { clearInterval(tt); start(); }
+    trot.addEventListener('mouseenter', () => clearInterval(tt));
+    trot.addEventListener('mouseleave', start);
+    tshow(0); start();
+  }
+
   /* ---------- AI Assistant (scripted) ---------- */
   const chat = $('#chat'); const openBtn = $('#chatOpen'); const body = $('#chatBody');
   if (chat && openBtn) {

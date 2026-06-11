@@ -479,6 +479,54 @@ section{position:relative}
 .chat__chips button{border:1px solid var(--line);background:#fff;border-radius:100px;padding:.45em .9em;font-size:.78rem;font-family:var(--font-alt);color:var(--charcoal);transition:.2s}
 .chat__chips button:hover{background:var(--charcoal);color:#fff;border-color:var(--charcoal)}
 
+/* ---------- Scroll progress bar ---------- */
+.scrollbar{position:fixed;top:0;left:0;height:3px;width:0;z-index:200;background:var(--grad-gold);box-shadow:0 0 14px rgba(249,176,0,.7)}
+
+/* ---------- 3D tilt + glare ---------- */
+.card{position:relative}
+[data-tilt]{will-change:transform;transform-style:preserve-3d}
+.tilt-glare{position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .35s;
+  background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.4),transparent 42%);mix-blend-mode:soft-light}
+[data-tilt]:hover .tilt-glare{opacity:1}
+[data-tilt] .card__icon,[data-tilt] h3,[data-tilt] p{transform:translateZ(28px)}
+
+/* ---------- Live Energy Dashboard ---------- */
+.dash{position:relative;overflow:hidden}
+.dash::before{content:"";position:absolute;width:600px;height:600px;border-radius:50%;filter:blur(120px);
+  background:radial-gradient(circle,rgba(50,183,104,.22),transparent 70%);top:-200px;left:-150px;z-index:0}
+.dash .container{position:relative;z-index:1}
+.dash__grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:stretch}
+@media(max-width:860px){.dash__grid{grid-template-columns:1fr}}
+.dash__panel{background:rgba(255,255,255,.05);border:1px solid var(--line-d);border-radius:var(--r-lg);padding:clamp(24px,3vw,36px);backdrop-filter:blur(10px)}
+.live{display:inline-flex;align-items:center;gap:9px;font-family:var(--font-alt);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--green);font-weight:600}
+.live .pulse{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(50,183,104,.6);animation:pulse 1.7s infinite}
+@keyframes pulse{to{box-shadow:0 0 0 13px rgba(50,183,104,0)}}
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:22px}
+.metric .v{font-family:var(--font-display);font-weight:700;font-size:clamp(1.7rem,3.4vw,2.3rem);line-height:1;background:var(--grad-gold);-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+.metric .v.green{background:linear-gradient(135deg,#62da93,var(--green));-webkit-background-clip:text;background-clip:text;color:transparent}
+.metric .l{font-size:.82rem;color:var(--muted-d);font-family:var(--font-alt);margin-top:6px}
+.chart{margin-top:8px}
+.chart svg{width:100%;height:170px;display:block;overflow:visible}
+.dash__foot{display:flex;align-items:center;justify-content:space-between;margin-top:16px;color:var(--muted-d);font-size:.78rem;font-family:var(--font-alt)}
+
+/* ---------- Testimonial rotator ---------- */
+.trotator{position:relative;max-width:840px;margin:0 auto;text-align:center}
+.trotator__track{position:relative;min-height:250px}
+.tquote{position:absolute;inset:0;opacity:0;transform:translateY(18px) scale(.98);transition:.65s var(--ease);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;pointer-events:none}
+.tquote.is-active{opacity:1;transform:none;pointer-events:auto}
+.tquote .stars{color:var(--gold);font-size:1.25rem;letter-spacing:3px}
+.tquote p{font-family:var(--font-display);font-size:clamp(1.2rem,2.7vw,1.7rem);line-height:1.42;font-weight:500;color:#1b1d21;margin:0;max-width:720px}
+.tquote .who{display:flex;align-items:center;gap:13px}
+.tquote .who b{font-family:var(--font-display);font-size:1rem;display:block;text-align:left}
+.tquote .who span{font-size:.82rem;color:var(--muted);text-align:left}
+.trotator__ctrl{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:30px}
+.trotator__nav{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--line);background:#fff;color:var(--charcoal);font-size:1.5rem;line-height:1;display:grid;place-items:center;transition:.25s}
+.trotator__nav:hover{background:var(--charcoal);color:#fff;border-color:var(--charcoal);transform:translateY(-2px)}
+.trotator__dots{display:flex;gap:9px}
+.trotator__dots button{width:9px;height:9px;border-radius:50%;border:none;background:rgba(0,0,0,.16);transition:.25s;padding:0}
+.trotator__dots button.is-active{background:var(--grad-gold);width:30px;border-radius:6px}
+
 /* ---------- Mobile type scale: uniform ~20% smaller ---------- */
 @media(max-width:600px){
   html{font-size:80%}          /* scales every rem-based font down by 20% */
