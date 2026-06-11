@@ -55,8 +55,6 @@
     const next = $('#heroNext'), prev = $('#heroPrev');
     next && next.addEventListener('click', () => show(idx + 1));
     prev && prev.addEventListener('click', () => show(idx - 1));
-    heroSlider.addEventListener('mouseenter', () => heroSlider.classList.add('is-paused'));
-    heroSlider.addEventListener('mouseleave', () => heroSlider.classList.remove('is-paused'));
     show(0);
   }
 
