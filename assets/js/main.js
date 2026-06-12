@@ -188,18 +188,16 @@
     window.runFinance();
   }
 
-  /* ---------- Project filter ---------- */
-  const filters = $$('.filter-btn');
-  if (filters.length) {
-    filters.forEach(b => b.addEventListener('click', () => {
-      filters.forEach(x => x.classList.remove('active'));
-      b.classList.add('active');
-      const f = b.dataset.filter;
-      $$('.gal__item').forEach(it => {
-        it.classList.toggle('hide', f !== 'all' && it.dataset.cat !== f);
-      });
-    }));
-  }
+  /* ---------- Filter (projects + blog) ---------- */
+  $$('.filter-btn').forEach(b => b.addEventListener('click', () => {
+    const scope = b.closest('[data-filters]') || document;
+    scope.querySelectorAll('.filter-btn').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    const f = b.dataset.filter;
+    scope.querySelectorAll('.gal__item, .post[data-cat]').forEach(it => {
+      it.classList.toggle('hide', f !== 'all' && it.dataset.cat !== f);
+    });
+  }));
 
   /* ---------- FAQ accordion ---------- */
   $$('.faq__q').forEach(q => q.addEventListener('click', () => {
