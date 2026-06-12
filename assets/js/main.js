@@ -96,44 +96,46 @@
     upd();
   });
 
-  /* ---------- Savings calculator ---------- */
+  /* ---------- Energy Savings Calculator ---------- */
   const sForm = $('#savings');
   if (sForm) {
-    const out = {
-      monthly: $('#r-monthly'), annual: $('#r-annual'), five: $('#r-five'),
-      carbon: $('#r-carbon'), roi: $('#r-roi')
-    };
-    const bars = { gen: $('#bar-gen'), solar: $('#bar-solar') };
+    const C = 2 * Math.PI * 52; // donut circumference
+    let acc = 0, perHour = 0;
     window.runSavings = function () {
       const bill = +$('#in-bill').value || 0;
       const fuel = +$('#in-fuel').value || 0;
       const type = $('#in-type').value;
       const size = +$('#in-size').value || 5;
-      // Current monthly energy spend (grid + generator fuel)
       const current = bill + fuel;
-      // Solar offsets ~85-92% of spend depending on system adequacy
       const offset = type === 'industrial' ? 0.82 : type === 'commercial' ? 0.88 : 0.9;
       const monthlySave = current * offset;
-      const annual = monthlySave * 12;
-      const five = annual * 5;
-      // Carbon: ~0.45 kg CO2 per kWh diesel; estimate kWh from size
-      const kwhMonth = size * 4 * 30; // kVA * sun-hours * days (rough usable)
-      const carbon = (kwhMonth * 0.45 * 12) / 1000; // tonnes/yr
-      // ROI months: system cost ~ size * 950k, payback = cost / monthlySave
+      const annual = monthlySave * 12, five = annual * 5;
+      const kwhMonth = size * 4 * 30;
+      const carbon = (kwhMonth * 0.45 * 12) / 1000;
       const sysCost = size * 950000;
-      const roiMonths = monthlySave > 0 ? sysCost / monthlySave : 0;
-      out.monthly.textContent = naira(monthlySave);
-      out.annual.textContent = naira(annual);
-      out.five.textContent = naira(five);
-      out.carbon.textContent = carbon.toFixed(1) + ' t';
-      out.roi.textContent = (roiMonths / 12).toFixed(1) + ' yrs';
-      // bars
-      const max = Math.max(current, monthlySave, 1);
-      bars.gen.style.height = (current / max * 100) + '%';
-      bars.solar.style.height = (Math.max(current - monthlySave, current * 0.1) / max * 100) + '%';
+      const roiYears = monthlySave > 0 ? (sysCost / monthlySave) / 12 : 0;
+      const pct = Math.round(offset * 100);
+      const solarSpend = Math.max(current - monthlySave, current * 0.08);
+      const max = Math.max(current, 1);
+      $('#r-monthly').textContent = naira(monthlySave);
+      $('#r-annual').textContent = naira(annual);
+      $('#r-five').textContent = naira(five);
+      $('#r-carbon').textContent = carbon.toFixed(1) + ' t';
+      $('#r-roi').textContent = roiYears.toFixed(1) + ' yrs';
+      $('#r-pct').textContent = pct + '%';
+      $('#r-indep').textContent = pct + '%';
+      $('#meter-fill').style.width = pct + '%';
+      $('#donut').style.strokeDashoffset = (C * (1 - offset)).toFixed(1);
+      $('#bar-gen').style.width = '100%';
+      $('#bar-solar').style.width = (solarSpend / max * 100) + '%';
+      $('#v-now').textContent = naira(current);
+      $('#v-sol').textContent = naira(solarSpend);
+      perHour = annual / 8760; // realtime ticker plays a year over ~365 real minutes
     };
     sForm.addEventListener('input', window.runSavings);
     window.runSavings();
+    // live ticking savings counter
+    setInterval(() => { acc += perHour; const t = $('#r-ticker'); if (t) t.textContent = naira(acc); }, 1000);
   }
 
   /* ---------- Smart sizing calculator ---------- */

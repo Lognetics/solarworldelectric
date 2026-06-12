@@ -194,16 +194,16 @@
   </div>
 </section>
 
-<!-- ===== SAVINGS CALCULATOR ===== -->
+<!-- ===== ENERGY SAVINGS CALCULATOR ===== -->
 <section class="section section--grey" id="savings-section">
   <div class="container">
     <div class="section-head center" data-reveal>
-      <span class="eyebrow">Energy Savings Calculator</span>
+      <span class="eyebrow" style="justify-content:center">Energy Savings Calculator</span>
       <h2>See what you save by switching to solar</h2>
-      <p>Estimate your monthly, annual and 5-year savings against grid bills and generator fuel.</p>
+      <p>Adjust your details and watch your savings update in real time.</p>
     </div>
-    <form class="calc" id="savings" data-reveal>
-      <div class="calc__form">
+    <form class="calc2__card" id="savings" data-reveal>
+      <div class="calc2__form">
         <div class="field">
           <label>Current monthly electricity bill <small>(₦)</small></label>
           <input type="number" id="in-bill" value="45000" min="0" step="1000">
@@ -227,20 +227,49 @@
             <span class="range-val" id="size-val">10 kVA</span>
           </div>
         </div>
-      </div>
-      <div class="calc__out">
-        <h3>Your projected savings</h3>
-        <div class="result-row big"><span class="k">Monthly savings</span><span class="v" id="r-monthly">₦0</span></div>
-        <div class="result-row"><span class="k">Annual savings</span><span class="v" id="r-annual">₦0</span></div>
-        <div class="result-row"><span class="k">5-year savings</span><span class="v" id="r-five">₦0</span></div>
-        <div class="result-row"><span class="k">Carbon reduction / yr</span><span class="v" id="r-carbon">0 t</span></div>
-        <div class="result-row"><span class="k">Estimated payback</span><span class="v" id="r-roi">0 yrs</span></div>
-        <div class="bars">
-          <div class="bar"><i id="bar-gen" style="height:100%"></i><span>Now</span></div>
-          <div class="bar green"><i id="bar-solar" style="height:14%"></i><span>With Solar</span></div>
+        <div class="meter">
+          <div class="meter__top"><span>Energy independence</span><span id="r-indep">90%</span></div>
+          <div class="meter__track"><i id="meter-fill" style="width:90%"></i></div>
         </div>
-        <p class="calc__note">Estimates only. Book a free assessment for an exact, itemised proposal.</p>
-        <a href="contact.html" class="btn btn--primary">Get My Exact Quote</a>
+        <p class="calc2__note">Estimates only — book a free assessment for an exact, itemised proposal.</p>
+      </div>
+
+      <div class="calc2__out">
+        <div class="calc2__live"><span class="pulse"></span> Live savings · <b id="r-ticker">₦0</b> &amp; counting</div>
+
+        <div class="calc2__hero">
+          <div class="donut">
+            <svg viewBox="0 0 120 120" aria-hidden="true">
+              <defs>
+                <linearGradient id="dgrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#FFC83D"/>
+                  <stop offset="1" stop-color="#32B768"/>
+                </linearGradient>
+              </defs>
+              <circle class="donut__bg" cx="60" cy="60" r="52"/>
+              <circle class="donut__val" id="donut" cx="60" cy="60" r="52"/>
+            </svg>
+            <div class="donut__c"><b id="r-pct">90%</b><span>bills eliminated</span></div>
+          </div>
+          <div class="calc2__big">
+            <div class="lbl">Monthly savings</div>
+            <div class="amt" id="r-monthly">₦0</div>
+            <div class="sub">≈ <span id="r-annual">₦0</span> / year</div>
+          </div>
+        </div>
+
+        <div class="cbars">
+          <div class="cbar"><span class="cbar__l">Spend now</span><div class="cbar__t"><i id="bar-gen" class="now"></i></div><span class="cbar__v" id="v-now">₦0</span></div>
+          <div class="cbar"><span class="cbar__l">With solar</span><div class="cbar__t"><i id="bar-solar" class="sol"></i></div><span class="cbar__v" id="v-sol">₦0</span></div>
+        </div>
+
+        <div class="calc2__metrics">
+          <div><div class="v" id="r-five">₦0</div><div class="l">5-year savings</div></div>
+          <div><div class="v" id="r-carbon">0 t</div><div class="l">CO₂ saved / yr</div></div>
+          <div><div class="v" id="r-roi">0 yrs</div><div class="l">Payback</div></div>
+        </div>
+
+        <a href="contact.html" class="btn btn--primary" style="width:100%">Get My Exact Quote</a>
       </div>
     </form>
   </div>
