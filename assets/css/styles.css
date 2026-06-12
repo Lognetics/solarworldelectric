@@ -535,6 +535,17 @@ section{position:relative}
   .hero__text{min-height:clamp(150px,40vh,230px)}
 }
 
+/* Keep "Why Solar World" & "Smart Product Showcase" cards 2-up on mobile */
+@media(max-width:620px){
+  .grid-3.tilt-zone{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .grid-3.tilt-zone .card{padding:18px 15px;min-width:0;overflow:hidden}
+  .grid-3.tilt-zone .card__icon{width:42px;height:42px;border-radius:11px;margin-bottom:12px}
+  .grid-3.tilt-zone .card__icon svg{width:20px;height:20px}
+  .grid-3.tilt-zone .card h3{font-size:1rem;margin-bottom:.25em}
+  .grid-3.tilt-zone .card p{font-size:.82rem;overflow-wrap:anywhere}
+  .grid-3.tilt-zone .card h3{overflow-wrap:anywhere}
+}
+
 /* utilities */
 .mt-s{margin-top:1rem}.mt-m{margin-top:2rem}.mt-l{margin-top:3rem}
 .center{text-align:center}
