@@ -424,7 +424,7 @@ FINANCE_STEPS = [
 # LEADERSHIP (profile pages 4–8)
 # ---------------------------------------------------------------------------
 TEAM = [
-    ("Mr. Charles Abia", "Chairman, Solar World Group", "team-1.jpg"),
+    ("Mr. Charles Abia", "Chairman, Solar World Group", "team-charles-abia.jpg"),
     ("Abigail Felix", "Managing Director", "team-abigail.jpg"),
     ("Raphael Duru", "General Manager, Operations", "team-raphael.jpg"),
     ("Ejike Okoli", "Head of Sales &amp; Business, Abuja Region", "team-ejike.jpg"),

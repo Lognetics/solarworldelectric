@@ -607,7 +607,7 @@ def about():
       </div>
     </div>
     <div class="media" data-reveal="right">
-      <img src="assets/img/team-1.jpg" alt="The Solar World Electric Technology Ltd team in Nigeria" loading="lazy">
+      <img src="assets/img/team-group.jpg" alt="The Solar World Electric Technology Ltd team outside the Solar World showroom in Nigeria" loading="lazy">
     </div>
   </div>
 </section>
