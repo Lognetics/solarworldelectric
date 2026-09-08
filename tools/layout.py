@@ -74,7 +74,7 @@ NAV_ITEMS = [
         ("solutions.html#industrial", "Industrial", "Factories and processing facilities"),
         ("solutions.html#infrastructure", "Energy &amp; infrastructure", "Streetlights, pumping and EV charging"),
     ]),
-    ("products.html", "Products", [
+    ("products.html", "Product Prices", [
         ("products.html", "All products", "Panels, inverters, batteries and more"),
         ("pricing.html", "Pricing &amp; packages", "Full Deye, Solis and standard charts"),
         ("financing.html", "Financing", "Pay 30% and spread the balance"),
