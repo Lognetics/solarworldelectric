@@ -66,7 +66,7 @@ NAV_ITEMS = [
         ("about.html", "Our story", "Who we are, our vision and mission"),
         ("about.html#team", "Meet the team", "The people behind every installation"),
         ("reviews.html", "Customer reviews", "What customers say after installation"),
-        ("contact.html#offices", "Our offices", "Eleven locations across three cities"),
+        ("contact.html#offices", "Our offices", "21 locations across three cities"),
     ]),
     ("solutions.html", "Solutions", [
         ("solutions.html#residential", "Residential", "Homes, estates, duplexes and apartments"),

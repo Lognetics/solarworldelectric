@@ -367,7 +367,7 @@ def reviews():
                  "“How long do the batteries actually last?”"),
             ]),
         "cta": cta_band("Join 60,000+ powered homes and businesses",
-                        "Book a free consultation and load assessment at any of our eleven offices, or send us "
+                        "Book a free consultation and load assessment at any of our 21 offices, or send us "
                         "your appliance list on WhatsApp."),
     }
 
@@ -775,7 +775,7 @@ def contact():
         </a>
         <div class="card">
           <div class="card__ico">%(pin)s</div>
-          <h4>Walk in</h4><p class="small muted">Eleven offices across Abuja, Lagos and Port Harcourt.</p>
+          <h4>Walk in</h4><p class="small muted">Branches across Abuja, Lagos and Port Harcourt.</p>
           <a class="tlink" href="#offices">See all locations %(arrow)s</a>
         </div>
       </div>
@@ -820,7 +820,8 @@ def contact():
     <div class="section-head">
       <span class="eyebrow">Our offices</span>
       <h2>Visit any of our locations</h2>
-      <p>Eleven offices across Abuja, Lagos and Port Harcourt, with nationwide installation.</p>
+      <p>Our showrooms and branches across Abuja, Lagos and Port Harcourt, with nationwide
+      installation. Call ahead on the number for the branch nearest you.</p>
     </div>
     %(offices)s
   </div>
@@ -830,7 +831,7 @@ def contact():
 """ % {
         "head": page_head(
             "Contact Solar World Electric Technology Ltd.",
-            "Eleven offices across Abuja, Lagos and Port Harcourt. Call, WhatsApp, email or walk in for a free "
+            "Branches across Abuja, Lagos and Port Harcourt. Call, WhatsApp, email or walk in for a free "
             "solar consultation and load assessment.",
             [("Home", "index.html"), ("Contact", None)], bg="store-front-2.jpg"),
         "wa": ico("wa"), "phoneico": ico("phone"), "mail": ico("mail"), "pin": ico("pin"),

@@ -318,7 +318,7 @@ def home():
         <span class="answer__k">%(spark)s Quick answer</span>
         <p><b>What does Solar World Electric do?</b> We size, supply, install and maintain complete solar power
         systems in Nigeria, solar panels, hybrid inverters and lithium battery storage, from 3 kVA home
-        packages to 125 kW industrial systems. We operate eleven offices across Abuja, Lagos and Port Harcourt,
+        packages to 125 kW industrial systems. We operate 21 offices across Abuja, Lagos and Port Harcourt,
         install nationwide, publish our prices openly, and back every installation with up to 25 years of panel
         warranty and a year of free after-sales support.</p>
       </div>
@@ -552,7 +552,7 @@ def home():
         "faqcount": sum(len(g["items"]) for g in FAQ_GROUPS),
         "cta": cta_band(
             "Tell us what you want to power. We will size it, price it and install it.",
-            "Free consultation and load assessment at any of our eleven offices in Abuja, Lagos and Port Harcourt "
+            "Free consultation and load assessment at any of our 21 offices in Abuja, Lagos and Port Harcourt "
             ", or over WhatsApp, wherever you are in Nigeria."),
     }
 

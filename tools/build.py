@@ -18,7 +18,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 
-from data import COMPANY, CATEGORIES, PACKAGES, PRICE_DEYE, PRICE_SOLIS, PRICE_STANDARD, CLIENTS
+from data import COMPANY, OFFICE_COUNT, CATEGORIES, PACKAGES, PRICE_DEYE, PRICE_SOLIS, PRICE_STANDARD, CLIENTS
 from content import FAQ_GROUPS, WA_REVIEWS
 from case_studies import CASES
 import layout
@@ -336,7 +336,7 @@ def blog_post(p):
                         [("Home", "index.html"), ("Knowledge centre", "blog.html"), (p["cat"], None)]),
        p["img"], p["alt"], body,
        layout.cta_band("Ready to talk about your building?",
-                       "Free consultation and load assessment, at any of our eleven offices or over WhatsApp."))
+                       "Free consultation and load assessment, at any of our 21 offices or over WhatsApp."))
 
 
 # ---------------------------------------------------------------------------
@@ -414,7 +414,7 @@ def llms_txt():
     add("> Nigerian solar energy company (RC %s, established %s) specialising in the sales, installation and "
         "maintenance of solar power, hybrid inverter and lithium battery systems for residential, commercial, "
         "industrial and government customers. Over 60,000 homes, offices, hotels, businesses and communities "
-        "powered. Eleven offices across Abuja, Lagos and Port Harcourt; installs nationwide."
+        "powered. 21 offices across Abuja, Lagos and Port Harcourt; installs nationwide."
         % (COMPANY["rc"], COMPANY["founded"]))
     add("")
     add("## Contact")
@@ -426,7 +426,7 @@ def llms_txt():
     add("## Key facts")
     add("- Founded: %s. RC number: %s." % (COMPANY["founded"], COMPANY["rc"]))
     add("- Customers powered: over 60,000 homes, offices, hotels, businesses and communities.")
-    add("- Offices: 11. Port Harcourt (3), Abuja (6), Lagos (2). Installs nationwide.")
+    add("- Offices: %d across Abuja, Lagos and Port Harcourt. Installs nationwide." % OFFICE_COUNT)
     add("- System range: 3 kVA residential to 125 kW industrial.")
     add("- Inverter brands supplied: Deye, Solis, ALP Solar, Bauman Energy, BICODI, SRNE.")
     add("- Panels: 620 W and 460 W monocrystalline.")
@@ -501,7 +501,7 @@ def main():
         title="Solar World Electric: Solar, Inverter &amp; Battery Systems in Nigeria",
         description="Nigeria's solar energy company since 2015. Complete solar, hybrid inverter and lithium "
                     "battery systems for homes, offices, hotels, factories and communities. 60,000+ powered, "
-                    "11 offices, prices published openly, financing from 30%.",
+                    "21 offices, prices published openly, financing from 30%.",
         body=A.home(), over_hero=True,
         schema=[breadcrumbs([("Home", "")])] + local_business_schema() + product_schema()
                + [faq_schema(FAQ_GROUPS[:2]), review_schema()]))
@@ -584,9 +584,9 @@ def main():
 
     write("contact.html", page(
         slug="contact.html",
-        title="Contact Solar World Electric: 11 Offices in Abuja, Lagos &amp; Port Harcourt",
+        title="Contact Solar World Electric: 21 Offices in Abuja, Lagos &amp; Port Harcourt",
         description="Call or WhatsApp +234 906 331 5492, email solarworldes@gmail.com, or visit any of our "
-                    "eleven offices across Abuja, Lagos and Port Harcourt for a free solar consultation.",
+                    "21 offices across Abuja, Lagos and Port Harcourt for a free solar consultation.",
         body=B.contact(), og_image="assets/img/store-front-2.jpg",
         schema=[breadcrumbs([("Home", ""), ("Contact", "contact.html")])] + local_business_schema()))
 

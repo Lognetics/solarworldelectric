@@ -149,7 +149,7 @@ FAQ_GROUPS = [
               "During the site visit we check your existing wiring and flag anything that needs correcting before "
               "the system is connected."]),
             ("Where in Nigeria do you install?",
-             ["We operate <b>eleven offices across Abuja, Lagos and Port Harcourt</b> and install nationwide.",
+             ["We operate <b>21 offices across Abuja, Lagos and Port Harcourt</b> and install nationwide.",
               "Port Harcourt: Sani Abacha 1 &amp; 2 (GRA Phase 3), Port Harcourt City Mall (SPAR) and Market Square "
               "GRA Phase 2. Abuja: Jabi Lake Mall, Wuse 2, Silverbird Entertainment Centre (first floor and "
               "basement), Ceddi Plaza and Primus Mall Gwarinpa. Lagos: Lekki Phase 1 and The Circle Mall, Jakande. "
@@ -210,7 +210,7 @@ FAQ_GROUPS = [
               "in <b>2015</b>, specialising in the sales, installation and maintenance of solar power systems for "
               "residential, commercial, industrial and government customers.",
               "We have powered <b>over 60,000 homes, offices, hotels, businesses and communities</b> across Nigeria "
-              "and operate eleven offices across Abuja, Lagos and Port Harcourt. Our clients include the NDDC, the "
+              "and operate 21 offices across Abuja, Lagos and Port Harcourt. Our clients include the NDDC, the "
               "Nigerian Army, GIG Logistics, Woodhall Capital, The Brook Finance Company, ENERGYMATICS, "
               "EngenderHealth, Riders for Health, the National Malaria Elimination Programme and the Maritime "
               "Academy of Nigeria, Oron."]),
@@ -231,7 +231,7 @@ FAQ_GROUPS = [
               "(Oron), EngenderHealth and Riders for Health."]),
             ("How do I get a quote?",
              ["Message us on WhatsApp at <b>+234 906 331 5492</b>, email <b>solarworldes@gmail.com</b>, or walk into "
-              "any of our eleven offices in Abuja, Lagos or Port Harcourt.",
+              "any of our 21 offices in Abuja, Lagos or Port Harcourt.",
               "Tell us what you want to power, the appliances, how many air conditioners and whether you need it "
               "day and night, and we will size the system and send a costed proposal with warranty terms and "
               "payment options. The consultation and load assessment are free."]),
@@ -345,7 +345,7 @@ WHY_US = [
      "our engineers guide every step, and install every system themselves.",
      "shield"),
     ("We are in your city, and growing",
-     "Eleven offices across Abuja, Lagos and Port Harcourt, with nationwide installation. Wherever you are, "
+     "21 offices across Abuja, Lagos and Port Harcourt, with nationwide installation. Wherever you are, "
      "a team is within reach for consultation, installation and support.",
      "pin"),
     ("Customised solutions for every need",

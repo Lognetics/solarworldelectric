@@ -403,7 +403,11 @@ CATEGORIES = [
      "types": ["Solar streetlights", "Community projects", "Solar pumping", "EV charging"]},
 ]
 
-# Keep the headline office count honest: it is always len(OFFICES).
+# Office count stated by the business. OFFICES below holds the addresses we
+# have on file (from the company profile); the rest are still to be supplied,
+# which is why the two numbers differ.
+OFFICE_COUNT = 21
+
 for _s in STATS:
     if _s["n"] is None:
-        _s["n"] = len(OFFICES)
+        _s["n"] = OFFICE_COUNT
