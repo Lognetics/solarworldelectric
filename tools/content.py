@@ -230,7 +230,7 @@ FAQ_GROUPS = [
               "National Malaria Elimination Programme (Federal Ministry of Health), the Maritime Academy of Nigeria "
               "(Oron), EngenderHealth and Riders for Health."]),
             ("How do I get a quote?",
-             ["Message us on WhatsApp at <b>+234 906 331 5492</b>, email <b>info@solarworldelectric.com</b>, or walk into "
+             ["Message us on WhatsApp at <b>+234 906 331 5492</b>, email <b>info@solarworldelectric.co</b>, or walk into "
               "any of our 21 offices in Abuja, Lagos or Port Harcourt.",
               "Tell us what you want to power, the appliances, how many air conditioners and whether you need it "
               "day and night, and we will size the system and send a costed proposal with warranty terms and "

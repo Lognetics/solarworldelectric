@@ -86,9 +86,11 @@ NAV_ITEMS = [
         ("projects.html?c=industrial", "Industrial projects", "Factories and large-scale sites"),
         ("projects.html?c=infrastructure", "Infrastructure", "Streetlights, pumping, EV charging"),
     ]),
-    ("calculator.html", "Tools", [
-        ("calculator.html", "Solar calculator", "Size your system from your appliances"),
-        ("financing.html#calculator", "Repayment estimator", "See your monthly instalments"),
+    ("calculator.html", "Calculators", [
+        ("calculator.html", "Solar calculator",
+         "Add your appliances, get the system size and cost"),
+        ("financing.html#calculator", "Finance calculator",
+         "Repayment estimator: deposit and monthly payment"),
         ("faq.html", "FAQ", "29 answers on cost, sizing and warranty"),
     ]),
     ("blog.html", "Blog", None),

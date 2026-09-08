@@ -22,7 +22,7 @@ COMPANY = {
     "canonical_domain": "https://www.solarworldelectric.com",
     "phone": "+2349063315492",
     "phone_display": "+234 906 331 5492",
-    "email": "info@solarworldelectric.com",
+    "email": "info@solarworldelectric.co",
     "wa_number": "2349063315492",
     "wa_default": ("Hello Solar World, I am interested in getting your solar and inverter "
                    "package. Please may I know how to proceed?"),

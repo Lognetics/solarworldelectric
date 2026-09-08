@@ -585,7 +585,7 @@ def main():
     write("contact.html", page(
         slug="contact.html",
         title="Contact Solar World Electric: 21 Offices in Abuja, Lagos &amp; Port Harcourt",
-        description="Call or WhatsApp +234 906 331 5492, email info@solarworldelectric.com, or visit any of our "
+        description="Call or WhatsApp +234 906 331 5492, email info@solarworldelectric.co, or visit any of our "
                     "21 offices across Abuja, Lagos and Port Harcourt for a free solar consultation.",
         body=B.contact(), og_image="assets/img/store-front-2.jpg",
         schema=[breadcrumbs([("Home", ""), ("Contact", "contact.html")])] + local_business_schema()))
