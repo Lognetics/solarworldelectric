@@ -1,321 +1,632 @@
-/* ============================================================
-   Solar World Electric — interactions
-   ============================================================ */
+/* =========================================================================
+   SOLAR WORLD ELECTRIC — main.js
+   Nav · scroll motion · hero slider · accordions · filters · tabs
+   WhatsApp chat widget (injected site-wide) · 30s lead popup (site-wide)
+   ========================================================================= */
 (function () {
   'use strict';
-  const $ = (s, c = document) => c.querySelector(s);
-  const $$ = (s, c = document) => [...c.querySelectorAll(s)];
-  const naira = n => '₦' + Math.round(n).toLocaleString('en-NG');
 
-  /* ---------- Navbar ---------- */
-  const nav = $('.nav');
-  const onScroll = () => nav && nav.classList.toggle('scrolled', window.scrollY > 24);
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-
-  const toggle = $('.nav__toggle');
-  const links = $('.nav__links');
-  if (toggle && links) {
-    toggle.addEventListener('click', () => {
-      toggle.classList.toggle('open');
-      links.classList.toggle('open');
-    });
-    $$('.nav__links a').forEach(a => a.addEventListener('click', () => {
-      toggle.classList.remove('open'); links.classList.remove('open');
-    }));
-  }
-
-  /* ---------- Hero slider ---------- */
-  const heroSlider = $('#heroSlider');
-  if (heroSlider) {
-    const slides = $$('.hero__slide', heroSlider);
-    const textEl = $('.hero__text', heroSlider);
-    const dotsWrap = $('#heroDots');
-    let idx = 0;
-    slides.forEach((s, i) => {
-      const b = document.createElement('button');
-      b.innerHTML = '<i></i>';
-      b.setAttribute('aria-label', 'Go to slide ' + (i + 1));
-      b.addEventListener('click', () => show(i));
-      dotsWrap.appendChild(b);
-    });
-    const dots = $$('button', dotsWrap);
-    const bars = $$('i', dotsWrap);
-    function show(n) {
-      idx = (n + slides.length) % slides.length;
-      slides.forEach((s, i) => s.classList.toggle('is-active', i === idx));
-      dots.forEach((d, i) => d.classList.toggle('is-active', i === idx));
-      const s = slides[idx];
-      textEl.innerHTML = '<h1>' + s.dataset.h1 + '</h1><p class="sub">' + s.dataset.sub + '</p>';
-    }
-    // advance exactly when the active progress bar fills — keeps everything in lock-step
-    bars.forEach(bar => bar.addEventListener('animationend', () => {
-      if (bar.parentElement.classList.contains('is-active')) show(idx + 1);
-    }));
-    const next = $('#heroNext'), prev = $('#heroPrev');
-    next && next.addEventListener('click', () => show(idx + 1));
-    prev && prev.addEventListener('click', () => show(idx - 1));
-    show(0);
-  }
-
-  /* ---------- Scroll reveal ---------- */
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-  $$('[data-reveal]').forEach(el => io.observe(el));
-
-  /* ---------- Animated counters ---------- */
-  const animate = (el) => {
-    const target = parseFloat(el.dataset.count);
-    const suffix = el.dataset.suffix || '';
-    const dec = (el.dataset.dec | 0);
-    const dur = 1600; const t0 = performance.now();
-    const step = (t) => {
-      const p = Math.min((t - t0) / dur, 1);
-      const eased = 1 - Math.pow(1 - p, 3);
-      const val = target * eased;
-      el.textContent = val.toLocaleString('en-NG', { minimumFractionDigits: dec, maximumFractionDigits: dec }) + suffix;
-      if (p < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
+  /* ------------------------------------------------------------------
+     Config — edit these in one place
+     ------------------------------------------------------------------ */
+  var CFG = {
+    phone: '2349063315492',
+    phoneDisplay: '+234 906 331 5492',
+    email: 'solarworldes@gmail.com',
+    waText: 'Hello Solar World, I am interested in getting your solar and inverter package. Please may I know how to proceed?',
+    popupDelay: 30000,          // 30 seconds, per brief
+    popupCooldownDays: 7,       // don't re-nag a visitor who closed it
+    heroInterval: 7000
   };
-  const cio = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { animate(e.target); cio.unobserve(e.target); } });
-  }, { threshold: 0.5 });
-  $$('[data-count]').forEach(el => cio.observe(el));
 
-  /* ---------- Range live value ---------- */
-  $$('input[type=range][data-out]').forEach(r => {
-    const out = $('#' + r.dataset.out);
-    const fmt = r.dataset.fmt;
-    const upd = () => {
-      let v = +r.value;
-      out.textContent = fmt === 'kva' ? v + ' kVA' : fmt === 'naira' ? naira(v) : v;
-    };
-    r.addEventListener('input', () => { upd(); if (r.dataset.calc) window.runSavings && window.runSavings(); });
-    upd();
-  });
+  var wa = function (text) {
+    return 'https://wa.me/' + CFG.phone + '?text=' + encodeURIComponent(text || CFG.waText);
+  };
 
-  /* ---------- Energy Savings Calculator ---------- */
-  const sForm = $('#savings');
-  if (sForm) {
-    const C = 2 * Math.PI * 52; // donut circumference
-    let acc = 0, perHour = 0;
-    window.runSavings = function () {
-      const bill = +$('#in-bill').value || 0;
-      const fuel = +$('#in-fuel').value || 0;
-      const type = $('#in-type').value;
-      const size = +$('#in-size').value || 5;
-      const current = bill + fuel;
-      const offset = type === 'industrial' ? 0.82 : type === 'commercial' ? 0.88 : 0.9;
-      const monthlySave = current * offset;
-      const annual = monthlySave * 12, five = annual * 5;
-      const kwhMonth = size * 4 * 30;
-      const carbon = (kwhMonth * 0.45 * 12) / 1000;
-      const sysCost = size * 950000;
-      const roiYears = monthlySave > 0 ? (sysCost / monthlySave) / 12 : 0;
-      const pct = Math.round(offset * 100);
-      const solarSpend = Math.max(current - monthlySave, current * 0.08);
-      const max = Math.max(current, 1);
-      $('#r-monthly').textContent = naira(monthlySave);
-      $('#r-annual').textContent = naira(annual);
-      $('#r-five').textContent = naira(five);
-      $('#r-carbon').textContent = carbon.toFixed(1) + ' t';
-      $('#r-roi').textContent = roiYears.toFixed(1) + ' yrs';
-      $('#r-pct').textContent = pct + '%';
-      $('#r-indep').textContent = pct + '%';
-      $('#meter-fill').style.width = pct + '%';
-      $('#donut').style.strokeDashoffset = (C * (1 - offset)).toFixed(1);
-      $('#bar-gen').style.width = '100%';
-      $('#bar-solar').style.width = (solarSpend / max * 100) + '%';
-      $('#v-now').textContent = naira(current);
-      $('#v-sol').textContent = naira(solarSpend);
-      perHour = annual / 8760; // realtime ticker plays a year over ~365 real minutes
-    };
-    sForm.addEventListener('input', window.runSavings);
-    window.runSavings();
-    // live ticking savings counter
-    setInterval(() => { acc += perHour; const t = $('#r-ticker'); if (t) t.textContent = naira(acc); }, 1000);
-  }
+  var $ = function (s, c) { return (c || document).querySelector(s); };
+  var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------- Smart sizing calculator ---------- */
-  const szForm = $('#sizer');
-  if (szForm) {
-    const APPL = { ac: 1500, fridge: 200, tv: 120, pc: 150, pump: 750, light: 15, freezer: 300 };
-    const out = {
-      load: $('#sz-load'), sys: $('#sz-sys'), batt: $('#sz-batt'),
-      panels: $('#sz-panels'), cost: $('#sz-cost'), monthly: $('#sz-monthly')
-    };
-    window.runSizer = function () {
-      let watts = 0;
-      $$('[data-appl]').forEach(i => { watts += (APPL[i.dataset.appl] || 0) * (+i.value || 0); });
-      watts += (+$('#sz-lights').value || 0) * APPL.light;
-      const kva = Math.max(Math.ceil((watts * 1.3) / 1000 / 0.8), 1); // 30% headroom, 0.8 pf
-      const backupHrs = +$('#sz-backup').value || 8;
-      const wh = watts * backupHrs;
-      const battKwh = Math.ceil((wh / 0.9) / 1000); // 90% DoD lithium
-      const panels = Math.max(Math.ceil((kva * 1000) / 550), 4); // 550W panels
-      const cost = kva * 950000 + battKwh * 320000;
-      out.load.textContent = (watts / 1000).toFixed(1) + ' kW';
-      out.sys.textContent = kva + ' kVA';
-      out.batt.textContent = battKwh + ' kWh';
-      out.panels.textContent = panels + ' panels';
-      out.cost.textContent = '~' + naira(cost);
-      out.monthly.textContent = naira(cost * 0.7 / 9); // 30% down, 9-month plan on 70%
-    };
-    szForm.addEventListener('input', window.runSizer);
-    window.runSizer();
-  }
+  var store = {
+    get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) { /* private mode */ } }
+  };
 
-  /* ---------- Financing calculator ---------- */
-  const fForm = $('#financing');
-  if (fForm) {
-    window.runFinance = function () {
-      const total = +$('#f-total').value || 0;
-      const months = +$('#f-term').value || 6;
-      const down = total * 0.30;
-      const principal = total - down;
-      const rate = 0.04; // 4% flat monthly per brochure note, simple split
-      const interest = principal * rate * months / 12 * 0 + principal * 0.04; // 4% flat add-on
-      const financed = principal + interest;
-      const monthly = financed / months;
-      $('#f-down').textContent = naira(down);
-      $('#f-principal').textContent = naira(principal);
-      $('#f-monthly').textContent = naira(monthly);
-      $('#f-totalpay').textContent = naira(down + financed);
-    };
-    fForm.addEventListener('input', window.runFinance);
-    window.runFinance();
-  }
+  /* ------------------------------------------------------------------
+     1. Navigation
+     ------------------------------------------------------------------ */
+  function initNav() {
+    var nav = $('#nav');
+    if (!nav) return;
+    var toggle = $('#navToggle');
+    var links = $('#navLinks');
+    var lastY = 0;
 
-  /* ---------- Filter (projects + blog) ---------- */
-  $$('.filter-btn').forEach(b => b.addEventListener('click', () => {
-    const scope = b.closest('[data-filters]') || document;
-    scope.querySelectorAll('.filter-btn').forEach(x => x.classList.remove('active'));
-    b.classList.add('active');
-    const f = b.dataset.filter;
-    scope.querySelectorAll('.gal__item, .post[data-cat]').forEach(it => {
-      it.classList.toggle('hide', f !== 'all' && it.dataset.cat !== f);
-    });
-  }));
+    function onScroll() {
+      var y = window.scrollY;
+      nav.classList.toggle('is-stuck', y > 24);
+      // hide on scroll-down, reveal on scroll-up (only past the fold)
+      if (!nav.classList.contains('menu-open')) {
+        nav.classList.toggle('is-hidden', y > 420 && y > lastY + 6);
+      }
+      lastY = y;
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
 
-  /* ---------- FAQ accordion ---------- */
-  $$('.faq__q').forEach(q => q.addEventListener('click', () => {
-    const item = q.closest('.faq__item');
-    const a = item.querySelector('.faq__a');
-    const open = item.classList.toggle('open');
-    a.style.maxHeight = open ? a.scrollHeight + 'px' : 0;
-  }));
-
-  /* ---------- Forms (demo) ---------- */
-  $$('form[data-demo]').forEach(f => f.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const btn = f.querySelector('[type=submit]');
-    const old = btn.textContent;
-    btn.textContent = 'Sent ✓'; btn.disabled = true;
-    const note = f.querySelector('.form-note');
-    if (note) note.textContent = "Thank you — our team will reach out within 24 hours.";
-    setTimeout(() => { btn.textContent = old; btn.disabled = false; f.reset(); }, 3500);
-  }));
-
-  /* ---------- Scroll progress bar ---------- */
-  const sb = $('#scrollbar');
-  if (sb) {
-    const upd = () => {
-      const h = document.documentElement;
-      const p = h.scrollTop / (h.scrollHeight - h.clientHeight || 1);
-      sb.style.width = (p * 100) + '%';
-    };
-    window.addEventListener('scroll', upd, { passive: true });
-    window.addEventListener('resize', upd);
-    upd();
-  }
-
-  /* ---------- 3D tilt + glare ---------- */
-  if (window.matchMedia('(pointer:fine)').matches) {
-    $$('.tilt-zone .card, [data-tilt]').forEach(el => {
-      el.setAttribute('data-tilt', '');
-      const g = document.createElement('div'); g.className = 'tilt-glare'; el.appendChild(g);
-      const MAX = 7;
-      el.addEventListener('pointermove', e => {
-        const r = el.getBoundingClientRect();
-        const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
-        el.style.transform = `perspective(900px) rotateX(${(py - .5) * -2 * MAX}deg) rotateY(${(px - .5) * 2 * MAX}deg) translateY(-6px)`;
-        g.style.setProperty('--gx', px * 100 + '%'); g.style.setProperty('--gy', py * 100 + '%');
+    if (toggle && links) {
+      toggle.addEventListener('click', function () {
+        var open = links.classList.toggle('is-open');
+        toggle.classList.toggle('is-open', open);
+        nav.classList.toggle('menu-open', open);
+        nav.classList.remove('is-hidden');
+        document.body.style.overflow = open ? 'hidden' : '';
+        toggle.setAttribute('aria-expanded', String(open));
       });
-      el.addEventListener('pointerleave', () => { el.style.transform = ''; });
+      links.addEventListener('click', function (e) {
+        if (e.target.closest('a')) {
+          links.classList.remove('is-open');
+          toggle.classList.remove('is-open');
+          nav.classList.remove('menu-open');
+          document.body.style.overflow = '';
+        }
+      });
+    }
+  }
+
+  /* ------------------------------------------------------------------
+     2. Scroll progress bar
+     ------------------------------------------------------------------ */
+  function initProgress() {
+    var bar = $('#scrollbar');
+    if (!bar) return;
+    function tick() {
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+    }
+    window.addEventListener('scroll', tick, { passive: true });
+    window.addEventListener('resize', tick);
+    tick();
+  }
+
+  /* ------------------------------------------------------------------
+     3. Scroll reveal + staggering
+     ------------------------------------------------------------------ */
+  function initReveal() {
+    var els = $$('[data-reveal]');
+    if (!els.length) return;
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      els.forEach(function (el) { el.classList.add('is-in'); });
+      return;
+    }
+    // auto-stagger siblings that share a parent
+    var groups = {};
+    els.forEach(function (el, i) {
+      var p = el.parentNode;
+      var key = p.__rvKey || (p.__rvKey = 'g' + i);
+      groups[key] = groups[key] || 0;
+      if (!el.style.getPropertyValue('--rd')) {
+        el.style.setProperty('--rd', Math.min(groups[key] * 90, 540) + 'ms');
+      }
+      groups[key]++;
+    });
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          en.target.classList.add('is-in');
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    els.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ------------------------------------------------------------------
+     4. Animated counters
+     ------------------------------------------------------------------ */
+  function initCounters() {
+    var els = $$('[data-count]');
+    if (!els.length) return;
+
+    function run(el) {
+      var target = parseFloat(el.getAttribute('data-count'));
+      var dur = parseInt(el.getAttribute('data-dur') || '1900', 10);
+      var dec = parseInt(el.getAttribute('data-dec') || '0', 10);
+      var pre = el.getAttribute('data-pre') || '';
+      var suf = el.getAttribute('data-suf') || '';
+      if (reduceMotion) {
+        el.textContent = pre + target.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec }) + suf;
+        return;
+      }
+      var t0 = null;
+      function step(ts) {
+        if (t0 === null) t0 = ts;
+        var p = Math.min((ts - t0) / dur, 1);
+        var eased = 1 - Math.pow(1 - p, 3);
+        var v = target * eased;
+        el.textContent = pre + v.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec }) + suf;
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    if (!('IntersectionObserver' in window)) { els.forEach(run); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { run(en.target); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.4 });
+    els.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ------------------------------------------------------------------
+     5. Hero slider (image + <video> ready)
+     ------------------------------------------------------------------ */
+  function initHero() {
+    var hero = $('#hero');
+    if (!hero) return;
+    var slides = $$('.hero__slide', hero);
+    if (slides.length < 1) return;
+
+    var h1 = $('#heroTitle');
+    var sub = $('#heroSub');
+    var dotWrap = $('#heroDots');
+    var i = 0, timer = null;
+
+    hero.style.setProperty('--hero-dur', CFG.heroInterval + 'ms');
+
+    var dots = slides.map(function (s, n) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', 'Go to slide ' + (n + 1));
+      b.addEventListener('click', function () { go(n); });
+      if (dotWrap) dotWrap.appendChild(b);
+      return b;
+    });
+
+    function paint() {
+      slides.forEach(function (s, n) {
+        s.classList.toggle('is-active', n === i);
+        var v = s.querySelector('video');
+        if (v) { if (n === i) { v.play().catch(function () {}); } else { v.pause(); } }
+      });
+      dots.forEach(function (d, n) {
+        d.classList.remove('is-active');
+        if (n === i) { void d.offsetWidth; d.classList.add('is-active'); }
+      });
+      var s = slides[i];
+      if (h1 && s.dataset.h1) {
+        h1.innerHTML = s.dataset.h1;
+        h1.style.animation = 'none'; void h1.offsetWidth;
+        h1.style.animation = 'msgIn .8s var(--ease-out) both';
+      }
+      if (sub && s.dataset.sub) {
+        sub.textContent = s.dataset.sub;
+        sub.style.animation = 'none'; void sub.offsetWidth;
+        sub.style.animation = 'msgIn .8s .1s var(--ease-out) both';
+      }
+    }
+
+    function go(n) { i = (n + slides.length) % slides.length; paint(); restart(); }
+    function next() { go(i + 1); }
+    function prev() { go(i - 1); }
+    function restart() {
+      clearInterval(timer);
+      if (slides.length > 1 && !reduceMotion) timer = setInterval(next, CFG.heroInterval);
+    }
+
+    var nx = $('#heroNext'), pv = $('#heroPrev');
+    if (nx) nx.addEventListener('click', next);
+    if (pv) pv.addEventListener('click', prev);
+
+    // swipe
+    var x0 = null;
+    hero.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    hero.addEventListener('touchend', function (e) {
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 55) { dx < 0 ? next() : prev(); }
+      x0 = null;
+    }, { passive: true });
+
+    document.addEventListener('visibilitychange', function () {
+      document.hidden ? clearInterval(timer) : restart();
+    });
+
+    paint();
+    restart();
+  }
+
+  /* ------------------------------------------------------------------
+     6. Accordions (FAQ) — height-animated, a11y-correct
+     ------------------------------------------------------------------ */
+  function initAccordions() {
+    $$('.faq').forEach(function (faq) {
+      var single = faq.hasAttribute('data-single');
+      $$('.faq__q', faq).forEach(function (btn) {
+        var panel = btn.nextElementSibling;
+        if (!panel) return;
+        var open = btn.getAttribute('aria-expanded') === 'true';
+        if (open) panel.style.height = 'auto';
+
+        btn.addEventListener('click', function () {
+          var isOpen = btn.getAttribute('aria-expanded') === 'true';
+          if (single && !isOpen) {
+            $$('.faq__q[aria-expanded="true"]', faq).forEach(function (o) {
+              o.setAttribute('aria-expanded', 'false');
+              var op = o.nextElementSibling;
+              op.style.height = op.scrollHeight + 'px';
+              requestAnimationFrame(function () { op.style.height = '0px'; });
+            });
+          }
+          btn.setAttribute('aria-expanded', String(!isOpen));
+          if (isOpen) {
+            panel.style.height = panel.scrollHeight + 'px';
+            requestAnimationFrame(function () { panel.style.height = '0px'; });
+          } else {
+            panel.style.height = panel.scrollHeight + 'px';
+            panel.addEventListener('transitionend', function te(e) {
+              if (e.propertyName !== 'height') return;
+              panel.style.height = 'auto';
+              panel.removeEventListener('transitionend', te);
+            });
+          }
+        });
+      });
     });
   }
 
-  /* ---------- Live Energy Dashboard ---------- */
-  const dash = $('#dash');
-  if (dash) {
-    const N = 44, line = $('#d-line'), area = $('#d-area');
-    const $homes = $('#d-homes'), $kwh = $('#d-kwh'), $co2 = $('#d-co2'), $out = $('#d-out');
-    let series = [], homes = 12480, kwh = 84230, co2 = 58.4;
-    for (let i = 0; i < N; i++) { const x = i / (N - 1); series.push(0.35 + 0.5 * Math.exp(-Math.pow((x - 0.55) * 2.4, 2))); }
-    const fmt = (n, d) => n.toLocaleString('en-NG', { minimumFractionDigits: d, maximumFractionDigits: d });
-    function draw() {
-      const pts = series.map((v, i) => [(i / (N - 1) * 100).toFixed(2), (40 - v * 33 - 3).toFixed(2)]);
-      const d = pts.map((p, i) => (i ? 'L' : 'M') + p[0] + ' ' + p[1]).join(' ');
-      line.setAttribute('d', d); area.setAttribute('d', d + ' L100 40 L0 40 Z');
-    }
-    function tick() {
-      series.shift();
-      let nv = series[series.length - 1] + (Math.random() - 0.5) * 0.13;
-      nv = Math.max(0.26, Math.min(0.95, nv)); series.push(nv); draw();
-      const out = nv * 92;
-      homes += Math.random() * 7; kwh += out * 1.4; co2 += out * 0.0008;
-      $out.textContent = fmt(out, 1) + ' MW';
-      $homes.textContent = fmt(Math.floor(homes), 0);
-      $kwh.textContent = fmt(Math.floor(kwh), 0);
-      $co2.textContent = fmt(co2, 1) + ' t';
-    }
-    draw(); tick();
-    let dt = setInterval(tick, 1600);
-    document.addEventListener('visibilitychange', () => { clearInterval(dt); if (!document.hidden) dt = setInterval(tick, 1600); });
+  /* ------------------------------------------------------------------
+     7. Filters (projects / case studies)
+     ------------------------------------------------------------------ */
+  function initFilters() {
+    $$('[data-filters]').forEach(function (bar) {
+      var targetSel = bar.getAttribute('data-filters');
+      var items = $$(targetSel + ' [data-cat]');
+      var empty = $(bar.getAttribute('data-empty') || '#noResults');
+
+      $$('.filter', bar).forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var cat = btn.getAttribute('data-filter');
+          $$('.filter', bar).forEach(function (b) { b.classList.toggle('is-active', b === btn); });
+          var shown = 0;
+          items.forEach(function (it) {
+            var match = cat === 'all' || it.getAttribute('data-cat') === cat;
+            it.hidden = !match;
+            if (match) {
+              shown++;
+              it.style.animation = 'none'; void it.offsetWidth;
+              it.style.animation = 'msgIn .5s var(--ease-out) both';
+            }
+          });
+          if (empty) empty.hidden = shown > 0;
+          if (history.replaceState) {
+            history.replaceState(null, '', cat === 'all' ? location.pathname : '?c=' + cat);
+          }
+        });
+      });
+
+      // deep link: ?c=residential
+      var pre = new URLSearchParams(location.search).get('c');
+      if (pre) {
+        var b = $('.filter[data-filter="' + CSS.escape(pre) + '"]', bar);
+        if (b) b.click();
+      }
+    });
   }
 
-  /* ---------- Testimonial rotator ---------- */
-  const trot = $('#trotator');
-  if (trot) {
-    const quotes = $$('.tquote', trot), dotsWrap = $('#trotDots');
-    let ti = 0, tt;
-    quotes.forEach((q, i) => { const b = document.createElement('button'); b.setAttribute('aria-label', 'Testimonial ' + (i + 1)); b.addEventListener('click', () => { tshow(i); rest(); }); dotsWrap.appendChild(b); });
-    const tdots = $$('button', dotsWrap);
-    function tshow(n) { ti = (n + quotes.length) % quotes.length; quotes.forEach((q, i) => q.classList.toggle('is-active', i === ti)); tdots.forEach((d, i) => d.classList.toggle('is-active', i === ti)); }
-    const tn = $('#trotNext'), tp = $('#trotPrev');
-    tn && tn.addEventListener('click', () => { tshow(ti + 1); rest(); });
-    tp && tp.addEventListener('click', () => { tshow(ti - 1); rest(); });
-    function start() { tt = setInterval(() => tshow(ti + 1), 5500); }
-    function rest() { clearInterval(tt); start(); }
-    trot.addEventListener('mouseenter', () => clearInterval(tt));
-    trot.addEventListener('mouseleave', start);
-    tshow(0); start();
+  /* ------------------------------------------------------------------
+     8. Tabs (pricing charts)
+     ------------------------------------------------------------------ */
+  function initTabs() {
+    $$('[data-tabs]').forEach(function (bar) {
+      var panels = $$(bar.getAttribute('data-tabs') + ' .tabpanel');
+      $$('.tab', bar).forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var id = btn.getAttribute('data-tab');
+          $$('.tab', bar).forEach(function (b) {
+            var on = b === btn;
+            b.classList.toggle('is-active', on);
+            b.setAttribute('aria-selected', String(on));
+          });
+          panels.forEach(function (p) { p.hidden = p.id !== id; });
+        });
+      });
+    });
   }
 
-  /* ---------- AI Assistant (scripted) ---------- */
-  const chat = $('#chat'); const openBtn = $('#chatOpen'); const body = $('#chatBody');
-  if (chat && openBtn) {
-    openBtn.addEventListener('click', () => chat.classList.toggle('open'));
-    const close = $('#chatClose'); close && close.addEventListener('click', () => chat.classList.remove('open'));
-    const add = (text, who) => {
-      const m = document.createElement('div');
-      m.className = 'msg ' + who; m.innerHTML = text;
-      body.appendChild(m); body.scrollTop = body.scrollHeight;
-    };
-    const KB = {
-      pricing: "Our systems start around <b>₦7M for a 7.5kVA</b> residential setup. With financing you pay just <b>30% upfront</b> and spread the rest over 3–12 months. Try our <a href='calculator.html'>Smart Calculator</a> for a tailored estimate.",
-      sizing: "Sizing depends on your appliances (ACs, fridges, pumps…). Our <a href='calculator.html'>Smart Solar Calculator</a> recommends the exact kVA, battery & panel count in seconds.",
-      financing: "Yes! Pay 30% upfront, get approval in 24–48 hours, and choose 3, 6, 9 or 12-month repayment at a low 4% flat rate. <a href='financing.html'>See how it works →</a>",
-      offices: "We have offices in <b>Abuja</b> (Jabi, Wuse 2, Gwarinpa), <b>Port Harcourt</b> (GRA Phase 2 & 3, City Mall) and <b>Lagos</b> (Lekki Phase 1, Circle Mall). <a href='contact.html'>Find the nearest →</a>",
-      warranty: "Warranties: Solar Panels up to <b>20 years</b>, Lithium Batteries <b>5 years</b>, Inverters <b>2 years</b>, plus <b>1 year free after-sales support</b>.",
-      book: "Great! Book a <b>free site inspection</b> on our <a href='contact.html'>Contact page</a> or chat on WhatsApp at <a href='https://wa.me/2349063315492'>0906 331 5492</a>.",
-      default: "I can help with pricing, system sizing, financing, warranties and office locations. What would you like to know?"
-    };
-    window.chatAsk = function (key, label) {
-      add(label || key, 'user');
-      setTimeout(() => add(KB[key] || KB.default, 'bot'), 450);
-    };
+  /* ------------------------------------------------------------------
+     9. Spotlight + tilt micro-interactions
+     ------------------------------------------------------------------ */
+  function initPointerFx() {
+    if (reduceMotion || window.matchMedia('(hover: none)').matches) return;
+
+    $$('.spotlight').forEach(function (el) {
+      el.addEventListener('pointermove', function (e) {
+        var r = el.getBoundingClientRect();
+        el.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        el.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      });
+    });
+
+    $$('.tilt').forEach(function (el) {
+      var max = parseFloat(el.getAttribute('data-tilt') || '7');
+      el.addEventListener('pointermove', function (e) {
+        var r = el.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - 0.5;
+        var py = (e.clientY - r.top) / r.height - 0.5;
+        el.style.transform = 'perspective(900px) rotateX(' + (-py * max) + 'deg) rotateY(' + (px * max) + 'deg)';
+      });
+      el.addEventListener('pointerleave', function () { el.style.transform = ''; });
+    });
   }
+
+  /* ------------------------------------------------------------------
+     10. Marquee — duplicate track for a seamless loop
+     ------------------------------------------------------------------ */
+  function initMarquee() {
+    $$('.marquee__track').forEach(function (track) {
+      if (track.dataset.cloned) return;
+      track.dataset.cloned = '1';
+      track.innerHTML += track.innerHTML;
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     11. WhatsApp chat widget — injected on every page
+     ------------------------------------------------------------------ */
+  var ICON = {
+    wa: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.65-2.05-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.53.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.6-.92-2.2-.24-.58-.48-.5-.67-.5h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.63.71.23 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35M12.05 21.8h-.02c-1.74 0-3.45-.47-4.94-1.35l-.35-.21-3.67.96.98-3.58-.23-.37a9.79 9.79 0 0 1-1.5-5.22c0-5.4 4.4-9.8 9.81-9.8 2.62 0 5.08 1.02 6.93 2.88a9.73 9.73 0 0 1 2.87 6.93c0 5.41-4.4 9.81-9.8 9.81M20.52 3.45A11.7 11.7 0 0 0 12.05 0C5.6 0 .35 5.25.34 11.7c0 2.06.54 4.08 1.56 5.86L.24 24l6.6-1.73a11.7 11.7 0 0 0 5.2 1.33h.01c6.45 0 11.7-5.25 11.7-11.7 0-3.13-1.21-6.07-3.43-8.28"/></svg>',
+    close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>',
+    arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+    check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>'
+  };
+
+  function initWhatsApp() {
+    if ($('.wa')) return;
+    var now = new Date();
+    var time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+
+    var quick = [
+      ['I want a price for my home', 'Hello Solar World, please send me pricing for a home solar and inverter system.'],
+      ['I want a price for my business', 'Hello Solar World, I need a solar system for my business. Please send pricing and options.'],
+      ['What size system do I need?', 'Hello Solar World, I would like help sizing a solar system for my property. Here are my appliances:'],
+      ['Tell me about financing', 'Hello Solar World, I would like to know more about your 30% deposit financing plan.']
+    ];
+
+    var el = document.createElement('div');
+    el.className = 'wa';
+    el.innerHTML =
+      '<div class="wa__panel" role="dialog" aria-label="Chat with Solar World on WhatsApp">' +
+        '<div class="wa__head">' +
+          '<span class="av">' + ICON.wa + '</span>' +
+          '<span><b>Solar World Electric</b><small><i></i>Typically replies in minutes</small></span>' +
+          '<button class="wa__close" type="button" aria-label="Close chat">' + ICON.close + '</button>' +
+        '</div>' +
+        '<div class="wa__body">' +
+          '<div class="wa__msg">👋 Hi there! Welcome to <b>Solar World Electric Technology Ltd.</b><span class="wa__time">' + time + '</span></div>' +
+          '<div class="wa__msg">We have powered over <b>60,000 homes, offices, hotels, businesses and communities</b> across Nigeria since 2015.<span class="wa__time">' + time + '</span></div>' +
+          '<div class="wa__msg">Tell us what you want to power and we will size it, price it and install it — usually within 48 hours of payment. How can we help?<span class="wa__time">' + time + '</span></div>' +
+        '</div>' +
+        '<div class="wa__quick"><p>Quick questions</p>' +
+          quick.map(function (q) {
+            return '<a href="' + wa(q[1]) + '" target="_blank" rel="noopener">' + q[0] + ICON.arrow + '</a>';
+          }).join('') +
+        '</div>' +
+        '<div class="wa__foot"><a class="btn btn--green" href="' + wa() + '" target="_blank" rel="noopener">' + ICON.wa + ' Start WhatsApp chat</a></div>' +
+      '</div>' +
+      '<button class="wa__fab" type="button" aria-expanded="false" aria-label="Chat with us on WhatsApp">' +
+        '<span class="wa__avatar">' + ICON.wa + '</span>' +
+        '<span class="wa__label"><b>Chat with us</b><span><i></i>We are online</span></span>' +
+        '<span class="wa__badge">1</span>' +
+      '</button>';
+
+    document.body.appendChild(el);
+
+    var fab = $('.wa__fab', el);
+    fab.addEventListener('click', function () {
+      var open = el.classList.toggle('is-open');
+      fab.setAttribute('aria-expanded', String(open));
+      if (open) store.set('swe_wa_seen', '1');
+    });
+    $('.wa__close', el).addEventListener('click', function () {
+      el.classList.remove('is-open');
+      fab.setAttribute('aria-expanded', 'false');
+    });
+    document.addEventListener('click', function (e) {
+      if (!el.contains(e.target)) { el.classList.remove('is-open'); fab.setAttribute('aria-expanded', 'false'); }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { el.classList.remove('is-open'); fab.setAttribute('aria-expanded', 'false'); }
+    });
+
+    if (store.get('swe_wa_seen')) $('.wa__badge', el).style.display = 'none';
+  }
+
+  /* ------------------------------------------------------------------
+     12. Lead-capture popup — fires 30s after landing, on every page
+     ------------------------------------------------------------------ */
+  function initLeadPopup() {
+    if ($('.leadpop')) return;
+
+    var snooze = parseInt(store.get('swe_lead_snooze') || '0', 10);
+    var done = store.get('swe_lead_done');
+    if (done || (snooze && Date.now() < snooze)) return;
+
+    var el = document.createElement('div');
+    el.className = 'leadpop';
+    el.setAttribute('role', 'dialog');
+    el.setAttribute('aria-modal', 'true');
+    el.setAttribute('aria-label', 'Get a free solar consultation');
+    el.hidden = false;
+    el.innerHTML =
+      '<div class="leadpop__scrim"></div>' +
+      '<div class="leadpop__box">' +
+        '<button class="leadpop__close" type="button" aria-label="Close">' + ICON.close + '</button>' +
+        '<aside class="leadpop__aside">' +
+          '<h3>Get a free solar plan for your property</h3>' +
+          '<p>Tell us what you want to power. Our engineers will size the system and send you a costed proposal — no obligation.</p>' +
+          '<ul>' +
+            '<li>' + ICON.check + '<span>Free load assessment &amp; system sizing</span></li>' +
+            '<li>' + ICON.check + '<span>Transparent pricing, no hidden charges</span></li>' +
+            '<li>' + ICON.check + '<span>Financing from 30% deposit</span></li>' +
+            '<li>' + ICON.check + '<span>Installation typically within 48 hours</span></li>' +
+          '</ul>' +
+        '</aside>' +
+        '<div class="leadpop__main">' +
+          '<form class="leadpop__form" novalidate>' +
+            '<h4>Tell us what you want to achieve</h4>' +
+            '<p class="small muted" style="margin-bottom:18px">Takes 30 seconds. We reply the same working day.</p>' +
+            '<div class="field-row">' +
+              '<div class="field"><label for="ld-name">Full name <span class="req">*</span></label><input id="ld-name" name="name" required autocomplete="name" placeholder="Your name"></div>' +
+              '<div class="field"><label for="ld-phone">Phone / WhatsApp <span class="req">*</span></label><input id="ld-phone" name="phone" required type="tel" autocomplete="tel" placeholder="0803 000 0000"></div>' +
+            '</div>' +
+            '<div class="field"><label for="ld-email">Email</label><input id="ld-email" name="email" type="email" autocomplete="email" placeholder="you@example.com"></div>' +
+            '<div class="field-row">' +
+              '<div class="field"><label for="ld-type">Property type</label><select id="ld-type" name="property">' +
+                '<option>Home / apartment</option><option>Duplex / estate</option><option>Office</option>' +
+                '<option>Hotel / short-stay</option><option>School</option><option>Hospital / clinic</option>' +
+                '<option>Shop / retail / restaurant</option><option>Factory / industrial</option>' +
+                '<option>Community / street lighting</option><option>Other</option>' +
+              '</select></div>' +
+              '<div class="field"><label for="ld-city">City / state</label><input id="ld-city" name="city" placeholder="e.g. Port Harcourt"></div>' +
+            '</div>' +
+            '<div class="field"><label for="ld-goal">What do you want to achieve? <span class="req">*</span></label>' +
+              '<textarea id="ld-goal" name="goal" required placeholder="e.g. I want to run 3 ACs, a fridge, freezer, TVs and lights 24/7 without a generator."></textarea></div>' +
+            '<div class="field"><label for="ld-budget">Budget range (optional)</label><select id="ld-budget" name="budget">' +
+              '<option value="">Not sure yet</option><option>Under ₦3m</option><option>₦3m – ₦6m</option>' +
+              '<option>₦6m – ₦12m</option><option>₦12m – ₦30m</option><option>Above ₦30m</option>' +
+            '</select></div>' +
+            '<button class="btn btn--primary btn--block btn--lg" type="submit">Send my details on WhatsApp' + ICON.arrow + '</button>' +
+            '<p class="form-note">By sending, your details open in WhatsApp addressed to our team on ' + CFG.phoneDisplay + '. We never share your information.</p>' +
+          '</form>' +
+          '<div class="leadpop__ok">' +
+            '<div class="tick">' + ICON.check + '</div>' +
+            '<h4>Thank you — your details are on the way.</h4>' +
+            '<p class="muted">WhatsApp should have opened with your message. If it did not, tap the button below and our team will pick it up straight away.</p>' +
+            '<a class="btn btn--green btn--lg" href="' + wa() + '" target="_blank" rel="noopener">' + ICON.wa + ' Open WhatsApp</a>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+
+    document.body.appendChild(el);
+
+    function close(snoozeIt) {
+      el.classList.remove('is-open');
+      document.body.style.overflow = '';
+      if (snoozeIt) store.set('swe_lead_snooze', String(Date.now() + CFG.popupCooldownDays * 864e5));
+    }
+    function open() {
+      if (document.body.classList.contains('leadpop-suppressed')) return;
+      el.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+      var f = $('#ld-name', el); if (f) setTimeout(function () { f.focus(); }, 420);
+    }
+
+    $('.leadpop__close', el).addEventListener('click', function () { close(true); });
+    $('.leadpop__scrim', el).addEventListener('click', function () { close(true); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && el.classList.contains('is-open')) close(true);
+    });
+
+    $('.leadpop__form', el).addEventListener('submit', function (e) {
+      e.preventDefault();
+      var f = e.target;
+      var bad = false;
+      ['name', 'phone', 'goal'].forEach(function (n) {
+        var input = f.elements[n];
+        if (!input.value.trim()) { input.style.borderColor = '#E5484D'; bad = true; }
+        else { input.style.borderColor = ''; }
+      });
+      if (bad) return;
+
+      var v = function (n) { return (f.elements[n] && f.elements[n].value.trim()) || '—'; };
+      var msg =
+        'Hello Solar World, I would like a solar consultation.\n\n' +
+        'Name: ' + v('name') + '\n' +
+        'Phone: ' + v('phone') + '\n' +
+        'Email: ' + v('email') + '\n' +
+        'Property: ' + v('property') + '\n' +
+        'Location: ' + v('city') + '\n' +
+        'Budget: ' + v('budget') + '\n\n' +
+        'What I want to achieve:\n' + v('goal') + '\n\n' +
+        '(Sent from solarworldelectric.com)';
+
+      window.open(wa(msg), '_blank', 'noopener');
+      store.set('swe_lead_done', '1');
+      el.classList.add('is-done');
+      document.dispatchEvent(new CustomEvent('swe:lead', { detail: { source: 'popup' } }));
+    });
+
+    // Fire after the configured delay, or on strong exit intent — whichever first.
+    var fired = false;
+    var t = setTimeout(function () { if (!fired) { fired = true; open(); } }, CFG.popupDelay);
+    document.addEventListener('mouseout', function (e) {
+      if (fired || e.clientY > 8 || e.relatedTarget) return;
+      if (performance.now() < 8000) return; // don't ambush an immediate bounce
+      fired = true; clearTimeout(t); open();
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     13. Any inline form that should route to WhatsApp
+     ------------------------------------------------------------------ */
+  function initWaForms() {
+    $$('form[data-wa-form]').forEach(function (f) {
+      f.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var lines = ['Hello Solar World, I am making an enquiry from your website.', ''];
+        $$('input, select, textarea', f).forEach(function (input) {
+          if (!input.name || input.type === 'submit') return;
+          var label = f.querySelector('label[for="' + input.id + '"]');
+          var key = (label ? label.textContent : input.name).replace('*', '').trim();
+          if (input.value.trim()) lines.push(key + ': ' + input.value.trim());
+        });
+        lines.push('', '(Sent from solarworldelectric.com)');
+        window.open(wa(lines.join('\n')), '_blank', 'noopener');
+        var ok = f.querySelector('[data-wa-ok]');
+        if (ok) { ok.hidden = false; f.reset(); }
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     14. Prefill WhatsApp links declared in markup
+     ------------------------------------------------------------------ */
+  function initWaLinks() {
+    $$('[data-wa]').forEach(function (a) {
+      a.href = wa(a.getAttribute('data-wa') || '');
+      a.target = '_blank';
+      a.rel = 'noopener';
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     Boot
+     ------------------------------------------------------------------ */
+  function boot() {
+    initNav();
+    initProgress();
+    initReveal();
+    initCounters();
+    initHero();
+    initAccordions();
+    initFilters();
+    initTabs();
+    initPointerFx();
+    initMarquee();
+    initWaLinks();
+    initWaForms();
+    initWhatsApp();
+    initLeadPopup();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+
+  window.SWE = { wa: wa, config: CFG };
 })();
