@@ -40,7 +40,7 @@ COMPANY = {
 
 STATS = [
     {"n": 60000, "suffix": "+", "label": "Homes, offices, hotels,<br>businesses &amp; communities powered"},
-    {"n": None,  "suffix": "",  "label": "Offices across Abuja,<br>Lagos &amp; Port Harcourt"},  # filled from OFFICES below
+    {"n": None,  "suffix": "",  "label": "Offices across Abuja,<br>Lagos &amp; Port Harcourt"},  # filled from OFFICE_COUNT below
     {"n": 10,    "suffix": "+", "label": "Years designing and installing<br>solar in Nigeria"},
     {"n": 48,    "suffix": "hr", "label": "Typical installation turnaround<br>after payment confirmation"},
 ]

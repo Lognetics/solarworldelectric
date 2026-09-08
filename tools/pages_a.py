@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Page bodies: home, about, solutions, products."""
 
-from data import COMPANY, STATS, CLIENTS, PACKAGES, CATEGORIES, OFFICES
+from data import COMPANY, STATS, CLIENTS, PACKAGES, CATEGORIES, OFFICES, OFFICE_COUNT
 from content import WHY_US, PROCESS, FAQ_GROUPS, WA_REVIEWS, TEAM
 from case_studies import CASES
 from layout import ico, page_head, cta_band, naira, SITE
@@ -293,7 +293,7 @@ def home():
           <span class="ticker__v"><span data-count="60000" data-suf="+">0</span></span></div>
         <div class="ticker__row"><span class="ticker__dot"></span>
           <span class="ticker__l">Offices across three cities</span>
-          <span class="ticker__v"><span data-count="11">0</span></span></div>
+          <span class="ticker__v"><span data-count="%(offices)s">0</span></span></div>
         <div class="ticker__row"><span class="ticker__dot"></span>
           <span class="ticker__l">Typical install after payment</span>
           <span class="ticker__v"><span data-count="48" data-suf="hr">0</span></span></div>
@@ -360,7 +360,7 @@ def home():
       <div class="kpis" style="margin-top:30px">
         <div><div class="kpi__n" style="color:var(--gold)"><span data-count="60000" data-suf="+">0</span></div>
              <div class="kpi__l" style="color:var(--d-fg-muted)">Homes, offices, hotels, businesses and communities powered</div></div>
-        <div><div class="kpi__n" style="color:var(--gold)"><span data-count="11">0</span></div>
+        <div><div class="kpi__n" style="color:var(--gold)"><span data-count="%(offices)s">0</span></div>
              <div class="kpi__l" style="color:var(--d-fg-muted)">Offices across three cities, installing nationwide</div></div>
         <div><div class="kpi__n" style="color:var(--gold)"><span data-count="25" data-suf="yr">0</span></div>
              <div class="kpi__l" style="color:var(--d-fg-muted)">Panel warranty on our Deye and Solis lines</div></div>
@@ -547,6 +547,7 @@ def home():
         "name": COMPANY["name"], "spark": ico("spark"),
         "stats": stats_band(), "why": why, "globe": globe_block(), "segs": segs,
         "orbit": orbit_globe(), "sizer": sizer_block(), "versus": versus_block(),
+        "offices": OFFICE_COUNT,
         "pkgs": pkgs, "arrow": ico("arrow"), "cases": cases, "reviews": reviews, "steps": steps,
         "faq": faq_block(FAQ_GROUPS, single=True, limit=7),
         "faqcount": sum(len(g["items"]) for g in FAQ_GROUPS),

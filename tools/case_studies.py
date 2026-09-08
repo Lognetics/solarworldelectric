@@ -274,8 +274,8 @@ CASES = [
         "cat": "residential", "type": "Homeowner", "verified": False,
         "title": "11 kW ALP Solar Hybrid Installation for a Homeowner",
         "location": "Port Harcourt, Rivers State", "client": None,
-        "img": "install-room-stack1.jpg",
-        "alt": "11kW ALP solar hybrid inverter installation with two 16kWh lithium batteries for a Nigerian home",
+        "img": "install-alp-11kw.jpg",
+        "alt": "11kW AlpSolar hybrid inverter with two BICODI lithium batteries installed by Solar World Electric for a homeowner in Port Harcourt",
         "specs": [("System", "11 kW / 48 V ALP hybrid"), ("Battery storage", "2 × 16 kWh lithium"),
                   ("Solar panels", "24 × 620 W"), ("Property", "Detached home")],
         "excerpt": ("A 24-panel array paired with 32 kWh of storage, specified for a homeowner who wanted "
