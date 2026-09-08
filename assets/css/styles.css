@@ -1558,9 +1558,11 @@ h4{font-size:var(--t-h4);letter-spacing:-.015em}
 /* ---------------------------------------------------------------
    26d. TEAM GRID
    --------------------------------------------------------------- */
-.team{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:clamp(16px,2vw,24px)}
+.team{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+  gap:clamp(16px,2vw,24px);grid-auto-rows:1fr}
 .team__card{
-  position:relative;background:var(--paper);border:1px solid var(--hair);
+  position:relative;display:flex;flex-direction:column;height:100%;
+  background:var(--paper);border:1px solid var(--hair);
   border-radius:var(--r-lg);overflow:hidden;text-align:center;
   transition:transform .45s var(--ease-out),box-shadow .45s var(--ease-out),border-color .3s;
 }
@@ -1585,13 +1587,16 @@ h4{font-size:var(--t-h4);letter-spacing:-.015em}
   transform:scaleX(0);transform-origin:center;transition:transform .5s var(--ease-out);
 }
 .team__card:hover .team__ring{transform:scaleX(1)}
-.team__body{padding:16px 14px 18px}
+.team__body{
+  padding:16px 14px 18px;flex:1 1 auto;
+  display:flex;flex-direction:column;justify-content:center;
+  min-height:84px;
+}
 .team__name{
   font-family:var(--f-display);font-weight:700;font-size:1rem;letter-spacing:-.02em;
   line-height:1.25;color:var(--fg);margin:0 0 5px;
 }
 .team__role{font-size:.8rem;color:var(--fg-muted);line-height:1.45;margin:0}
-.team__lead .team__photo{aspect-ratio:4/5}
 
 /* ---------------------------------------------------------------
    26e. INTERACTIVE MODULES

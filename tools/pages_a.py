@@ -565,14 +565,14 @@ def home():
 # ---------------------------------------------------------------------------
 def about():
     team = "".join(
-        '<article class="team__card%s" data-reveal>'
+        '<article class="team__card" data-reveal>'
         '<div class="team__photo">'
         '<img src="assets/img/%s" alt="%s, %s at Solar World Electric Technology Ltd" loading="lazy">'
         '<span class="team__ring"></span></div>'
         '<div class="team__body"><h3 class="team__name">%s</h3><p class="team__role">%s</p></div>'
         '</article>'
-        % (" team__lead" if i < 3 else "", img, name, role.replace("&amp;", "and"), name, role)
-        for i, (name, role, img) in enumerate(TEAM)
+        % (img, name, role.replace("&amp;", "and"), name, role)
+        for name, role, img in TEAM
     )
     values = "".join(
         '<article class="card card--glass" data-reveal><div class="card__ico">%s</div><h3>%s</h3><p>%s</p></article>'
