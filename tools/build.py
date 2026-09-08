@@ -147,7 +147,7 @@ POSTS = [
         "excerpt": "Real published prices for every system size, what drives the number up or down, and how to "
                    "work out where your own building lands.",
         "img": "pkg/pkg-25kw.jpg",
-        "alt": "Solar system pricing in Nigeria — a high voltage lithium battery rack and inverter installation",
+        "alt": "Solar system pricing in Nigeria, a high voltage lithium battery rack and inverter installation",
         "cat": "Pricing",
         "body": [
             ("The short answer",
@@ -161,8 +161,8 @@ POSTS = [
               "<b>solar package</b>. The inverter package is the inverter, the lithium battery, cables, "
               "accessories and installation. The solar package is the panel array, its cables, accessories and "
               "installation.",
-              "This exists for a practical reason: many customers buy the inverter package first — which "
-              "already ends the generator dependence for evenings and outages — and add the panel array a few "
+              "This exists for a practical reason: many customers buy the inverter package first, which "
+              "already ends the generator dependence for evenings and outages, and add the panel array a few "
               "months later. A 5 kVA inverter package is ₦2,820,000; the matching four-panel solar package is "
               "₦1,120,000."]),
             ("What actually drives your price",
@@ -179,7 +179,7 @@ POSTS = [
               "</ul>"]),
             ("Is it cheaper than a generator?",
              ["Over the life of the system, comfortably. A generator has a lower purchase price and an unlimited "
-              "running cost. A solar system is the reverse — concentrated upfront, then effectively free.",
+              "running cost. A solar system is the reverse, concentrated upfront, then effectively free.",
               "Our panels carry a 25-year warranty and our lithium batteries a 10-year warranty. A generator "
               "bought on the same day would typically have been replaced twice in that period, with fuel and "
               "servicing throughout."]),
@@ -197,36 +197,36 @@ POSTS = [
         "excerpt": "Inverter size, battery capacity and panel count are three different questions. Getting one "
                    "right and the others wrong is why systems fail at 3 a.m.",
         "img": "pkg/pkg-16kw.jpg",
-        "alt": "Sizing a solar system for a Nigerian home — 16kW inverter with lithium battery storage",
+        "alt": "Sizing a solar system for a Nigerian home, 16kW inverter with lithium battery storage",
         "cat": "Sizing",
         "body": [
             ("Three numbers, not one",
              ["People ask &lsquo;what size solar do I need?&rsquo; as though it is a single number. It is three:",
               "<ul>"
-              "<li><b>Inverter size (kW)</b> — set by your peak simultaneous demand, dominated by air-conditioner "
+              "<li><b>Inverter size (kW)</b>: set by your peak simultaneous demand, dominated by air-conditioner "
               "start-up surge.</li>"
-              "<li><b>Battery capacity (kWh)</b> — set by how much energy you use while the sun is down.</li>"
-              "<li><b>Panel count (kWp)</b> — set by how fast you need that battery refilled the next day.</li>"
+              "<li><b>Battery capacity (kWh)</b>: set by how much energy you use while the sun is down.</li>"
+              "<li><b>Panel count (kWp)</b>: set by how fast you need that battery refilled the next day.</li>"
               "</ul>",
               "An oversized inverter with a small battery empties before morning. A large battery with too few "
               "panels never refills. Both are common, and both are avoidable."]),
             ("A practical guide by property",
              ["<ul>"
-              "<li><b>3–5 kVA</b> — lights, fans, TVs, one fridge/freezer, sometimes one 1 HP AC</li>"
-              "<li><b>8–10 kW</b> — a full family home with 2 fridges, 2 freezers and two to three 1.5 HP ACs</li>"
-              "<li><b>12–16 kW</b> — a large home or duplex with three to five 1.5 HP ACs and a pumping machine</li>"
-              "<li><b>20–30 kW</b> — an estate residence, office or small commercial building, often three-phase</li>"
-              "<li><b>50 kW+</b> — hotels, schools, hospitals, warehouses and industrial facilities</li>"
+              "<li><b>3–5 kVA</b>: lights, fans, TVs, one fridge/freezer, sometimes one 1 HP AC</li>"
+              "<li><b>8–10 kW</b>: a full family home with 2 fridges, 2 freezers and two to three 1.5 HP ACs</li>"
+              "<li><b>12–16 kW</b>: a large home or duplex with three to five 1.5 HP ACs and a pumping machine</li>"
+              "<li><b>20–30 kW</b>: an estate residence, office or small commercial building, often three-phase</li>"
+              "<li><b>50 kW+</b>: hotels, schools, hospitals, warehouses and industrial facilities</li>"
               "</ul>"]),
             ("Why air conditioning decides everything",
              ["A 1.5 HP inverter AC draws roughly 1.1–1.3 kW while running. Three of them is close to 4 kW of "
               "continuous demand before you have switched on a single light.",
               "This is why we ask for the horsepower of each unit rather than just how many rooms you have. "
-              "A 3 HP unit and a 1 HP unit place completely different demands on the same system — as we found "
+              "A 3 HP unit and a 1 HP unit place completely different demands on the same system, as we found "
               "on a <a href=\"projects.html#cs-16kw-residential-airbnb\">two-bedroom Airbnb</a> running two "
               "1.5 HP units and one 3 HP unit."]),
             ("Get it assessed rather than guessed",
-             ["Our load assessment is free, and it is genuinely diagnostic — our engineers regularly tell "
+             ["Our load assessment is free, and it is genuinely diagnostic; our engineers regularly tell "
               "customers they need less than they were about to buy.",
               "Send your appliance list on WhatsApp, or start with the <a href=\"calculator.html\">calculator</a>."]),
         ],
@@ -234,7 +234,7 @@ POSTS = [
     {
         "slug": "solar-myths-in-nigeria",
         "title": "Five myths about solar energy in Nigeria, answered",
-        "excerpt": "Too expensive, only works in sunshine, wrecks your roof, needs constant maintenance — "
+        "excerpt": "Too expensive, only works in sunshine, wrecks your roof, needs constant maintenance, "
                    "the beliefs that keep Nigerians on diesel, examined one at a time.",
         "img": "project-rooftop-garden.jpg",
         "alt": "Solar panels installed on a Nigerian rooftop, addressing common myths about solar energy",
@@ -244,7 +244,7 @@ POSTS = [
              ["Solar energy is becoming increasingly affordable, with financing options and payment plans "
               "available to suit different budgets. Our entry-level 3 kVA inverter package starts at ₦1,490,000, "
               "and with a 30% deposit you can start at ₦447,000 and spread the balance over up to 12 months.",
-              "It is an investment that pays off over time by reducing — and eventually removing — your "
+              "It is an investment that pays off over time by reducing, and eventually removing, your "
               "electricity and fuel costs."]),
             ("Myth 2: Solar panels only work in sunny climates",
              ["Solar panels can still generate power on cloudy days. While sunlight is essential, modern "
@@ -262,7 +262,7 @@ POSTS = [
              ["Solar panels do not damage roofs when installed properly. In fact they can protect your roof by "
               "shielding it from rain, sun and debris.",
               "Where roof condition, orientation or available area is unsuitable, we install a ground-mounted "
-              "array instead — as on a recent Port Harcourt residential compound."]),
+              "array instead, as on a recent Port Harcourt residential compound."]),
             ("Myth 5: You have to get rid of your generator",
              ["You do not. A hybrid installation integrates with your existing distribution board and your "
               "generator can stay exactly where it is as a backup.",
@@ -299,12 +299,12 @@ def blog_index():
 %s
 """ % (layout.page_head(
         "Solar knowledge centre",
-        "Practical guides on solar system cost, sizing, equipment and financing in Nigeria — written by the "
+        "Practical guides on solar system cost, sizing, equipment and financing in Nigeria, written by the "
         "engineers who install them.",
         [("Home", "index.html"), ("Knowledge centre", None)], bg="project-rooftop-tilt.jpg"),
        cards,
        layout.cta_band("Have a question we have not covered?",
-                       "Send it to us on WhatsApp and we will answer it — and probably turn it into the next "
+                       "Send it to us on WhatsApp and we will answer it, and probably turn it into the next "
                        "article."))
 
 
@@ -426,7 +426,7 @@ def llms_txt():
     add("## Key facts")
     add("- Founded: %s. RC number: %s." % (COMPANY["founded"], COMPANY["rc"]))
     add("- Customers powered: over 60,000 homes, offices, hotels, businesses and communities.")
-    add("- Offices: 11 — Port Harcourt (3), Abuja (6), Lagos (2). Installs nationwide.")
+    add("- Offices: 11. Port Harcourt (3), Abuja (6), Lagos (2). Installs nationwide.")
     add("- System range: 3 kVA residential to 125 kW industrial.")
     add("- Inverter brands supplied: Deye, Solis, ALP Solar, Bauman Energy, BICODI, SRNE.")
     add("- Panels: 620 W and 460 W monocrystalline.")
@@ -448,11 +448,11 @@ def llms_txt():
                         ("Standard systems", PRICE_STANDARD)]:
         add("### %s" % label)
         for cap, inc, app, price in rows:
-            add("- **%s** — %s. Includes: %s. Rated for: %s." % (cap, naira(price), inc, app))
+            add("- **%s**: %s. Includes: %s. Rated for: %s." % (cap, naira(price), inc, app))
         add("")
     add("## Complete packages")
     for p in PACKAGES:
-        add("- **%s** (%s) — %s. %s. Runs: %s."
+        add("- **%s** (%s): %s. %s. Runs: %s."
             % (strip_tags(p["title"]), p["kw"], naira(p["price"]),
                "; ".join(strip_tags(s) for s in p["specs"]), strip_tags(p["loads"])))
     add("")
@@ -461,7 +461,7 @@ def llms_txt():
         add("### %s" % strip_tags(cat["label"]))
         add("%s Types served: %s." % (strip_tags(cat["blurb"]), ", ".join(cat["types"])))
         for c in cases_by_cat.get(cat["key"], []):
-            add("- **%s** — %s Specification: %s."
+            add("- **%s**: %s Specification: %s."
                 % (strip_tags(c["title"]), strip_tags(c["excerpt"]),
                    "; ".join("%s: %s" % (k, v) for k, v in c["specs"])))
         add("")
@@ -498,7 +498,7 @@ def main():
 
     write("index.html", page(
         slug="index.html",
-        title="Solar World Electric — Solar, Inverter &amp; Battery Systems in Nigeria",
+        title="Solar World Electric: Solar, Inverter &amp; Battery Systems in Nigeria",
         description="Nigeria's solar energy company since 2015. Complete solar, hybrid inverter and lithium "
                     "battery systems for homes, offices, hotels, factories and communities. 60,000+ powered, "
                     "11 offices, prices published openly, financing from 30%.",
@@ -508,7 +508,7 @@ def main():
 
     write("about.html", page(
         slug="about.html",
-        title="About Solar World Electric Technology Ltd. — Nigeria's Solar Company",
+        title="About Solar World Electric Technology Ltd.: Nigeria's Solar Company",
         description="Founded in 2015, Solar World Electric Technology Ltd (RC 1684774) designs, installs and "
                     "maintains solar power systems across Nigeria. Meet our team, vision and mission.",
         body=A.about(),
@@ -518,21 +518,21 @@ def main():
         slug="solutions.html",
         title="Solar Solutions for Homes, Businesses &amp; Industry in Nigeria",
         description="Residential (5–20 kVA), commercial (20–80 kW), industrial (80–125 kW+) and infrastructure "
-                    "solar solutions — street lighting, water pumping and EV charging. Sized to your load.",
+                    "solar solutions, street lighting, water pumping and EV charging. Sized to your load.",
         body=A.solutions(),
         schema=[breadcrumbs([("Home", ""), ("Solutions", "solutions.html")])] + service_schema()))
 
     write("products.html", page(
         slug="products.html",
-        title="Solar Panels, Hybrid Inverters &amp; Lithium Batteries — Nigeria",
+        title="Solar Panels, Hybrid Inverters &amp; Lithium Batteries in Nigeria",
         description="Deye, Solis and ALP Solar hybrid inverters, 620W monocrystalline panels, lithium battery "
-                    "storage, MPPT controllers, solar street lights and pumps — supplied and installed nationwide.",
+                    "storage, MPPT controllers, solar street lights and pumps, supplied and installed nationwide.",
         body=A.products(),
         schema=[breadcrumbs([("Home", ""), ("Products", "products.html")])] + product_schema()))
 
     write("pricing.html", page(
         slug="pricing.html",
-        title="Solar System Prices in Nigeria — Full Price Charts | Solar World",
+        title="Solar System Prices in Nigeria: Full Price Charts | Solar World",
         description="Published Deye, Solis and standard solar price charts. From ₦1,490,000 for a 3 kVA "
                     "package to ₦147,190,950 for a 125 kW industrial system. Installation included, "
                     "financing from 30% deposit.",
@@ -543,7 +543,7 @@ def main():
     write("projects.html", page(
         slug="projects.html",
         title="Solar Installation Projects &amp; Case Studies in Nigeria | Solar World",
-        description="Residential, commercial, industrial and infrastructure solar case studies — system "
+        description="Residential, commercial, industrial and infrastructure solar case studies, system "
                     "specifications, the loads they carry and what each customer achieved. 60,000+ powered.",
         body=B.projects(), og_image="assets/img/project-ground-array-1.jpg",
         schema=[breadcrumbs([("Home", ""), ("Projects", "projects.html")])] + case_schema()))
@@ -551,14 +551,14 @@ def main():
     write("reviews.html", page(
         slug="reviews.html",
         title="Customer Reviews &amp; Testimonials | Solar World Electric Nigeria",
-        description="Unedited WhatsApp messages from Solar World Electric customers across Nigeria — "
+        description="Unedited WhatsApp messages from Solar World Electric customers across Nigeria, "
                     "homeowners, offices and businesses, weeks and years after installation.",
         body=B.reviews(), og_image="assets/img/install-room-stack1.jpg",
         schema=[breadcrumbs([("Home", ""), ("Reviews", "reviews.html")]), review_schema()]))
 
     write("faq.html", page(
         slug="faq.html",
-        title="Solar Energy FAQ Nigeria — Cost, Sizing, Warranty &amp; Financing",
+        title="Solar Energy FAQ Nigeria: Cost, Sizing, Warranty &amp; Financing",
         description="Straight answers on solar system cost in Nigeria, what size you need, what it can run, "
                     "battery life, warranties, installation time and financing.",
         body=B.faq(),
@@ -566,7 +566,7 @@ def main():
 
     write("financing.html", page(
         slug="financing.html",
-        title="Solar Financing in Nigeria — 30% Deposit Payment Plan | Solar World",
+        title="Solar Financing in Nigeria: 30% Deposit Payment Plan | Solar World",
         description="Pay 30% upfront and spread the balance over 3, 6, 9 or 12 months. Fixed 4% monthly "
                     "interest, no bank queues, financing disbursed in 24–48 hours.",
         body=B.financing(), og_image="assets/img/install-room-dual.jpg",
@@ -575,7 +575,7 @@ def main():
 
     write("calculator.html", page(
         slug="calculator.html",
-        title="Solar Calculator — What Size Solar System Do I Need? | Solar World",
+        title="Solar Calculator: What Size Solar System Do I Need? | Solar World",
         description="Select your appliances and get an estimate of the inverter size, battery capacity and "
                     "panel count your Nigerian home or business needs.",
         body=B.calculator(),
@@ -584,7 +584,7 @@ def main():
 
     write("contact.html", page(
         slug="contact.html",
-        title="Contact Solar World Electric — 9 Offices in Abuja, Lagos &amp; Port Harcourt",
+        title="Contact Solar World Electric: 11 Offices in Abuja, Lagos &amp; Port Harcourt",
         description="Call or WhatsApp +234 906 331 5492, email solarworldes@gmail.com, or visit any of our "
                     "eleven offices across Abuja, Lagos and Port Harcourt for a free solar consultation.",
         body=B.contact(), og_image="assets/img/store-front-2.jpg",
@@ -592,7 +592,7 @@ def main():
 
     write("blog.html", page(
         slug="blog.html",
-        title="Solar Knowledge Centre — Guides on Solar in Nigeria | Solar World",
+        title="Solar Knowledge Centre: Guides on Solar in Nigeria | Solar World",
         description="Practical guides on solar system cost, sizing, equipment and financing in Nigeria, "
                     "written by the engineers who install them.",
         body=blog_index(),

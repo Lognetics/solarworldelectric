@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Solar World Electric — project case studies.
+Solar World Electric, project case studies.
 
 INTEGRITY NOTE
 --------------
@@ -10,7 +10,7 @@ INTEGRITY NOTE
                      photographs), but the CLIENT NAME, exact LOCATION and any
                      CUSTOMER QUOTE still need to be confirmed before the page
                      goes live. Those fields are left as `client: None` /
-                     `quote: None` on purpose — do not invent them.
+                     `quote: None` on purpose. Do not invent them.
 
 Fill in `client`, `location` and `quote` as the business confirms each project,
 then flip `verified` to True and re-run `python3 tools/build.py`.
@@ -39,7 +39,7 @@ CASES = [
             ("Property", "Two-bedroom apartment"),
         ],
         "excerpt": ("An Airbnb operator needed power that keeps guests comfortable through every "
-                    "outage — without generator noise. We sized a 16 kW system around the property's "
+                    "outage, without generator noise. We sized a 16 kW system around the property's "
                     "three air conditioners and everyday loads."),
         "loads": ("3 air conditioners (two 1.5 HP, one 3 HP), refrigeration, television, lighting "
                   "and other household appliances"),
@@ -57,7 +57,7 @@ CASES = [
               "Rather than purchasing an inverter based on its advertised capacity alone, the customer "
               "approached Solar World to determine what system would properly support the apartment's "
               "intended loads.",
-              "The property had three air conditioners — two 1.5 HP AC units and one 3 HP AC unit. "
+              "The property had three air conditioners, two 1.5 HP AC units and one 3 HP AC unit. "
               "It also needed to accommodate everyday loads such as lighting, television, refrigeration, "
               "microwave, washing machine and other household appliances."]),
             ("Our Recommendation",
@@ -88,7 +88,7 @@ CASES = [
                   "noise and inconvenience of a generator. Since we installed the system, it has performed "
                   "exactly as we expected and is very easy to operate. I'm even looking at getting extra "
                   "panels and another battery for more backup."),
-        "quote_status": "Suggested testimonial direction — to be replaced with the customer's actual wording.",
+        "quote_status": "Suggested testimonial direction, to be replaced with the customer's actual wording.",
         "keywords": ["solar system for Airbnb", "solar system for home", "residential solar installation",
                      "solar inverter installation for home", "solar battery system",
                      "lithium battery solar system", "solar installation in Nigeria"],
@@ -110,8 +110,8 @@ CASES = [
              ["Like most family homes in Port Harcourt, this household was running two power bills at once: "
               "the grid bill for the hours supply was available, and diesel or petrol for the generator that "
               "covered everything else. The generator also meant noise every evening and maintenance every month.",
-              "The family wanted a single system that would carry the whole house — not just a few sockets and "
-              "lights — so that a power outage would stop being an event."]),
+              "The family wanted a single system that would carry the whole house, not just a few sockets and "
+              "lights, so that a power outage would stop being an event."]),
             ("Our Recommendation",
              ["We carried out a load assessment on the property and specified an 8 kW / 48 V hybrid system with "
               "a single 12 kWh lithium battery and eight 620 W monocrystalline panels.",
@@ -148,7 +148,7 @@ CASES = [
               "day and night, a pumping machine cycles on demand, and three air conditioners can dominate the "
               "evening profile.",
               "The owner had been quoted on inverter capacity alone. What actually decides whether a duplex gets "
-              "through the night is battery capacity — and that had not been sized against the real load."]),
+              "through the night is battery capacity, and that had not been sized against the real load."]),
             ("Our Recommendation",
              ["We specified a 10 kW / 48 V hybrid inverter with a single 16 kWh lithium battery and eight 620 W panels. "
               "The larger battery is the deliberate choice here: it holds the refrigeration and overnight base load "
@@ -175,14 +175,14 @@ CASES = [
         "alt": "12kW 15kVA home solar and inverter installation in Lekki Lagos with two 16kWh lithium batteries",
         "specs": [("System", "12 kW / 48 V hybrid"), ("Battery storage", "2 × 16 kWh lithium"),
                   ("Solar panels", "16 × 620 W"), ("Property", "Family home")],
-        "excerpt": ("Sixteen panels and 32 kWh of lithium storage — enough to carry a large Lagos household "
+        "excerpt": ("Sixteen panels and 32 kWh of lithium storage, enough to carry a large Lagos household "
                     "through consecutive low-sun days without touching a generator."),
         "loads": "70 bulbs, 10 fans, 3 fridges and freezers, washing machine, three 1.5 HP air conditioners, pumping machine, microwave and electric blender",
         "sections": [
             ("The Challenge",
              ["A larger household means more of everything: more lighting points, more refrigeration, more "
               "simultaneous air conditioning. It also means less tolerance for a system that runs out at 3 a.m.",
-              "The family wanted headroom — a system that would still perform on a cloudy week, and one they "
+              "The family wanted headroom, a system that would still perform on a cloudy week, and one they "
               "would not outgrow in two years."]),
             ("Our Recommendation",
              ["A 12 kW / 48 V hybrid inverter with two 16 kWh lithium batteries (32 kWh total) and a 16-panel array "
@@ -244,14 +244,14 @@ CASES = [
         "specs": [("System", "20 kW / 48 V three-phase"), ("Battery storage", "3 × 16 kWh lithium"),
                   ("Solar panels", "24 × 620 W"), ("Property", "Estate residence")],
         "excerpt": ("Six air conditioners, five fridges and freezers and a borehole pump on a three-phase "
-                    "supply — sized so nothing has to be switched off to run anything else."),
+                    "supply, sized so nothing has to be switched off to run anything else."),
         "loads": "80 bulbs, 10 fans, 5 fridges and freezers, washing machine, six 1.5 HP air conditioners, pumping machine, microwave and electric blender",
         "sections": [
             ("The Challenge",
              ["Estate residences are usually wired three-phase, and a single-phase inverter cannot serve them "
               "properly. Loads are also distributed across the phases, so the system has to balance rather than "
               "simply total them.",
-              "This property runs six 1.5 HP air conditioners plus a borehole pump — a combination that punishes "
+              "This property runs six 1.5 HP air conditioners plus a borehole pump, a combination that punishes "
               "an undersized inverter every time the pump and an AC compressor start together."]),
             ("Our Recommendation",
              ["A 20 kW / 48 V three-phase hybrid inverter with 48 kWh of lithium storage across three batteries and "
@@ -278,7 +278,7 @@ CASES = [
         "alt": "11kW ALP solar hybrid inverter installation with two 16kWh lithium batteries for a Nigerian home",
         "specs": [("System", "11 kW / 48 V ALP hybrid"), ("Battery storage", "2 × 16 kWh lithium"),
                   ("Solar panels", "24 × 620 W"), ("Property", "Detached home")],
-        "excerpt": ("A 24-panel array paired with 32 kWh of storage — specified for a homeowner who wanted "
+        "excerpt": ("A 24-panel array paired with 32 kWh of storage, specified for a homeowner who wanted "
                     "generation, not just backup."),
         "loads": "50 bulbs, 10 fans, 6 television sets, 2 fridges, 2 freezers, washing machine, three 1.5 HP air conditioners, pumping machine, microwave and electric blender",
         "sections": [
@@ -288,7 +288,7 @@ CASES = [
               "battery so the system would recharge fully even on an average day."]),
             ("Our Recommendation",
              ["An 11 kW / 48 V ALP solar hybrid inverter, two 16 kWh lithium batteries and a 24-panel array totalling "
-              "14.88 kWp — deliberately generous generation for the storage behind it."]),
+              "14.88 kWp, deliberately generous generation for the storage behind it."]),
             ("What We Installed",
              ["11 kW / 48 V ALP solar hybrid inverter", "2 × 16 kWh lithium batteries",
               "24 × 620 W monocrystalline solar panels", "Cables, accessories and complete installation"], "list"),
@@ -318,7 +318,7 @@ CASES = [
               "load is high, and the owner needed a system that would never be the reason something had to be "
               "switched off."]),
             ("Our Recommendation",
-             ["A 30 kVA / 48 V hybrid system with four 17.6 kWh lithium batteries — 70.4 kWh of usable storage — and "
+             ["A 30 kVA / 48 V hybrid system with four 17.6 kWh lithium batteries, 70.4 kWh of usable storage, and "
               "a 48-panel array rated at 29.76 kWp. At this scale the array is ground-mounted where roof space or "
               "orientation would otherwise limit output."]),
             ("What We Installed",
@@ -345,14 +345,14 @@ CASES = [
         "alt": "20kW solar inverter installation for offices in Abuja with three-phase hybrid inverter",
         "specs": [("System", "20 kW / 48 V three-phase"), ("Battery storage", "3 × 16 kWh lithium"),
                   ("Solar panels", "24 × 620 W"), ("Property", "Commercial office")],
-        "excerpt": ("Workstations, servers, six air conditioners and a full lighting load — powered through "
+        "excerpt": ("Workstations, servers, six air conditioners and a full lighting load, powered through "
                     "the working day without a generator start."),
         "loads": "80 lighting points, workstations and office equipment, 5 fridges and freezers, six 1.5 HP air conditioners, pumping machine and microwave",
         "sections": [
             ("The Challenge",
              ["An office's power problem is different from a home's. The load is concentrated into eight or nine "
               "hours, it peaks with air conditioning in the afternoon, and an outage does not merely inconvenience "
-              "people — it stops billable work.",
+              "people, it stops billable work.",
               "Generator switchovers also mean momentary drops that reset equipment and irritate staff and visitors."]),
             ("Our Recommendation",
              ["A 20 kW / 48 V three-phase hybrid system with 48 kWh of lithium storage and a 24-panel array. "
@@ -381,12 +381,12 @@ CASES = [
         "alt": "50kW solar and inverter installation for a hotel in Nigeria with BOS-B lithium battery bank",
         "specs": [("System", "50 kW / 48 V"), ("Battery storage", "5 × 14.3 kWh"),
                   ("Solar panels", "64 × 620 W"), ("Property", "Hotel")],
-        "excerpt": ("Guest rooms, kitchen refrigeration, lifts and an EV charger on one system — because in "
+        "excerpt": ("Guest rooms, kitchen refrigeration, lifts and an EV charger on one system, because in "
                     "hospitality, a power cut is a review."),
         "loads": "120 lighting points, 20 TVs, 4 fridges, 4 freezers, pumping machine, EV charger and five 2.5 HP air conditioners",
         "sections": [
             ("The Challenge",
-             ["In hospitality, power reliability is not a facilities issue — it is a reputation issue. Guests notice "
+             ["In hospitality, power reliability is not a facilities issue; it is a reputation issue. Guests notice "
               "the moment air conditioning stops, and they write about it.",
               "Hotels also carry an unusual load shape: refrigeration and corridor lighting run continuously, room "
               "air conditioning spikes at night, and kitchen equipment peaks at service times."]),
@@ -417,13 +417,13 @@ CASES = [
         "alt": "25kW high voltage solar installation for a school in Nigeria with stackable lithium battery rack",
         "specs": [("System", "25 kW / 48 V"), ("Battery storage", "7 × 5.12 kWh"),
                   ("Solar panels", "28 × 620 W"), ("Property", "School campus")],
-        "excerpt": ("Classrooms, ICT labs, staff offices and an EV charge point — a campus load that maps "
+        "excerpt": ("Classrooms, ICT labs, staff offices and an EV charge point, a campus load that maps "
                     "almost perfectly onto the solar day."),
         "loads": "90 lighting points, 8 TVs, ICT equipment, 2 fridges, 2 freezers, 6 kW EV charger, pumping machine and three 2.5 HP air conditioners",
         "sections": [
             ("The Challenge",
              ["Schools have one of the best load profiles for solar in Nigeria: demand runs from roughly 7 a.m. to "
-              "4 p.m., which is almost exactly when the array is producing. The obstacle is rarely technical — it is "
+              "4 p.m., which is almost exactly when the array is producing. The obstacle is rarely technical; it is "
               "capital cost against a term-time budget.",
               "The campus also needed the system to hold ICT labs and administrative systems through outages during "
               "examination periods."]),
@@ -452,7 +452,7 @@ CASES = [
         "alt": "30kW solar and inverter installation for a hospital in Nigeria with a redundant lithium battery bank",
         "specs": [("System", "30 kW / 48 V"), ("Battery storage", "7 × 7.68 kWh"),
                   ("Solar panels", "36 × 620 W"), ("Property", "Hospital / clinic")],
-        "excerpt": ("Cold-chain refrigeration, theatre lighting and diagnostic equipment — the one category "
+        "excerpt": ("Cold-chain refrigeration, theatre lighting and diagnostic equipment, the one category "
                     "of building where a power gap is a clinical risk."),
         "loads": "100 lighting points, 10 TVs, 3 fridges, 3 freezers, medical and diagnostic equipment, 7 kW EV charger, pumping machine and four 2.5 HP air conditioners",
         "sections": [
@@ -561,7 +561,7 @@ CASES = [
         "sections": [
             ("The Challenge",
              ["Warehouses have enormous roof area and enormous lighting loads, which makes them natural solar "
-              "candidates — but the electrical design has to handle long cable runs and high current without "
+              "candidates, but the electrical design has to handle long cable runs and high current without "
               "unacceptable losses."]),
             ("Our Recommendation",
              ["An 80 kW / 48 V high-VAC package built on a dual-inverter bank with 100.1 kWh of BOS-B lithium storage "
@@ -624,14 +624,14 @@ CASES = [
         "alt": "125kW industrial solar and lithium storage installation for a factory in Nigeria",
         "specs": [("System", "125 kW PCS"), ("Battery storage", "15 × 16 kWh"),
                   ("Solar panels", "168 × 620 W"), ("Property", "Manufacturing plant")],
-        "excerpt": ("Chillers, three-phase air conditioning, compressors and an industrial oven — the "
+        "excerpt": ("Chillers, three-phase air conditioning, compressors and an industrial oven, the "
                     "class of load that decides whether a plant runs or stops."),
         "loads": "Chillers, three-phase air conditioners, elevator, air compressor, industrial water heater, industrial oven, industrial pumping machine and EV charging station",
         "sections": [
             ("The Challenge",
              ["Industrial power is not a comfort question. When the supply fails, production stops, work in progress "
               "is scrapped and the plant absorbs the cost of restarting.",
-              "Plants of this size also run motor loads — compressors, chillers, pumps — whose starting current is "
+              "Plants of this size also run motor loads, compressors, chillers, pumps, whose starting current is "
               "several times their running current. Any system that ignores that fails on the first cold start."]),
             ("Our Recommendation",
              ["A 125 kW power conversion system with 240 kWh of BOS-B Pro lithium storage across fifteen modules and "
@@ -668,7 +668,7 @@ CASES = [
         "sections": [
             ("The Challenge",
              ["Manufacturing facilities run long, predictable shifts with high continuous demand. Grid instability "
-              "does not just interrupt production — voltage sags and surges shorten the life of motors, drives and "
+              "does not just interrupt production; voltage sags and surges shorten the life of motors, drives and "
               "control electronics."]),
             ("Our Recommendation",
              ["A 100 kW / 48 V high-VAC package with 143 kWh of BOS-B lithium storage and a 140-panel array rated at "
@@ -727,7 +727,7 @@ CASES = [
         "alt": "50kW solar installation with lithium battery bank for a large-scale facility in Nigeria",
         "specs": [("System", "50 kW / 48 V"), ("Battery storage", "5 × 14.3 kWh"),
                   ("Solar panels", "64 × 620 W"), ("Property", "Large-scale facility")],
-        "excerpt": ("A 39.68 kWp array with 71.5 kWh of storage — the workhorse configuration for large "
+        "excerpt": ("A 39.68 kWp array with 71.5 kWh of storage, the workhorse configuration for large "
                     "facilities that need reliability before they need scale."),
         "loads": "120 lighting points, 20 displays, 4 fridges, 4 freezers, pumping machine, EV charger and five 2.5 HP air conditioners",
         "sections": [
@@ -762,7 +762,7 @@ CASES = [
         "alt": "All-in-one solar street light installed by Solar World Electric illuminating a Nigerian street at night",
         "specs": [("Type", "All-in-one street light"), ("Power", "Integrated PV + lithium"),
                   ("Control", "Dusk-to-dawn auto"), ("Application", "Roads &amp; communities")],
-        "excerpt": ("Self-contained street lights with integrated panel, battery and LED head — no trenching, "
+        "excerpt": ("Self-contained street lights with integrated panel, battery and LED head, no trenching, "
                     "no cabling, no metered supply."),
         "loads": "Public roads, estate streets, compound perimeters, car parks and community spaces",
         "sections": [
@@ -797,7 +797,7 @@ CASES = [
         "alt": "AC/DC auto solar pump controller installed by Solar World Electric for a borehole system",
         "specs": [("Type", "Submersible pump"), ("Drive", "MPPT controller"),
                   ("Power", "Direct PV array"), ("Application", "Boreholes &amp; irrigation")],
-        "excerpt": ("Submersible pumps driven directly from the array through an MPPT controller — water "
+        "excerpt": ("Submersible pumps driven directly from the array through an MPPT controller, water "
                     "storage instead of battery storage."),
         "loads": "Borehole abstraction, overhead tank filling, irrigation and community water supply",
         "sections": [
@@ -831,7 +831,7 @@ CASES = [
         "specs": [("Type", "Ground-mounted array"), ("Storage", "Centralised lithium"),
                   ("Scope", "End-to-end delivery"), ("Application", "Public institutions")],
         "excerpt": ("Ground-mounted arrays and centralised storage for institutions, agencies and community "
-                    "facilities — delivered end to end, including maintenance."),
+                    "facilities, delivered end to end, including maintenance."),
         "loads": "Institutional buildings, community facilities, offices, clinics and public lighting",
         "sections": [
             ("The Challenge",
@@ -867,7 +867,7 @@ CASES = [
         "alt": "Hybrid inverter and lithium battery system supplying a solar powered EV charging point",
         "specs": [("Charger", "6–7 kW charge point"), ("Source", "Solar + lithium"),
                   ("Integration", "Hybrid inverter"), ("Application", "Homes &amp; offices")],
-        "excerpt": ("EV charge points integrated into the same hybrid system that powers the building — so "
+        "excerpt": ("EV charge points integrated into the same hybrid system that powers the building, so "
                     "the car charges on solar, not diesel."),
         "loads": "Electric vehicle charging alongside building load",
         "sections": [

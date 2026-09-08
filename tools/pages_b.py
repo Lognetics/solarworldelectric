@@ -63,8 +63,8 @@ def pricing():
       <p><b>How much does a solar system cost in Nigeria?</b> Solar World Electric systems range from
       <b>₦1,490,000</b> for a 3 kVA inverter package to <b>₦147,190,950</b> for a 125 kW industrial system.
       A typical Nigerian family home lands between <b>₦3.5m and ₦16m</b> installed. Prices are quoted in two
-      parts — the <b>inverter package</b> (inverter, lithium battery, cables, accessories and installation) and
-      the <b>solar package</b> (the panel array, cables, accessories and installation) — so you can buy the
+      parts, the <b>inverter package</b> (inverter, lithium battery, cables, accessories and installation) and
+      the <b>solar package</b> (the panel array, cables, accessories and installation), so you can buy the
       inverter first and add panels later. Financing starts at a 30%% deposit.</p>
     </div>
   </div>
@@ -76,7 +76,7 @@ def pricing():
       <span class="eyebrow">Published price charts</span>
       <h2>Every system, every price, in the open</h2>
       <p>These are our current published rates, taken directly from our price charts. All prices are in Nigerian
-      Naira and include installation. Prices are reviewed periodically — confirm the current rate with our team
+      Naira and include installation. Prices are reviewed periodically, confirm the current rate with our team
       before ordering.</p>
     </div>
     <div class="tabs" data-tabs="#charts" role="tablist">%(tabs)s</div>
@@ -128,13 +128,13 @@ def pricing():
 """ % {
         "head": page_head(
             "Solar system prices in Nigeria",
-            "Our full published price charts for Deye, Solis and standard solar and inverter systems — "
+            "Our full published price charts for Deye, Solis and standard solar and inverter systems, "
             "from ₦1.49m starter packages to ₦147m industrial installations. All prices include installation.",
             [("Home", "index.html"), ("Pricing", None)], bg="pkg/pkg-25kw.jpg"),
         "spark": ico("spark"), "tabs": tabs, "panels": panels,
         "pkgs": "".join(pkg_card(p) for p in PACKAGES[:4]),
         "factors": "".join('<li>%s<span>%s</span></li>' % (ico("check"), f) for f in [
-            "How many air conditioners you run, and their horsepower — almost always the deciding factor",
+            "How many air conditioners you run, and their horsepower, almost always the deciding factor",
             "Whether you need power overnight or only during outages (battery capacity)",
             "Refrigeration: fridges and freezers run continuously and set your base load",
             "Single-phase or three-phase supply",
@@ -144,7 +144,7 @@ def pricing():
         "arrow": ico("arrow"),
         "cta": cta_band("Want a price for your exact building?",
                         "Send us your appliance list and we will size the system and quote it against these "
-                        "published charts — no markup, no surprises."),
+                        "published charts, no markup, no surprises."),
     }
 
 
@@ -244,7 +244,7 @@ def projects():
     <div class="section-head">
       <span class="eyebrow">Project index</span>
       <h2>Browse by category</h2>
-      <p>Filter the index, then scroll for the full write-up of each installation — what the customer needed,
+      <p>Filter the index, then scroll for the full write-up of each installation, what the customer needed,
       what we recommended and installed, and what it achieved.</p>
     </div>
     <div class="filters" data-filters="#caseGrid">%(filters)s</div>
@@ -261,14 +261,14 @@ def projects():
 """ % {
         "head": page_head(
             "Solar installation projects &amp; case studies in Nigeria",
-            "Residential, commercial, industrial and infrastructure solar installations — with the system "
+            "Residential, commercial, industrial and infrastructure solar installations, with the system "
             "specification, the loads carried and the outcome for each customer.",
             [("Home", "index.html"), ("Projects", None)], bg="project-ground-array-1.jpg"),
         "spark": ico("spark"), "filters": filters, "cards": cards, "cats": cat_sections,
         "marquee": client_marquee(dark=True, title="Some of the organisations we have powered"),
         "cta": cta_band("Want a system like one of these?",
                         "Tell us which project matches your building and we will size and price the equivalent "
-                        "for you — usually within the same working day."),
+                        "for you, usually within the same working day."),
     }
 
 
@@ -292,7 +292,7 @@ def reviews():
       <span class="answer__k">%(spark)s Quick answer</span>
       <p><b>Is Solar World Electric reliable?</b> Customers who message us months and years after installation
       report systems that are still performing. The reviews below are unedited WhatsApp conversations with real
-      customers — homeowners, offices and businesses — captured during our routine post-installation check-ins.
+      customers, homeowners, offices and businesses, captured during our routine post-installation check-ins.
       Names are shortened for privacy. Every installation carries warranty coverage of up to 25 years on panels,
       10 years on lithium batteries and 5 years on inverters, plus a year of free after-sales service.</p>
     </div>
@@ -306,7 +306,14 @@ def reviews():
       <h2>Straight from our customers&rsquo; WhatsApp</h2>
       <p>We check in with customers weeks, months and years after installation. These are their replies.</p>
     </div>
-    <div class="wall">%(wa)s</div>
+    <div class="filters" data-filters="#reviewWall" data-empty="#noReviews" style="justify-content:center">
+      <button class="filter is-active" type="button" data-filter="all">All reviews</button>
+      <button class="filter" type="button" data-filter="residential">Homes</button>
+      <button class="filter" type="button" data-filter="commercial">Offices &amp; business</button>
+      <button class="filter" type="button" data-filter="longterm">Years later</button>
+    </div>
+    <div class="wall" id="reviewWall">%(wa)s</div>
+    <p id="noReviews" hidden class="center muted" style="padding:30px 0">No reviews in this group yet.</p>
   </div>
 </section>
 
@@ -338,7 +345,7 @@ def reviews():
 """ % {
         "head": page_head(
             "Customer reviews &amp; testimonials",
-            "Unedited WhatsApp messages from Solar World Electric customers across Nigeria — homeowners, "
+            "Unedited WhatsApp messages from Solar World Electric customers across Nigeria, homeowners, "
             "offices and businesses, weeks and years after installation.",
             [("Home", "index.html"), ("Reviews", None)], bg="install-room-stack1.jpg"),
         "spark": ico("spark"), "wa": wa_cards, "photos": photos,
@@ -372,7 +379,7 @@ def faq():
     sections = ""
     for g in FAQ_GROUPS:
         sections += """
-<section class="section%s" id="%s">
+<section class="section%s" id="%s" data-search-group>
   <div class="container container--narrow">
     <div class="section-head">
       <span class="eyebrow">%s</span>
@@ -385,14 +392,21 @@ def faq():
                  "%d question%s" % (len(g["items"]), "" if len(g["items"]) == 1 else "s"),
                  g["label"], faq_block([g]))
 
-    nav_chips = "".join('<a class="chip" href="#%s">%s</a>' % (g["key"], g["label"]) for g in FAQ_GROUPS)
+    nav_chips = "".join('<a href="#%s">%s</a>' % (g["key"], g["label"]) for g in FAQ_GROUPS)
 
     return """
 %(head)s
 
 <section class="section section--tight">
   <div class="container container--narrow">
-    <div class="row" style="justify-content:center;margin-bottom:34px">%(chips)s</div>
+    <div class="searchbox" data-search="#faqAll" style="margin-bottom:22px">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="search" placeholder="Search all 29 questions, e.g. &quot;air conditioner&quot; or &quot;warranty&quot;"
+             aria-label="Search the FAQ">
+      <span class="searchbox__count"></span>
+    </div>
+    <nav class="pagenav" aria-label="FAQ sections">%(chips)s</nav>
     <div class="answer" data-reveal>
       <span class="answer__k">%(spark)s The three questions everyone starts with</span>
       <p><b>How much?</b> ₦1.49m for a 3 kVA starter package up to ₦147m for a 125 kW industrial system;
@@ -405,18 +419,18 @@ def faq():
   </div>
 </section>
 
-%(sections)s
+<div id="faqAll">%(sections)s</div>
 
 %(cta)s
 """ % {
         "head": page_head(
-            "Solar energy FAQ — Nigeria",
+            "Solar energy FAQ for Nigeria",
             "Straight answers on solar system costs, sizing, installation, warranties, batteries, financing "
             "and the myths that stop Nigerians going solar.",
             [("Home", "index.html"), ("FAQ", None)], bg="showroom-interior.jpg"),
         "chips": nav_chips, "spark": ico("spark"), "sections": sections,
         "cta": cta_band("Still have a question?",
-                        "Send it to us on WhatsApp. A real engineer answers — usually within minutes during "
+                        "Send it to us on WhatsApp. A real engineer answers, usually within minutes during "
                         "working hours.",
                         wa_text="Hello Solar World, I have a question about going solar: "),
     }
@@ -440,7 +454,7 @@ def financing():
       <p><b>Does Solar World offer solar financing in Nigeria?</b> Yes. Pay a <b>30%% deposit</b> and spread the
       balance over <b>3, 6, 9 or 12 months</b> through our financing partner, with a fixed <b>4%% monthly
       interest</b> added to the principal and no hidden charges. Applications are handled in-house at any of our
-      nine offices — no bank queues — and approved financing is disbursed within <b>24 to 48 hours</b>, with
+      nine offices, no bank queues, and approved financing is disbursed within <b>24 to 48 hours</b>, with
       installation following immediately.</p>
     </div>
   </div>
@@ -462,6 +476,48 @@ def financing():
       <a class="btn btn--primary btn--lg" data-wa="Hello Solar World, I would like to apply for solar financing. Please tell me what I need to get started.">Apply on WhatsApp %(wa)s</a>
     </div>
     <div class="steps" data-reveal="right">%(steps)s</div>
+  </div>
+</section>
+
+<section class="section section--alt" id="calculator">
+  <div class="container split" style="align-items:start">
+    <div data-reveal="left">
+      <span class="eyebrow">Repayment estimator</span>
+      <h2>See your monthly payment before you apply</h2>
+      <p class="lead">Drag to your system cost and choose a term. The estimator uses our published
+      terms: a 30%% deposit, with a flat 4%% of the financed balance added per month.</p>
+      <div class="facts" style="margin-top:24px">
+        <div><dt>Deposit</dt><dd>30%% of system cost</dd></div>
+        <div><dt>Terms</dt><dd>3, 6, 9 or 12 months</dd></div>
+        <div><dt>Disbursement</dt><dd>24 to 48 hours</dd></div>
+      </div>
+      <p class="small muted" style="margin-top:18px">Indicative. Your final terms are confirmed by our
+      financing partner when your application is approved.</p>
+    </div>
+
+    <div class="card" id="repay" data-reveal="right">
+      <div class="row" style="justify-content:space-between;margin-bottom:6px">
+        <h3 style="margin:0">Estimate my repayments</h3>
+        <span class="chip chip--gold">Live</span>
+      </div>
+      <div class="field" style="margin-top:18px">
+        <label for="rpCost">System cost <b id="rpCostOut" class="text-gold"></b></label>
+        <input class="range" type="range" id="rpCost" min="1490000" max="50000000" step="250000" value="9290000">
+      </div>
+      <div class="field">
+        <label>Spread over</label>
+        <div class="seg" id="rpTerms">
+          <button type="button" data-m="3">3 months</button>
+          <button type="button" data-m="6" class="is-on">6 months</button>
+          <button type="button" data-m="9">9 months</button>
+          <button type="button" data-m="12">12 months</button>
+        </div>
+      </div>
+      <dl class="readout readout--total" id="rpOut" style="margin-top:18px"></dl>
+      <a class="btn btn--primary btn--block" id="rpSend" style="margin-top:16px" href="#">
+        Apply with these figures %(wa)s</a>
+      <p class="form-note">Sends your figures to our financing team on WhatsApp.</p>
+    </div>
   </div>
 </section>
 
@@ -489,7 +545,7 @@ def financing():
       <span class="eyebrow">The bottom line</span>
       <h2>You no longer have to wait</h2>
       <p>For years many Nigerians have wanted to switch to solar but were held back by the high initial cost.
-      With our financing plan there is no huge upfront payment — just fast, hassle-free processing and flexible
+      With our financing plan there is no huge upfront payment, just fast, hassle-free processing and flexible
       repayment options that fit your budget.</p>
     </div>
     %(faq)s
@@ -499,7 +555,7 @@ def financing():
 %(cta)s
 """ % {
         "head": page_head(
-            "Solar financing in Nigeria — pay 30% and spread the rest",
+            "Solar financing in Nigeria: pay 30% and spread the rest",
             "Switching to solar should not be a financial burden. Pay 30% upfront and spread the balance over "
             "3, 6, 9 or 12 months, with financing disbursed in 24–48 hours.",
             [("Home", "index.html"), ("Financing", None)], bg="install-room-dual.jpg"),
@@ -529,7 +585,7 @@ def calculator():
       published charts.</p>
       <div class="answer" style="margin-top:24px">
         <span class="answer__k">%(spark)s How sizing actually works</span>
-        <p>Inverter size is set by your <b>peak simultaneous demand</b> — mostly air-conditioner start-up surge.
+        <p>Inverter size is set by your <b>peak simultaneous demand</b>: mostly air-conditioner start-up surge.
         Battery capacity is set by your <b>overnight energy use in kWh</b>. Panel count is set by how fast you
         need the battery refilled the next day. Getting one right and the others wrong is why undersized systems
         fail at 3 a.m.</p>
@@ -648,7 +704,7 @@ def calculator():
 </script>
 """ % {
         "head": page_head(
-            "Solar calculator — what size system do I need?",
+            "Solar calculator: what size system do I need?",
             "Select your appliances and we will estimate the inverter size, battery capacity and panel count "
             "your property needs, with an indicative price from our published charts.",
             [("Home", "index.html"), ("Calculator", None)], bg="project-rooftop-garden.jpg"),
@@ -664,7 +720,7 @@ def calculator():
                 ("125 kW", "Chillers, three-phase ACs, elevator, air compressor, industrial oven and pumps"),
             ]),
         "cta": cta_band("Prefer a person to size it?",
-                        "Our engineers do a free load assessment on site or over WhatsApp — and they will tell "
+                        "Our engineers do a free load assessment on site or over WhatsApp, and they will tell "
                         "you if you need less than you think."),
     }
 
@@ -753,7 +809,7 @@ def contact():
         <button class="btn btn--primary btn--block btn--lg" type="submit">Send my details %(arrow)s</button>
         <p class="form-note">Your details open in WhatsApp addressed to our team on %(phone_display)s.
         We never share your information.</p>
-        <p data-wa-ok hidden class="small" style="color:var(--green);margin-top:12px">%(check)s Sent — check WhatsApp.</p>
+        <p data-wa-ok hidden class="small" style="color:var(--green);margin-top:12px">%(check)s Sent, check WhatsApp.</p>
       </form>
     </div>
   </div>

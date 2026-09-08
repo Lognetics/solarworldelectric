@@ -61,43 +61,109 @@ def ico(name, cls=""):
 # NAV
 # ---------------------------------------------------------------------------
 NAV_ITEMS = [
-    ("index.html", "Home"),
-    ("about.html", "About"),
-    ("solutions.html", "Solutions"),
-    ("products.html", "Products"),
-    ("pricing.html", "Pricing"),
-    ("projects.html", "Projects"),
-    ("reviews.html", "Reviews"),
-    ("faq.html", "FAQ"),
-    ("contact.html", "Contact"),
+    ("index.html", "Home", None),
+    ("about.html", "About", [
+        ("about.html", "Our story", "Who we are, our vision and mission"),
+        ("about.html#team", "Meet the team", "The people behind every installation"),
+        ("reviews.html", "Customer reviews", "What customers say after installation"),
+        ("contact.html#offices", "Our offices", "Eleven locations across three cities"),
+    ]),
+    ("solutions.html", "Solutions", [
+        ("solutions.html#residential", "Residential", "Homes, estates, duplexes and apartments"),
+        ("solutions.html#commercial", "Commercial", "Offices, hotels, schools and retail"),
+        ("solutions.html#industrial", "Industrial", "Factories and processing facilities"),
+        ("solutions.html#infrastructure", "Energy &amp; infrastructure", "Streetlights, pumping and EV charging"),
+    ]),
+    ("products.html", "Products", [
+        ("products.html", "All products", "Panels, inverters, batteries and more"),
+        ("pricing.html", "Pricing &amp; packages", "Full Deye, Solis and standard charts"),
+        ("financing.html", "Financing", "Pay 30% and spread the balance"),
+    ]),
+    ("projects.html", "Projects", [
+        ("projects.html", "All case studies", "Every project, filterable by category"),
+        ("projects.html?c=residential", "Residential projects", "Homes, estates and apartments"),
+        ("projects.html?c=commercial", "Commercial projects", "Offices, hotels, schools, retail"),
+        ("projects.html?c=industrial", "Industrial projects", "Factories and large-scale sites"),
+        ("projects.html?c=infrastructure", "Infrastructure", "Streetlights, pumping, EV charging"),
+    ]),
+    ("calculator.html", "Tools", [
+        ("calculator.html", "Solar calculator", "Size your system from your appliances"),
+        ("financing.html#calculator", "Repayment estimator", "See your monthly instalments"),
+        ("faq.html", "FAQ", "29 answers on cost, sizing and warranty"),
+    ]),
+    ("blog.html", "Blog", None),
+    ("contact.html", "Contact", None),
 ]
 
-def nav(active, over_hero=False):
-    links = "".join(
-        '<a href="%s"%s>%s</a>' % (h, ' class="active" aria-current="page"' if h == active else "", t)
-        for h, t in NAV_ITEMS
+
+def _submenu(items):
+    rows = "".join(
+        '<a href="%s"><span class="nav__sub-t">%s</span>'
+        '<span class="nav__sub-d">%s</span></a>' % (h, t, d)
+        for h, t, d in items
     )
+    return '<div class="nav__sub"><div class="nav__sub-in">%s</div></div>' % rows
+
+
+def nav(active, over_hero=False):
+    links = ""
+    for item in NAV_ITEMS:
+        href, label, sub = item
+        is_active = href.split("#")[0].split("?")[0] == active
+        cls = " class=\"nav__item%s\"" % (" is-active" if is_active else "")
+        if sub:
+            links += (
+                '<div%s>'
+                '<a href="%s"%s>%s<svg class="nav__caret" viewBox="0 0 24 24" fill="none" '
+                'stroke="currentColor" stroke-width="2.2" stroke-linecap="round" '
+                'stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a>'
+                '<button class="nav__subtoggle" type="button" aria-expanded="false" '
+                'aria-label="Show %s submenu"></button>%s</div>'
+                % (cls, href, ' aria-current="page"' if is_active else "", label,
+                   label.replace("&amp;", "and"), _submenu(sub))
+            )
+        else:
+            links += '<div%s><a href="%s"%s>%s</a></div>' % (
+                cls, href, ' aria-current="page"' if is_active else "", label)
+
     return """
 <a class="skip" href="#main">Skip to content</a>
 <div class="scrollbar" id="scrollbar"></div>
 <header class="nav%s" id="nav">
   <div class="nav__inner">
-    <a class="brand" href="index.html" aria-label="Solar World Electric Technology Ltd — home">
+    <a class="brand" href="index.html" aria-label="Solar World Electric Technology Ltd, home">
       <img class="brand__mark" src="assets/img/logo-mark.svg" alt="" width="40" height="40">
       <span class="brand__txt">
         <span class="brand__name">Solar World</span>
         <span class="brand__sub">Electric Technology Ltd.</span>
       </span>
     </a>
+
     <nav class="nav__links" id="navLinks" aria-label="Main">
-      %s
-      <a class="btn btn--primary nav__cta" href="contact.html">Free consultation</a>
+      <div class="nav__mhead">
+        <span>Menu</span>
+        <button class="nav__mclose" id="navClose" type="button" aria-label="Close menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+               stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="nav__list">%s</div>
+      <div class="nav__mfoot">
+        <a class="btn btn--primary btn--block" href="contact.html">Free consultation</a>
+        <a class="btn btn--green btn--block" data-wa="">Chat on WhatsApp</a>
+        <p>%s<br><a href="tel:%s">%s</a></p>
+      </div>
     </nav>
+
+    <a class="btn btn--primary nav__cta" href="contact.html">Free consultation</a>
     <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
       <span></span><span></span><span></span>
     </button>
   </div>
-</header>""" % (" is-over" if over_hero else "", links)
+</header>
+<div class="nav__scrim" id="navScrim" hidden></div>""" % (
+        " is-over" if over_hero else "", links,
+        COMPANY["email"], COMPANY["phone"], COMPANY["phone_display"])
 
 
 # ---------------------------------------------------------------------------
@@ -237,7 +303,7 @@ def local_business_schema():
             "@type": "LocalBusiness",
             "@id": SITE + "/#office-%d" % i,
             "parentOrganization": {"@id": SITE + "/#organization"},
-            "name": "%s — %s, %s" % (COMPANY["short"], o["name"], o["region"]),
+            "name": "%s, %s, %s" % (COMPANY["short"], o["name"], o["region"]),
             "image": SITE + "/assets/img/store-front-1.jpg",
             "telephone": o["phone"],
             "priceRange": "₦₦₦",

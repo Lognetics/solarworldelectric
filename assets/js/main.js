@@ -40,12 +40,13 @@
     if (!nav) return;
     var toggle = $('#navToggle');
     var links = $('#navLinks');
+    var scrim = $('#navScrim');
+    var closeBtn = $('#navClose');
     var lastY = 0;
 
     function onScroll() {
       var y = window.scrollY;
       nav.classList.toggle('is-stuck', y > 24);
-      // hide on scroll-down, reveal on scroll-up (only past the fold)
       if (!nav.classList.contains('menu-open')) {
         nav.classList.toggle('is-hidden', y > 420 && y > lastY + 6);
       }
@@ -54,24 +55,81 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
-    if (toggle && links) {
-      toggle.addEventListener('click', function () {
-        var open = links.classList.toggle('is-open');
+    function setMenu(open) {
+      if (!links) return;
+      links.classList.toggle('is-open', open);
+      if (toggle) {
         toggle.classList.toggle('is-open', open);
-        nav.classList.toggle('menu-open', open);
-        nav.classList.remove('is-hidden');
-        document.body.style.overflow = open ? 'hidden' : '';
         toggle.setAttribute('aria-expanded', String(open));
-      });
-      links.addEventListener('click', function (e) {
-        if (e.target.closest('a')) {
-          links.classList.remove('is-open');
-          toggle.classList.remove('is-open');
-          nav.classList.remove('menu-open');
-          document.body.style.overflow = '';
+        toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      }
+      nav.classList.toggle('menu-open', open);
+      nav.classList.remove('is-hidden');
+      document.body.style.overflow = open ? 'hidden' : '';
+      if (scrim) {
+        if (open) { scrim.hidden = false; requestAnimationFrame(function () { scrim.classList.add('is-on'); }); }
+        else {
+          scrim.classList.remove('is-on');
+          setTimeout(function () { if (!links.classList.contains('is-open')) scrim.hidden = true; }, 420);
         }
+      }
+    }
+
+    if (toggle) toggle.addEventListener('click', function () { setMenu(!links.classList.contains('is-open')); });
+    if (closeBtn) closeBtn.addEventListener('click', function () { setMenu(false); });
+    if (scrim) scrim.addEventListener('click', function () { setMenu(false); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && links && links.classList.contains('is-open')) setMenu(false);
+    });
+    if (links) {
+      links.addEventListener('click', function (e) {
+        var a = e.target.closest('a');
+        if (a && a.getAttribute('href') && a.getAttribute('href').charAt(0) !== '#') setMenu(false);
+        else if (a) setMenu(false);
       });
     }
+
+    // Mobile submenu accordions (desktop uses CSS hover)
+    $$('.nav__subtoggle').forEach(function (btn) {
+      var item = btn.closest('.nav__item');
+      var panel = $('.nav__sub', item);
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var open = item.classList.contains('is-open');
+        $$('.nav__item.is-open').forEach(function (o) {
+          if (o === item) return;
+          o.classList.remove('is-open');
+          var op = $('.nav__sub', o);
+          if (op) { op.style.height = op.scrollHeight + 'px'; requestAnimationFrame(function () { op.style.height = '0px'; }); }
+        });
+        item.classList.toggle('is-open', !open);
+        btn.setAttribute('aria-expanded', String(!open));
+        if (!panel) return;
+        if (open) {
+          panel.style.height = panel.scrollHeight + 'px';
+          requestAnimationFrame(function () { panel.style.height = '0px'; });
+        } else {
+          panel.style.height = panel.scrollHeight + 'px';
+          panel.addEventListener('transitionend', function te(ev) {
+            if (ev.propertyName !== 'height') return;
+            panel.style.height = 'auto';
+            panel.removeEventListener('transitionend', te);
+          });
+        }
+      });
+    });
+
+    // Reset inline heights when crossing the desktop breakpoint
+    var mq = window.matchMedia('(min-width:1081px)');
+    var sync = function () {
+      if (mq.matches) {
+        $$('.nav__sub').forEach(function (el) { el.style.height = ''; });
+        $$('.nav__item').forEach(function (el) { el.classList.remove('is-open'); });
+        setMenu(false);
+      }
+    };
+    mq.addEventListener ? mq.addEventListener('change', sync) : mq.addListener(sync);
   }
 
   /* ------------------------------------------------------------------
@@ -603,6 +661,317 @@
   }
 
   /* ------------------------------------------------------------------
+     15. Section-level scroll motion + parallax
+     ------------------------------------------------------------------ */
+  function initSectionMotion() {
+    var secs = $$('main > section, main > div > section');
+    if (!secs.length) return;
+
+    secs.forEach(function (sec, i) {
+      // The first screenful should be visible immediately, never animated in.
+      if (i === 0 || sec.classList.contains('hero') || sec.classList.contains('phead')) return;
+      sec.classList.add('sec-motion');
+    });
+
+    var motion = $$('.sec-motion');
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      motion.forEach(function (el) { el.classList.add('sec-in'); });
+      return;
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        var el = en.target;
+        if (en.isIntersecting) {
+          el.classList.add('sec-in');
+          el.classList.remove('sec-out');
+        } else if (el.classList.contains('sec-in')) {
+          // only drift out upward, never when scrolling back down past it
+          var above = en.boundingClientRect.top < 0;
+          el.classList.toggle('sec-out', above);
+        }
+      });
+    }, { threshold: 0.04, rootMargin: '0px 0px -4% 0px' });
+    motion.forEach(function (el) { io.observe(el); });
+  }
+
+  function initParallax() {
+    var els = $$('[data-parallax]');
+    if (!els.length || reduceMotion) return;
+    var ticking = false;
+
+    function frame() {
+      var vh = window.innerHeight;
+      els.forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.bottom < -200 || r.top > vh + 200) return;
+        var speed = parseFloat(el.getAttribute('data-parallax')) || 0.12;
+        var mid = r.top + r.height / 2 - vh / 2;
+        el.style.transform = 'translate3d(0,' + (-mid * speed).toFixed(2) + 'px,0)';
+      });
+      ticking = false;
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(frame); }
+    }, { passive: true });
+    window.addEventListener('resize', frame);
+    frame();
+  }
+
+  /* ------------------------------------------------------------------
+     16. Sticky in-page nav (scroll spy)
+     ------------------------------------------------------------------ */
+  function initPageNav() {
+    var bar = $('.pagenav');
+    if (!bar) return;
+    var links = $$('a[href^="#"]', bar);
+    var targets = links.map(function (a) { return $(a.getAttribute('href')); }).filter(Boolean);
+    if (!targets.length) return;
+
+    function spy() {
+      var top = window.scrollY + parseInt(getComputedStyle(document.documentElement).scrollPaddingTop) + 40;
+      var current = targets[0];
+      targets.forEach(function (t) { if (t.offsetTop <= top) current = t; });
+      links.forEach(function (a) {
+        a.classList.toggle('is-on', a.getAttribute('href') === '#' + current.id);
+      });
+    }
+    window.addEventListener('scroll', spy, { passive: true });
+    spy();
+  }
+
+  /* ------------------------------------------------------------------
+     17. Live search filter (FAQ, projects)
+     ------------------------------------------------------------------ */
+  function initSearch() {
+    $$('[data-search]').forEach(function (box) {
+      var input = $('input', box);
+      var count = $('.searchbox__count', box);
+      var scope = document.querySelector(box.getAttribute('data-search'));
+      if (!input || !scope) return;
+      var items = $$('[data-searchable]', scope);
+
+      function run() {
+        var q = input.value.trim().toLowerCase();
+        var shown = 0;
+        items.forEach(function (it) {
+          var hit = !q || it.textContent.toLowerCase().indexOf(q) > -1;
+          it.hidden = !hit;
+          if (hit) shown++;
+        });
+        // hide group wrappers that end up empty
+        $$('[data-search-group]', scope).forEach(function (g) {
+          g.hidden = !$$('[data-searchable]', g).some(function (i) { return !i.hidden; });
+        });
+        if (count) count.textContent = q ? shown + (shown === 1 ? ' match' : ' matches') : '';
+      }
+      input.addEventListener('input', run);
+      run();
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     18. Home system sizer (interactive, mirrors the full calculator)
+     ------------------------------------------------------------------ */
+  var SIZER_LOADS = [
+    { k: 'lights',  n: 'Lights',        w: 12,   dc: 1.0,  step: 10, max: 200, unit: 'points' },
+    { k: 'tv',      n: 'TVs',           w: 110,  dc: 0.35, step: 1,  max: 40 },
+    { k: 'fridge',  n: 'Fridges',       w: 200,  dc: 0.4,  step: 1,  max: 12 },
+    { k: 'freezer', n: 'Freezers',      w: 250,  dc: 0.45, step: 1,  max: 12 },
+    { k: 'ac15',    n: '1.5HP ACs',     w: 1250, dc: 0.55, step: 1,  max: 12 },
+    { k: 'ac25',    n: '2.5HP ACs',     w: 2100, dc: 0.55, step: 1,  max: 10 },
+    { k: 'pump',    n: 'Water pump',    w: 750,  dc: 0.1,  step: 1,  max: 4 },
+    { k: 'office',  n: 'Office / ICT',  w: 150,  dc: 0.5,  step: 1,  max: 40 }
+  ];
+  var SIZER_TIERS = [
+    { kw: 5,   price: 3940000 },   { kw: 8,   price: 8210000 },
+    { kw: 10,  price: 9290000 },   { kw: 12,  price: 14660000 },
+    { kw: 16,  price: 16360000 },  { kw: 20,  price: 22510000 },
+    { kw: 25,  price: 29120000 },  { kw: 30,  price: 35990000 },
+    { kw: 50,  price: 47660000 },  { kw: 80,  price: 68080000 },
+    { kw: 100, price: 107570950 }, { kw: 125, price: 147190950 }
+  ];
+
+  function initSizer() {
+    var root = $('#sizer');
+    if (!root) return;
+    var picker = $('#sizerPicker', root);
+    var out = $('#sizerOut', root);
+    var hoursEl = $('#sizerHours', root);
+    var state = { lights: 30, tv: 3, fridge: 1, freezer: 1, ac15: 2, ac25: 0, pump: 1, office: 0 };
+
+    SIZER_LOADS.forEach(function (a) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('data-k', a.k);
+      b.innerHTML = a.n + ' <span class="n">' + state[a.k] + '</span>';
+      b.addEventListener('click', function (e) {
+        var dec = e.shiftKey || e.altKey;
+        var v = state[a.k] + (dec ? -a.step : a.step);
+        if (v > a.max) v = 0;
+        if (v < 0) v = 0;
+        state[a.k] = v;
+        $('.n', b).textContent = v;
+        b.classList.toggle('is-on', v > 0);
+        calc();
+      });
+      b.classList.toggle('is-on', state[a.k] > 0);
+      picker.appendChild(b);
+    });
+
+    function fmtN(n) { return '\u20a6' + Math.round(n).toLocaleString('en-US'); }
+
+    function calc() {
+      var peak = 0, daily = 0, parts = [];
+      SIZER_LOADS.forEach(function (a) {
+        var q = state[a.k];
+        if (!q) return;
+        peak += q * a.w;
+        daily += q * a.w * a.dc * 10 / 1000;
+        parts.push(q + ' x ' + a.n);
+      });
+      var hours = parseInt(hoursEl.value, 10);
+      var need = peak * 1.3 / 1000;
+      var tier = SIZER_TIERS.find(function (t) { return t.kw >= need; }) || SIZER_TIERS[SIZER_TIERS.length - 1];
+      var batt = Math.max(5, Math.ceil((peak / 1000) * 0.55 * hours / 0.9));
+      var panels = Math.max(4, Math.ceil((batt + daily) / (0.62 * 4.5)));
+
+      out.innerHTML =
+        '<div class="is-hot"><dt>Inverter</dt><dd>' + tier.kw + ' kW</dd></div>' +
+        '<div><dt>Battery</dt><dd>' + batt + ' kWh</dd></div>' +
+        '<div><dt>Panels</dt><dd>' + panels + '<small>x 620 W</small></dd></div>' +
+        '<div><dt>Peak demand</dt><dd>' + (peak / 1000).toFixed(1) + ' kW</dd></div>' +
+        '<div class="is-hot"><dt>Indicative</dt><dd>' + fmtN(tier.price) + '<small>installed, from</small></dd></div>';
+
+      root.dataset.summary = parts.join(', ') || 'nothing selected yet';
+      root.dataset.spec = tier.kw + ' kW inverter, ' + batt + ' kWh battery, ' + panels + ' x 620W panels';
+    }
+
+    hoursEl.addEventListener('change', calc);
+    var send = $('#sizerSend', root);
+    if (send) send.addEventListener('click', function (e) {
+      e.preventDefault();
+      window.open(wa('Hello Solar World, I used the sizer on your website.\n\nMy appliances: ' +
+        (root.dataset.summary || '') + '\nBackup needed: ' + hoursEl.value +
+        ' hours\nEstimated system: ' + (root.dataset.spec || '') +
+        '\n\nPlease confirm the right system and price for me.'), '_blank', 'noopener');
+    });
+    calc();
+  }
+
+  /* ------------------------------------------------------------------
+     19. Generator vs solar cost comparison
+     ------------------------------------------------------------------ */
+  function initVersus() {
+    var root = $('#versus');
+    if (!root) return;
+    var litres = $('#vsLitres', root);
+    var price = $('#vsPrice', root);
+    var years = $('#vsYears', root);
+    var sysCost = $('#vsSystem', root);
+
+    function paintRange(el) {
+      var pct = ((el.value - el.min) / (el.max - el.min)) * 100;
+      el.style.setProperty('--pct', pct + '%');
+    }
+
+    function fmt(n) { return '\u20a6' + Math.round(n).toLocaleString('en-US'); }
+
+    function calc() {
+      [litres, price, years, sysCost].forEach(paintRange);
+      var l = +litres.value, p = +price.value, y = +years.value, sc = +sysCost.value;
+
+      // Fuel + servicing. Servicing assumed at 12% of annual fuel spend.
+      var fuelYear = l * p * 365;
+      var genTotal = (fuelYear * 1.12) * y;
+      var solarTotal = sc; // panels 25yr / battery 10yr warranty, no fuel
+      var max = Math.max(genTotal, solarTotal, 1);
+
+      $('#vsGenVal', root).textContent = fmt(genTotal);
+      $('#vsSolVal', root).textContent = fmt(solarTotal);
+      $('#vsGenBar', root).style.width = (genTotal / max * 100) + '%';
+      $('#vsSolBar', root).style.width = (solarTotal / max * 100) + '%';
+      $('#vsLitresOut', root).textContent = l + ' litres/day';
+      $('#vsPriceOut', root).textContent = fmt(p) + '/litre';
+      $('#vsYearsOut', root).textContent = y + (y === 1 ? ' year' : ' years');
+      $('#vsSystemOut', root).textContent = fmt(sc);
+
+      var note = $('#vsNote', root);
+      var diff = genTotal - solarTotal;
+      if (diff > 0) {
+        var months = solarTotal / (fuelYear * 1.12 / 12);
+        note.innerHTML = 'Over ' + y + (y === 1 ? ' year' : ' years') + ' the generator costs <b>' +
+          fmt(diff) + ' more</b> than the solar system. At this fuel burn the system pays for itself in about <b>' +
+          (months < 12 ? Math.round(months) + ' months' : (months / 12).toFixed(1) + ' years') + '</b>.';
+      } else {
+        note.innerHTML = 'At this fuel burn the generator is still cheaper over ' + y +
+          (y === 1 ? ' year' : ' years') + '. Drag the years out, or raise the daily litres, to see where solar overtakes it.';
+      }
+    }
+
+    [litres, price, years, sysCost].forEach(function (el) { el.addEventListener('input', calc); });
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (en) {
+        if (en[0].isIntersecting) { calc(); io.disconnect(); }
+      }, { threshold: 0.3 });
+      io.observe(root);
+    }
+    calc();
+  }
+
+  /* ------------------------------------------------------------------
+     20. Financing repayment estimator
+     ------------------------------------------------------------------ */
+  function initRepay() {
+    var root = $('#repay');
+    if (!root) return;
+    var cost = $('#rpCost', root);
+    var terms = $$('#rpTerms button', root);
+    var months = 6;
+
+    function fmt(n) { return '\u20a6' + Math.round(n).toLocaleString('en-US'); }
+
+    function calc() {
+      var pct = ((cost.value - cost.min) / (cost.max - cost.min)) * 100;
+      cost.style.setProperty('--pct', pct + '%');
+
+      var total = +cost.value;
+      var deposit = total * 0.30;
+      var principal = total - deposit;
+      // Their published terms: a flat 4% of the principal is added per month.
+      var interest = principal * 0.04 * months;
+      var repayable = principal + interest;
+      var monthly = repayable / months;
+
+      $('#rpCostOut', root).textContent = fmt(total);
+      $('#rpOut', root).innerHTML =
+        '<div class="is-hot"><dt>Deposit today (30%)</dt><dd>' + fmt(deposit) + '</dd></div>' +
+        '<div><dt>Financed balance</dt><dd>' + fmt(principal) + '</dd></div>' +
+        '<div><dt>Interest over ' + months + ' months</dt><dd>' + fmt(interest) + '</dd></div>' +
+        '<div class="is-hot"><dt>Monthly payment</dt><dd>' + fmt(monthly) +
+          '<small>x ' + months + ' months</small></dd></div>';
+      root.dataset.msg = 'System ' + fmt(total) + ', deposit ' + fmt(deposit) +
+        ', then ' + fmt(monthly) + ' a month for ' + months + ' months.';
+    }
+
+    terms.forEach(function (b) {
+      b.addEventListener('click', function () {
+        terms.forEach(function (o) { o.classList.toggle('is-on', o === b); });
+        months = parseInt(b.getAttribute('data-m'), 10);
+        calc();
+      });
+    });
+    cost.addEventListener('input', calc);
+    var send = $('#rpSend', root);
+    if (send) send.addEventListener('click', function (e) {
+      e.preventDefault();
+      window.open(wa('Hello Solar World, I would like to apply for solar financing.\n\n' +
+        (root.dataset.msg || '') + '\n\nPlease tell me what I need to get started.'), '_blank', 'noopener');
+    });
+    calc();
+  }
+
+  /* ------------------------------------------------------------------
      Boot
      ------------------------------------------------------------------ */
   function boot() {
@@ -618,6 +987,13 @@
     initMarquee();
     initWaLinks();
     initWaForms();
+    initSectionMotion();
+    initParallax();
+    initPageNav();
+    initSearch();
+    initSizer();
+    initVersus();
+    initRepay();
     initWhatsApp();
     initLeadPopup();
   }
