@@ -486,13 +486,24 @@
     fab.addEventListener('click', function () {
       var open = el.classList.toggle('is-open');
       fab.setAttribute('aria-expanded', String(open));
-      if (open) store.set('swe_wa_seen', '1');
+      if (open) {
+        store.set('swe_wa_seen', '1');
+        // never let both floating panels sit open on top of each other
+        var c = $('.cfab');
+        if (c) {
+          c.classList.remove('is-open');
+          var cb = $('.cfab__btn', c);
+          if (cb) cb.setAttribute('aria-expanded', 'false');
+        }
+      }
     });
     $('.wa__close', el).addEventListener('click', function () {
       el.classList.remove('is-open');
       fab.setAttribute('aria-expanded', 'false');
     });
     document.addEventListener('click', function (e) {
+      if (e.composedPath && e.composedPath().indexOf(el) > -1) return;
+      if (!document.contains(e.target)) return;
       if (!el.contains(e.target)) { el.classList.remove('is-open'); fab.setAttribute('aria-expanded', 'false'); }
     });
     document.addEventListener('keydown', function (e) {
@@ -1170,6 +1181,190 @@
   }
 
   /* ------------------------------------------------------------------
+     22. Floating calculator widget (site-wide, computes in place)
+     ------------------------------------------------------------------ */
+  // A curated subset of CALC_GROUPS: enough to size a real home in a popup,
+  // with the full calculator one tap away for everything else.
+  var CFAB_ITEMS = [
+    { k: 'ac15',   n: '1.5 HP air conditioner', w: 1250, dc: 0.55, max: 12 },
+    { k: 'ac2',    n: '2 HP air conditioner',   w: 1700, dc: 0.55, max: 12 },
+    { k: 'fridge', n: 'Fridge',                 w: 200,  dc: 0.40, max: 12 },
+    { k: 'freezer',n: 'Freezer',                w: 250,  dc: 0.45, max: 12 },
+    { k: 'bulb',   n: 'Light points',           w: 12,   dc: 1.00, max: 250, step: 5 },
+    { k: 'tv',     n: 'Televisions',            w: 110,  dc: 0.35, max: 40 },
+    { k: 'fan',    n: 'Fans',                   w: 75,   dc: 0.60, max: 30 },
+    { k: 'pump',   n: 'Water pump',             w: 750,  dc: 0.10, max: 6 },
+    { k: 'wash',   n: 'Washing machine',        w: 500,  dc: 0.08, max: 6 },
+    { k: 'office', n: 'Computers / office',     w: 150,  dc: 0.50, max: 60, step: 2 }
+  ];
+
+  var ICON_CALC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" ' +
+    'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<rect x="4" y="2" width="16" height="20" rx="2.5"/><path d="M8 6h8"/>' +
+    '<path d="M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 19h4M16 19h.01"/></svg>';
+
+  function initCalcFab() {
+    if ($('.cfab')) return;
+
+    var state = {}, months = 6;
+    CFAB_ITEMS.forEach(function (a) { state[a.k] = 0; });
+
+    var el = document.createElement('div');
+    el.className = 'cfab';
+    el.innerHTML =
+      '<div class="cfab__panel" role="dialog" aria-label="Solar and finance calculator">' +
+        '<div class="cfab__head">' +
+          '<span class="av">' + ICON_CALC + '</span>' +
+          '<span><b>Size &amp; price your system</b><small>Works right here, no page change</small></span>' +
+          '<button class="cfab__close" type="button" aria-label="Close calculator">' + ICON.close + '</button>' +
+        '</div>' +
+        '<div class="cfab__body">' +
+          '<div class="field"><label for="cf-hours">How long must it run without the grid?</label>' +
+            '<select id="cf-hours">' +
+              '<option value="6">6 hours, night only</option>' +
+              '<option value="10" selected>10 hours, evening and night</option>' +
+              '<option value="16">16 hours, most of the day</option>' +
+              '<option value="24">24 hours, full independence</option>' +
+            '</select></div>' +
+          '<p class="cfab__hint">Add what you want running when the grid is off.</p>' +
+          '<div class="qs" id="cfRows"></div>' +
+        '</div>' +
+        '<div class="cfab__foot" id="cfFoot"></div>' +
+      '</div>' +
+      '<button class="cfab__btn" type="button" aria-expanded="false" aria-label="Open the solar and finance calculator">' +
+        '<span class="cfab__avatar">' + ICON_CALC + '</span>' +
+        '<span class="cfab__label"><b>Calculate</b><span>System &amp; finance</span></span>' +
+      '</button>';
+
+    document.body.appendChild(el);
+
+    var rows = $('#cfRows', el);
+    CFAB_ITEMS.forEach(function (a) {
+      var step = a.step || 1;
+      var row = document.createElement('div');
+      row.className = 'qs__row';
+      row.innerHTML =
+        '<span><span class="qs__nm">' + a.n + '</span><br><span class="qs__w">' + a.w + ' W</span></span>' +
+        '<span class="qs__ctl">' +
+          '<button class="qs__b" type="button" data-d="-1" aria-label="Remove one ' + a.n + '" disabled>&minus;</button>' +
+          '<span class="qs__n" aria-live="polite">0</span>' +
+          '<button class="qs__b" type="button" data-d="1" aria-label="Add one ' + a.n + '">+</button>' +
+        '</span>';
+      var num = $('.qs__n', row), minus = $('[data-d="-1"]', row);
+      $$('.qs__b', row).forEach(function (b) {
+        b.addEventListener('click', function () {
+          var v = state[a.k] + parseInt(b.getAttribute('data-d'), 10) * step;
+          state[a.k] = Math.min(Math.max(v, 0), a.max);
+          num.textContent = state[a.k];
+          minus.disabled = state[a.k] === 0;
+          row.classList.toggle('is-on', state[a.k] > 0);
+          calc();
+        });
+      });
+      rows.appendChild(row);
+    });
+
+    var foot = $('#cfFoot', el);
+    var hoursEl = $('#cf-hours', el);
+
+    function fmt(n) { return '\u20a6' + Math.round(n).toLocaleString('en-US'); }
+
+    function calc() {
+      var peak = 0, daily = 0, parts = [];
+      CFAB_ITEMS.forEach(function (a) {
+        var q = state[a.k];
+        if (!q) return;
+        peak += q * a.w;
+        daily += q * a.w * a.dc * 10 / 1000;
+        parts.push(q + ' x ' + a.n);
+      });
+
+      if (!parts.length) {
+        foot.innerHTML =
+          '<p class="cfab__empty">Add an appliance above and your system size, cost and monthly ' +
+          'payment appear here.</p>' +
+          '<div class="cfab__acts"><a class="btn btn--outline" href="calculator.html">Open the full calculator</a></div>';
+        return;
+      }
+
+      var hours = parseInt(hoursEl.value, 10);
+      var need = peak * 1.3 / 1000;
+      var tier = CALC_TIERS.find(function (t) { return t.kw >= need; }) || CALC_TIERS[CALC_TIERS.length - 1];
+      var batt = Math.max(5, Math.ceil((peak / 1000) * 0.55 * hours / 0.9));
+      var panels = Math.max(4, Math.ceil((batt + daily) / (0.62 * 4.5)));
+      var deposit = tier.price * 0.30;
+      var principal = tier.price - deposit;
+      var monthly = (principal + principal * 0.04 * months) / months;
+
+      foot.innerHTML =
+        '<dl class="cfab__sum">' +
+          '<div><dt>Inverter</dt><dd>' + tier.kw + ' kW</dd></div>' +
+          '<div><dt>Battery</dt><dd>' + batt + ' kWh</dd></div>' +
+          '<div><dt>Panels</dt><dd>' + panels + '</dd></div>' +
+          '<div><dt>Peak</dt><dd>' + (peak / 1000).toFixed(1) + ' kW</dd></div>' +
+        '</dl>' +
+        '<div class="cfab__cost"><span>Indicative, installed</span><b>' + fmt(tier.price) + '</b></div>' +
+        '<div class="cfab__fin">' +
+          '<div class="seg" id="cfTerms">' +
+            [3, 6, 9, 12].map(function (m) {
+              return '<button type="button" data-m="' + m + '"' +
+                (m === months ? ' class="is-on"' : '') + '>' + m + 'm</button>';
+            }).join('') +
+          '</div>' +
+          '<div class="cfab__finrow"><span>Deposit today (30%)</span><b>' + fmt(deposit) + '</b></div>' +
+          '<div class="cfab__finrow"><span>Then per month</span><b>' + fmt(monthly) + '</b></div>' +
+        '</div>' +
+        '<div class="cfab__acts">' +
+          '<a class="btn btn--primary" id="cfSend" href="#">Send this to an engineer</a>' +
+          '<a class="btn btn--outline" href="calculator.html">Open the full calculator</a>' +
+        '</div>';
+
+      $$('#cfTerms button', foot).forEach(function (b) {
+        b.addEventListener('click', function () {
+          months = parseInt(b.getAttribute('data-m'), 10);
+          calc();
+        });
+      });
+
+      $('#cfSend', foot).addEventListener('click', function (e) {
+        e.preventDefault();
+        window.open(wa('Hello Solar World, I used the calculator on your website.\n\n' +
+          'My appliances: ' + parts.join(', ') + '\n' +
+          'Backup needed: ' + hours + ' hours\n' +
+          'Suggested system: ' + tier.kw + ' kW inverter, ' + batt + ' kWh battery, ' +
+          panels + ' x 620W panels\n' +
+          'Indicative cost: ' + fmt(tier.price) + '\n' +
+          'Financing: ' + fmt(deposit) + ' deposit, then ' + fmt(monthly) +
+          ' a month for ' + months + ' months.\n\nPlease confirm the right system and price for me.'),
+          '_blank', 'noopener');
+      });
+    }
+
+    hoursEl.addEventListener('change', calc);
+
+    var btn = $('.cfab__btn', el);
+    function setOpen(open) {
+      el.classList.toggle('is-open', open);
+      btn.setAttribute('aria-expanded', String(open));
+      // never let both floating panels sit open on top of each other
+      if (open) {
+        var w = $('.wa');
+        if (w) { w.classList.remove('is-open'); var f = $('.wa__fab', w); if (f) f.setAttribute('aria-expanded', 'false'); }
+      }
+    }
+    btn.addEventListener('click', function () { setOpen(!el.classList.contains('is-open')); });
+    $('.cfab__close', el).addEventListener('click', function () { setOpen(false); });
+    document.addEventListener('click', function (e) {
+      if (e.composedPath && e.composedPath().indexOf(el) > -1) return;
+      if (!document.contains(e.target)) return;   // target was re-rendered away
+      if (!el.contains(e.target)) setOpen(false);
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
+
+    calc();
+  }
+
+  /* ------------------------------------------------------------------
      Boot
      ------------------------------------------------------------------ */
   function boot() {
@@ -1194,6 +1389,7 @@
     initRepay();
     initSmartCalc();
     initWhatsApp();
+    initCalcFab();
     initLeadPopup();
   }
 
