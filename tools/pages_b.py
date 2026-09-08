@@ -171,7 +171,7 @@ def _case_article(c):
 
     kws = "".join('<span class="chip">%s</span>' % k for k in c["keywords"])
     cat_label = next(x["label"] for x in CATEGORIES if x["key"] == c["cat"])
-    meta = " · ".join(filter(None, [cat_label, c["type"], c.get("location")]))
+    meta = " · ".join(filter(None, [cat_label, c["type"], c.get("client"), c.get("location")]))
 
     return """
 <article class="cs-article" id="cs-%s" data-reveal>
@@ -575,44 +575,56 @@ def calculator():
     return """
 %(head)s
 
-<section class="section">
-  <div class="container split" style="align-items:start">
-    <div data-reveal="left">
-      <span class="eyebrow">Solar sizing tool</span>
-      <h2>Tell us what you run. We will tell you what you need.</h2>
-      <p class="lead">Select your appliances and how long you run them. The calculator estimates the inverter
-      size, battery capacity and panel count for your load, then gives an indicative price band from our
-      published charts.</p>
-      <div class="answer" style="margin-top:24px">
-        <span class="answer__k">%(spark)s How sizing actually works</span>
-        <p>Inverter size is set by your <b>peak simultaneous demand</b>: mostly air-conditioner start-up surge.
-        Battery capacity is set by your <b>overnight energy use in kWh</b>. Panel count is set by how fast you
-        need the battery refilled the next day. Getting one right and the others wrong is why undersized systems
-        fail at 3 a.m.</p>
-      </div>
-      <div class="btn-row" style="margin-top:26px">
-        <a class="btn btn--dark" href="pricing.html">See published prices</a>
-        <a class="btn btn--outline" data-wa="Hello Solar World, I used your solar calculator and would like an engineer to confirm my system size.">Have an engineer confirm it</a>
-      </div>
+<section class="section section--tight">
+  <div class="container container--narrow">
+    <div class="answer" data-reveal>
+      <span class="answer__k">%(spark)s Quick answer</span>
+      <p><b>What size solar system do I need?</b> It is decided by three separate numbers, not one.
+      <b>Inverter size</b> comes from your peak simultaneous demand, which air-conditioner start-up
+      surge usually dominates. <b>Battery capacity</b> comes from how much energy you use while the sun
+      is down. <b>Panel count</b> comes from how fast that battery has to refill the next day. Add your
+      appliances below and the calculator works out all three, then prices it against our published
+      charts and shows the monthly payment if you finance it.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0" id="calc">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Smart solar calculator</span>
+      <h2>Add your appliances. Get your system.</h2>
+      <p>Tap the plus and minus buttons for everything you want running when the grid is off.
+      Every number on the right updates as you go.</p>
     </div>
 
-    <div class="card" data-reveal="right" id="calc">
-      <h3>Load calculator</h3>
-      <p class="small muted">Enter quantities. Leave anything you do not have at zero.</p>
-      <div id="calcRows" style="margin-top:18px"></div>
-      <div class="field" style="margin-top:6px">
-        <label for="calcHours">Hours of backup needed overnight</label>
-        <select id="calcHours">
-          <option value="6">6 hours (night only)</option>
-          <option value="10" selected>10 hours (evening + night)</option>
-          <option value="16">16 hours (most of the day)</option>
-          <option value="24">24 hours (full independence)</option>
-        </select>
+    <div class="calc" id="smartCalc">
+      <div class="calc__panel">
+        <div class="row" style="justify-content:space-between;margin-bottom:18px">
+          <div class="field" style="margin:0;flex:1;min-width:240px">
+            <label for="calcHours">How long must it run without the grid?</label>
+            <select id="calcHours">
+              <option value="6">6 hours, night only</option>
+              <option value="10" selected>10 hours, evening and night</option>
+              <option value="16">16 hours, most of the day</option>
+              <option value="24">24 hours, full independence</option>
+            </select>
+          </div>
+          <button class="btn btn--outline btn--sm" type="button" id="calcReset"
+                  style="align-self:flex-end">Reset</button>
+        </div>
+        <div id="calcGroups"></div>
       </div>
-      <div class="facts" id="calcOut" style="margin-top:20px"></div>
-      <a class="btn btn--primary btn--block" style="margin-top:18px" id="calcSend">Send this to an engineer %(wa)s</a>
-      <p class="form-note">Estimates are indicative. A free site load assessment gives you the exact
-      specification and price.</p>
+
+      <aside class="calc__side">
+        <div class="calc__panel">
+          <div class="row" style="justify-content:space-between;margin-bottom:14px">
+            <h3 style="margin:0;font-size:1.1rem">Your system</h3>
+            <span class="chip chip--gold">Live</span>
+          </div>
+          <div class="calc__out" id="calcResult"></div>
+        </div>
+      </aside>
     </div>
   </div>
 </section>
@@ -622,93 +634,54 @@ def calculator():
     <div class="section-head center">
       <span class="eyebrow">Reference</span>
       <h2>What each system size is rated for</h2>
-      <p>Straight from our published price charts.</p>
+      <p>Straight from our published price charts, so you can sanity-check the calculator.</p>
     </div>
     <div class="grid grid-3">%(ref)s</div>
   </div>
 </section>
 
+<section class="section section--deep">
+  <div class="container split" style="align-items:center">
+    <div data-reveal="left">
+      <span class="eyebrow">How the sizing works</span>
+      <h2>Three numbers, not one</h2>
+      <p class="lead" style="color:var(--d-fg-muted)">Getting one right and the others wrong is why
+      undersized systems fail at three in the morning.</p>
+      <div class="steps" style="margin-top:26px">
+        <div class="step"><div class="step__n"></div><div>
+          <h4>Inverter size</h4>
+          <p>Set by peak simultaneous demand plus 30%% headroom for compressor start-up surge.</p></div></div>
+        <div class="step"><div class="step__n"></div><div>
+          <h4>Battery capacity</h4>
+          <p>Set by your overnight energy use, at 90%% usable depth of discharge on lithium.</p></div></div>
+        <div class="step"><div class="step__n"></div><div>
+          <h4>Panel count</h4>
+          <p>Set by how much energy has to be replaced the next day, at roughly 4.5 peak sun hours.</p></div></div>
+      </div>
+    </div>
+    <div data-reveal="right">
+      <div class="card card--glass">
+        <h3>Prefer a person to size it?</h3>
+        <p style="color:var(--d-fg-muted)">Our engineers do a free load assessment, on site or over
+        WhatsApp. They will also tell you if you need less than the calculator suggests, which happens
+        more often than you would think.</p>
+        <div class="btn-row" style="margin-top:22px">
+          <a class="btn btn--primary" data-wa="Hello Solar World, I would like a free load assessment for my property.">Book a free assessment</a>
+          <a class="btn btn--ghost" href="pricing.html">See published prices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 %(cta)s
-
-<script>
-(function(){
-  var APPLIANCES = [
-    {k:'bulb',   n:'LED bulbs / lighting points', w:12,   dc:1.0},
-    {k:'fan',    n:'Ceiling / standing fans',     w:75,   dc:0.6},
-    {k:'tv',     n:'Television sets',             w:110,  dc:0.35},
-    {k:'fridge', n:'Fridges',                     w:200,  dc:0.4},
-    {k:'freezer',n:'Freezers',                    w:250,  dc:0.45},
-    {k:'ac1',    n:'1 HP air conditioners',       w:900,  dc:0.55},
-    {k:'ac15',   n:'1.5 HP air conditioners',     w:1250, dc:0.55},
-    {k:'ac25',   n:'2.5 HP air conditioners',     w:2100, dc:0.55},
-    {k:'pump',   n:'Water pumping machine',       w:750,  dc:0.1},
-    {k:'wash',   n:'Washing machine',             w:500,  dc:0.08},
-    {k:'micro',  n:'Microwave',                   w:1200, dc:0.05},
-    {k:'office', n:'Computers / office equipment',w:150,  dc:0.5}
-  ];
-  var rows = document.getElementById('calcRows');
-  if(!rows) return;
-  APPLIANCES.forEach(function(a){
-    var d = document.createElement('div');
-    d.className = 'field-row';
-    d.style.cssText = 'grid-template-columns:1fr 92px;align-items:center;gap:12px;margin-bottom:10px';
-    d.innerHTML = '<label for="q-'+a.k+'" style="font-size:.9rem;font-weight:500">'+a.n+
-      ' <span class="muted" style="font-weight:400">('+a.w+'W)</span></label>'+
-      '<input id="q-'+a.k+'" type="number" min="0" step="1" value="0" style="padding:.5em .7em;text-align:center">';
-    rows.appendChild(d);
-  });
-
-  var out = document.getElementById('calcOut');
-  function fmt(n){ return n.toLocaleString('en-NG'); }
-
-  function calc(){
-    var peak = 0, daily = 0, list = [];
-    APPLIANCES.forEach(function(a){
-      var q = parseInt(document.getElementById('q-'+a.k).value || '0', 10);
-      if(q > 0){
-        peak  += q * a.w;
-        daily += q * a.w * a.dc * 10 / 1000;   // kWh over a 10h active window
-        list.push(q + ' x ' + a.n);
-      }
-    });
-    var hours = parseInt(document.getElementById('calcHours').value, 10);
-    // inverter: peak plus 30%% surge headroom, rounded to a real product size
-    var sizes = [3,5,8,10,12,16,20,25,30,50,80,100,125];
-    var need = peak * 1.3 / 1000;
-    var inv = sizes.find(function(s){ return s >= need; }) || 125;
-    // battery: overnight energy at 90%% depth of discharge
-    var batt = Math.max(5, Math.ceil((peak/1000) * 0.55 * hours / 0.9));
-    // panels: refill the battery plus carry daytime load, 620W panels at ~4.5 peak sun hours
-    var panels = Math.max(4, Math.ceil((batt + daily) / (0.62 * 4.5)));
-    out.innerHTML =
-      '<div><dt>Inverter size</dt><dd>'+inv+' kW</dd></div>'+
-      '<div><dt>Battery storage</dt><dd>'+fmt(batt)+' kWh</dd></div>'+
-      '<div><dt>Solar panels</dt><dd>'+panels+' x 620 W</dd></div>'+
-      '<div><dt>Peak demand</dt><dd>'+fmt(Math.round(peak))+' W</dd></div>';
-    out.dataset.summary = list.join(', ') || 'no appliances selected';
-    out.dataset.spec = inv+' kW inverter, '+batt+' kWh battery, '+panels+' x 620W panels';
-  }
-
-  rows.addEventListener('input', calc);
-  document.getElementById('calcHours').addEventListener('change', calc);
-  document.getElementById('calcSend').addEventListener('click', function(e){
-    e.preventDefault();
-    var msg = 'Hello Solar World, I used your solar calculator.\\n\\nMy appliances: '+
-      (out.dataset.summary||'')+'\\nBackup needed: '+document.getElementById('calcHours').value+
-      ' hours\\nEstimated system: '+(out.dataset.spec||'')+
-      '\\n\\nPlease confirm the right system and price for me.';
-    window.open(window.SWE.wa(msg), '_blank', 'noopener');
-  });
-  calc();
-})();
-</script>
 """ % {
         "head": page_head(
-            "Solar calculator: what size system do I need?",
-            "Select your appliances and we will estimate the inverter size, battery capacity and panel count "
-            "your property needs, with an indicative price from our published charts.",
+            "Smart solar calculator: what size system do I need?",
+            "Add your air conditioners, fridges, freezers and other appliances. We estimate the inverter "
+            "size, battery capacity, panel count, installed cost and your monthly payment if you finance it.",
             [("Home", "index.html"), ("Calculator", None)], bg="project-rooftop-garden.jpg"),
-        "spark": ico("spark"), "wa": ico("wa"),
+        "spark": ico("spark"),
         "ref": "".join(
             '<article class="card" data-reveal><span class="chip chip--gold" style="margin-bottom:12px">%s</span>'
             '<p style="margin:0">%s</p></article>' % (cap, loads) for cap, loads in [
@@ -719,9 +692,9 @@ def calculator():
                 ("30 kW", "100 lighting points, 10 TVs, 3 fridges, 3 freezers, four 2.5 HP ACs, 7 kW EV charger"),
                 ("125 kW", "Chillers, three-phase ACs, elevator, air compressor, industrial oven and pumps"),
             ]),
-        "cta": cta_band("Prefer a person to size it?",
-                        "Our engineers do a free load assessment on site or over WhatsApp, and they will tell "
-                        "you if you need less than you think."),
+        "cta": cta_band("Ready for a firm quote?",
+                        "Send us your calculator result on WhatsApp and an engineer will confirm the "
+                        "specification and price, usually the same working day."),
     }
 
 
@@ -737,9 +710,12 @@ def contact():
     for region, items in regions.items():
         cards = "".join(
             '<article class="card" data-reveal><span class="chip chip--gold" style="margin-bottom:12px">%s</span>'
-            '<h4>%s</h4><p class="small muted">%s</p>'
-            '<a class="tlink" href="tel:%s">%s %s</a></article>'
-            % (region, o["name"], o["address"], o["phone"].replace(" ", ""), ico("phone"), o["phone"])
+            '<h4>%s</h4><p class="small muted">%s</p>%s</article>'
+            % (region, o["name"], o["address"],
+               ('<a class="tlink" href="tel:%s">%s %s</a>'
+                % (o["phone"].replace(" ", ""), ico("phone"), o["phone"])) if o["phone"]
+               else ('<a class="tlink" data-wa="Hello Solar World, I would like to reach your %s branch.">%s Message us</a>'
+                     % (o["name"].replace('"', ""), ico("wa"))))
             for o in items
         )
         office_cards += ('<div style="margin-bottom:40px"><h3 style="margin-bottom:20px">%s '

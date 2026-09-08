@@ -177,8 +177,10 @@ def footer():
     office_html = ""
     for region, items in regions.items():
         rows = "".join(
-            '<p><b style="color:rgba(255,255,255,.8)">%s</b><br>%s<br><a href="tel:%s" style="color:var(--gold)">%s</a></p>'
-            % (o["name"], o["address"], o["phone"].replace(" ", ""), o["phone"])
+            '<p><b style="color:rgba(255,255,255,.8)">%s</b><br>%s%s</p>'
+            % (o["name"], o["address"],
+               ('<br><a href="tel:%s" style="color:var(--gold)">%s</a>'
+                % (o["phone"].replace(" ", ""), o["phone"])) if o["phone"] else "")
             for o in items
         )
         office_html += '<div><h6>%s</h6>%s</div>' % (region, rows)

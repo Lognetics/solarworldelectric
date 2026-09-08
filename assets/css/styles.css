@@ -1600,6 +1600,86 @@ h4{font-size:var(--t-h4);letter-spacing:-.015em}
 .pagenav a.is-on{background:var(--ink-100);color:#fff}
 
 /* ---------------------------------------------------------------
+   26f. SMART CALCULATOR
+   --------------------------------------------------------------- */
+.calc{display:grid;grid-template-columns:1.25fr .95fr;gap:clamp(20px,2.6vw,34px);align-items:start}
+.calc__panel{background:var(--paper);border:1px solid var(--hair);border-radius:var(--r-lg);padding:clamp(20px,2.4vw,28px)}
+.calc__side{position:sticky;top:calc(var(--nav-h) + 20px)}
+
+.calc__group{margin-bottom:22px}
+.calc__group h4{
+  font-family:var(--f-body);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--fg-muted);font-weight:700;margin-bottom:12px;
+}
+.calc__rows{display:grid;gap:8px}
+
+.stepper{
+  display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;
+  padding:10px 12px;border-radius:14px;border:1px solid var(--hair);background:var(--paper);
+  transition:border-color .25s,background .25s,box-shadow .25s;
+}
+.stepper.is-on{border-color:rgba(249,176,0,.5);background:rgba(249,176,0,.05)}
+.stepper__label{display:flex;flex-direction:column;gap:2px;min-width:0}
+.stepper__name{font-weight:600;font-size:.94rem;line-height:1.25}
+.stepper__w{font-size:.74rem;color:var(--fg-muted)}
+.stepper__ctl{display:flex;align-items:center;gap:4px;flex:0 0 auto}
+.stepper__btn{
+  width:32px;height:32px;border-radius:9px;display:grid;place-items:center;
+  border:1px solid var(--hair-strong);background:var(--paper);color:var(--fg);
+  font-size:1.05rem;line-height:1;font-weight:600;
+  transition:background .2s,border-color .2s,transform .18s var(--ease-spring);
+}
+.stepper__btn:hover:not(:disabled){background:var(--ink-100);border-color:var(--ink-100);color:#fff;transform:scale(1.06)}
+.stepper__btn:disabled{opacity:.32;cursor:not-allowed}
+.stepper__n{
+  min-width:34px;text-align:center;font-family:var(--f-display);font-weight:700;
+  font-size:1rem;letter-spacing:-.02em;
+}
+
+.calc__out{display:grid;gap:14px}
+.calc__hero{
+  border-radius:var(--r);padding:20px;text-align:center;
+  background:var(--g-deep);color:#fff;position:relative;overflow:hidden;
+}
+.calc__hero::before{
+  content:"";position:absolute;width:220px;height:220px;border-radius:50%;
+  right:-70px;top:-80px;background:radial-gradient(circle,rgba(249,176,0,.34),transparent 68%);filter:blur(26px);
+}
+.calc__hero .k{
+  font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.62);font-weight:700;position:relative;
+}
+.calc__hero .v{
+  font-family:var(--f-display);font-weight:700;letter-spacing:-.03em;line-height:1.05;
+  font-size:clamp(1.7rem,3.4vw,2.3rem);margin-top:6px;position:relative;
+  background:var(--g-gold);-webkit-background-clip:text;background-clip:text;
+  color:transparent;-webkit-text-fill-color:transparent;
+}
+.calc__hero .s{font-size:.82rem;color:rgba(255,255,255,.72);margin-top:8px;position:relative;line-height:1.5}
+
+.calc__pill{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:11px 15px;border-radius:12px;background:var(--paper-2);border:1px solid var(--hair);
+}
+.calc__pill dt{font-size:.82rem;color:var(--fg-muted);font-weight:550}
+.calc__pill dd{margin:0;font-family:var(--f-display);font-weight:700;font-size:1rem;letter-spacing:-.02em}
+
+.calc__fin{
+  border-radius:var(--r);border:1px solid rgba(249,176,0,.32);
+  background:linear-gradient(140deg,rgba(249,176,0,.10),rgba(247,147,26,.05));
+  padding:18px;
+}
+.calc__fin h4{margin:0 0 12px;font-size:.95rem;font-family:var(--f-display)}
+.calc__fin .seg{width:100%;justify-content:space-between;margin-bottom:14px}
+.calc__fin .seg button{flex:1}
+.calc__empty{text-align:center;color:var(--fg-muted);font-size:.9rem;padding:26px 12px}
+
+@media (max-width:920px){
+  .calc{grid-template-columns:1fr}
+  .calc__side{position:static}
+}
+
+/* ---------------------------------------------------------------
    27. RESPONSIVE
    --------------------------------------------------------------- */
 @media (max-width:1080px){

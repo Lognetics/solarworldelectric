@@ -101,12 +101,14 @@ def case_card(c):
   </div>
   <div class="case__body">
     <h3>%s</h3>
-    <div class="case__meta"><span class="chip">%s</span>%s</div>
+    <div class="case__meta">%s<span class="chip">%s</span>%s</div>
     <p class="case__excerpt">%s</p>
     <div class="case__spec">%s</div>
     <div class="case__foot"><a class="tlink" href="projects.html#cs-%s">Read the full case study %s</a></div>
   </div>
-</article>""" % (c["cat"], c["id"], c["img"], c["alt"], cat_label, c["title"], c["type"],
+</article>""" % (c["cat"], c["id"], c["img"], c["alt"], cat_label, c["title"],
+                 ('<span class="chip chip--gold">%s</span>' % c["client"]) if c.get("client") else "",
+                 c["type"],
                  ('<span class="chip">%s</span>' % c["location"]) if c.get("location") else "",
                  c["excerpt"], specs, c["id"], ico("arrow"))
 

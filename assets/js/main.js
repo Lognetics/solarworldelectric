@@ -972,6 +972,204 @@
   }
 
   /* ------------------------------------------------------------------
+     21. Smart solar calculator (appliance sizing + cost + financing)
+     ------------------------------------------------------------------ */
+  var CALC_GROUPS = [
+    { g: 'Cooling', items: [
+      { k: 'ac1',   n: '1 HP air conditioner',   w: 900,  dc: 0.55, max: 12 },
+      { k: 'ac15',  n: '1.5 HP air conditioner', w: 1250, dc: 0.55, max: 12 },
+      { k: 'ac2',   n: '2 HP air conditioner',   w: 1700, dc: 0.55, max: 12 },
+      { k: 'ac25',  n: '2.5 HP air conditioner', w: 2100, dc: 0.55, max: 12 },
+      { k: 'fan',   n: 'Ceiling / standing fan', w: 75,   dc: 0.60, max: 30 }
+    ]},
+    { g: 'Refrigeration', items: [
+      { k: 'fridge',  n: 'Fridge',            w: 200, dc: 0.40, max: 12 },
+      { k: 'freezer', n: 'Freezer',           w: 250, dc: 0.45, max: 12 },
+      { k: 'chiller', n: 'Cold room / chiller', w: 1500, dc: 0.50, max: 8 }
+    ]},
+    { g: 'Lighting & entertainment', items: [
+      { k: 'bulb',  n: 'LED bulb / light point', w: 12,  dc: 1.00, max: 250, step: 5 },
+      { k: 'tv',    n: 'Television',             w: 110, dc: 0.35, max: 40 },
+      { k: 'sound', n: 'Sound system',           w: 250, dc: 0.20, max: 8 }
+    ]},
+    { g: 'Household', items: [
+      { k: 'wash',  n: 'Washing machine',   w: 500,  dc: 0.08, max: 6 },
+      { k: 'micro', n: 'Microwave',         w: 1200, dc: 0.05, max: 6 },
+      { k: 'iron',  n: 'Electric iron',     w: 1100, dc: 0.05, max: 4 },
+      { k: 'pump',  n: 'Water pumping machine', w: 750, dc: 0.10, max: 6 },
+      { k: 'heater', n: 'Water heater',     w: 1500, dc: 0.12, max: 6 }
+    ]},
+    { g: 'Work & other', items: [
+      { k: 'office', n: 'Computer / office point', w: 150, dc: 0.50, max: 60, step: 2 },
+      { k: 'ev',     n: 'EV charge point',         w: 6000, dc: 0.20, max: 4 },
+      { k: 'lift',   n: 'Elevator',                w: 5000, dc: 0.15, max: 4 }
+    ]}
+  ];
+
+  // Installed package prices, straight from the published charts.
+  var CALC_TIERS = [
+    { kw: 3,   price: 2350000,   label: '3 kVA package' },
+    { kw: 5,   price: 3940000,   label: '5 kVA package' },
+    { kw: 8,   price: 8210000,   label: '8 kW package' },
+    { kw: 10,  price: 9290000,   label: '10 kW (12.5 kVA) package' },
+    { kw: 12,  price: 14660000,  label: '12 kW (15 kVA) package' },
+    { kw: 16,  price: 16360000,  label: '16 kW (20 kVA) package' },
+    { kw: 20,  price: 22510000,  label: '20 kW three-phase package' },
+    { kw: 25,  price: 29120000,  label: '25 kW high-voltage package' },
+    { kw: 30,  price: 35990000,  label: '30 kW high-voltage package' },
+    { kw: 50,  price: 47660000,  label: '50 kW high-voltage package' },
+    { kw: 80,  price: 68080000,  label: '80 kW high-voltage package' },
+    { kw: 100, price: 107570950, label: '100 kW high-voltage package' },
+    { kw: 125, price: 147190950, label: '125 kW industrial package' }
+  ];
+
+  function initSmartCalc() {
+    var root = $('#smartCalc');
+    if (!root) return;
+
+    var wrap = $('#calcGroups', root);
+    var out = $('#calcResult', root);
+    var hoursEl = $('#calcHours', root);
+    var state = {};
+    var months = 6;
+
+    CALC_GROUPS.forEach(function (grp) {
+      var box = document.createElement('div');
+      box.className = 'calc__group';
+      box.innerHTML = '<h4>' + grp.g + '</h4><div class="calc__rows"></div>';
+      var rows = $('.calc__rows', box);
+
+      grp.items.forEach(function (a) {
+        state[a.k] = 0;
+        var step = a.step || 1;
+        var row = document.createElement('div');
+        row.className = 'stepper';
+        row.innerHTML =
+          '<span class="stepper__label"><span class="stepper__name">' + a.n + '</span>' +
+          '<span class="stepper__w">' + a.w + ' W</span></span>' +
+          '<span class="stepper__ctl">' +
+            '<button class="stepper__btn" type="button" data-d="-1" aria-label="Remove one ' + a.n + '" disabled>&minus;</button>' +
+            '<span class="stepper__n" aria-live="polite">0</span>' +
+            '<button class="stepper__btn" type="button" data-d="1" aria-label="Add one ' + a.n + '">+</button>' +
+          '</span>';
+        var num = $('.stepper__n', row);
+        var minus = $('[data-d="-1"]', row);
+        $$('.stepper__btn', row).forEach(function (b) {
+          b.addEventListener('click', function () {
+            var d = parseInt(b.getAttribute('data-d'), 10) * step;
+            var v = Math.min(Math.max(state[a.k] + d, 0), a.max);
+            state[a.k] = v;
+            num.textContent = v;
+            minus.disabled = v === 0;
+            row.classList.toggle('is-on', v > 0);
+            calc();
+          });
+        });
+        rows.appendChild(row);
+      });
+      wrap.appendChild(box);
+    });
+
+    function fmt(n) { return '\u20a6' + Math.round(n).toLocaleString('en-US'); }
+
+    function calc() {
+      var peak = 0, daily = 0, parts = [], any = false;
+      CALC_GROUPS.forEach(function (grp) {
+        grp.items.forEach(function (a) {
+          var q = state[a.k];
+          if (!q) return;
+          any = true;
+          peak += q * a.w;
+          daily += q * a.w * a.dc * 10 / 1000;   // kWh across a 10h active window
+          parts.push(q + ' x ' + a.n);
+        });
+      });
+
+      if (!any) {
+        out.innerHTML = '<p class="calc__empty">Add the appliances you want to run and your ' +
+          'recommended system will appear here.</p>';
+        root.dataset.summary = '';
+        return;
+      }
+
+      var hours = parseInt(hoursEl.value, 10);
+      var need = peak * 1.3 / 1000;                       // 30% surge headroom
+      var tier = CALC_TIERS.find(function (t) { return t.kw >= need; }) || CALC_TIERS[CALC_TIERS.length - 1];
+      var batt = Math.max(5, Math.ceil((peak / 1000) * 0.55 * hours / 0.9));
+      var panels = Math.max(4, Math.ceil((batt + daily) / (0.62 * 4.5)));
+      var deposit = tier.price * 0.30;
+      var principal = tier.price - deposit;
+      var monthly = (principal + principal * 0.04 * months) / months;
+
+      out.innerHTML =
+        '<div class="calc__hero">' +
+          '<div class="k">Recommended system</div>' +
+          '<div class="v">' + tier.kw + ' kW</div>' +
+          '<div class="s">' + tier.label + '<br>' + batt + ' kWh storage &middot; ' + panels + ' x 620 W panels</div>' +
+        '</div>' +
+        '<dl class="calc__pill"><dt>Peak demand</dt><dd>' + (peak / 1000).toFixed(1) + ' kW</dd></dl>' +
+        '<dl class="calc__pill"><dt>Daily energy use</dt><dd>' + daily.toFixed(1) + ' kWh</dd></dl>' +
+        '<dl class="calc__pill"><dt>Battery storage</dt><dd>' + batt + ' kWh</dd></dl>' +
+        '<dl class="calc__pill"><dt>Solar panels</dt><dd>' + panels + ' x 620 W</dd></dl>' +
+        '<dl class="calc__pill" style="background:var(--ink-100);border-color:var(--ink-100)">' +
+          '<dt style="color:rgba(255,255,255,.7)">Indicative cost</dt>' +
+          '<dd style="color:var(--gold)">' + fmt(tier.price) + '</dd></dl>' +
+
+        '<div class="calc__fin">' +
+          '<h4>Spread it with financing</h4>' +
+          '<div class="seg" id="calcTerms">' +
+            [3, 6, 9, 12].map(function (m) {
+              return '<button type="button" data-m="' + m + '"' +
+                (m === months ? ' class="is-on"' : '') + '>' + m + 'm</button>';
+            }).join('') +
+          '</div>' +
+          '<dl class="calc__pill" style="margin-bottom:8px"><dt>Deposit today (30%)</dt><dd>' + fmt(deposit) + '</dd></dl>' +
+          '<dl class="calc__pill"><dt>Then per month</dt><dd>' + fmt(monthly) + '</dd></dl>' +
+          '<p class="form-note" style="margin-top:10px">A flat 4% of the financed balance is added each ' +
+          'month, as published on our financing page.</p>' +
+        '</div>' +
+
+        '<a class="btn btn--primary btn--block" id="calcSend" href="#">Send this to an engineer</a>' +
+        '<p class="form-note">Indicative only. A free load assessment gives you the exact ' +
+        'specification and a firm price.</p>';
+
+      $$('#calcTerms button', out).forEach(function (b) {
+        b.addEventListener('click', function () {
+          months = parseInt(b.getAttribute('data-m'), 10);
+          calc();
+        });
+      });
+
+      root.dataset.summary = parts.join(', ');
+      root.dataset.spec = tier.kw + ' kW inverter (' + tier.label + '), ' + batt +
+        ' kWh battery, ' + panels + ' x 620W panels, indicative ' + fmt(tier.price);
+
+      $('#calcSend', out).addEventListener('click', function (e) {
+        e.preventDefault();
+        window.open(wa('Hello Solar World, I used the smart calculator on your website.\n\n' +
+          'My appliances: ' + root.dataset.summary + '\n' +
+          'Backup needed: ' + hours + ' hours\n' +
+          'Suggested system: ' + root.dataset.spec + '\n' +
+          'Financing: ' + fmt(deposit) + ' deposit, then ' + fmt(monthly) + ' a month for ' + months + ' months.\n\n' +
+          'Please confirm the right system and price for me.'), '_blank', 'noopener');
+      });
+    }
+
+    hoursEl.addEventListener('change', calc);
+    var reset = $('#calcReset', root);
+    if (reset) reset.addEventListener('click', function () {
+      Object.keys(state).forEach(function (k) { state[k] = 0; });
+      $$('.stepper', root).forEach(function (r) {
+        $('.stepper__n', r).textContent = '0';
+        r.classList.remove('is-on');
+        $('[data-d="-1"]', r).disabled = true;
+      });
+      calc();
+    });
+    calc();
+  }
+
+  /* ------------------------------------------------------------------
      Boot
      ------------------------------------------------------------------ */
   function boot() {
@@ -994,6 +1192,7 @@
     initSizer();
     initVersus();
     initRepay();
+    initSmartCalc();
     initWhatsApp();
     initLeadPopup();
   }

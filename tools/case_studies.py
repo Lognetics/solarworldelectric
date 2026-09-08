@@ -22,78 +22,6 @@ CASES = [
     # RESIDENTIAL
     # ======================================================================
     {
-        "id": "16kw-residential-airbnb",
-        "cat": "residential",
-        "type": "Airbnb / Short-stay accommodation",
-        "verified": True,
-        "featured": True,
-        "title": "16 kW Residential Solar Installation for a Two-Bedroom Airbnb",
-        "location": None,           # business to confirm
-        "client": None,             # private residence
-        "img": "pkg/pkg-16kw.jpg",
-        "alt": "16 kW residential solar and inverter installation for a two-bedroom Airbnb apartment in Nigeria",
-        "specs": [
-            ("System", "16 kW inverter"),
-            ("Battery storage", "2 × 16 kWh lithium"),
-            ("Solar panels", "20 × 620 W"),
-            ("Property", "Two-bedroom apartment"),
-        ],
-        "excerpt": ("An Airbnb operator needed power that keeps guests comfortable through every "
-                    "outage, without generator noise. We sized a 16 kW system around the property's "
-                    "three air conditioners and everyday loads."),
-        "loads": ("3 air conditioners (two 1.5 HP, one 3 HP), refrigeration, television, lighting "
-                  "and other household appliances"),
-        "sections": [
-            ("The Challenge",
-             ["For an Airbnb operator, electricity is not simply a household convenience. "
-              "It is part of the customer experience.",
-              "Guests expect a property advertised as comfortable to remain comfortable when the "
-              "public power supply goes off. Air conditioning, refrigeration, lighting, entertainment "
-              "and other essential appliances need to remain available without the constant sound and "
-              "inconvenience associated with a generator.",
-              "The owner of this two-bedroom Airbnb wanted a reliable power solution but was faced "
-              "with a more important question: who could they trust to design a system that would "
-              "actually match the property's requirements?",
-              "Rather than purchasing an inverter based on its advertised capacity alone, the customer "
-              "approached Solar World to determine what system would properly support the apartment's "
-              "intended loads.",
-              "The property had three air conditioners, two 1.5 HP AC units and one 3 HP AC unit. "
-              "It also needed to accommodate everyday loads such as lighting, television, refrigeration, "
-              "microwave, washing machine and other household appliances."]),
-            ("Our Recommendation",
-             ["After considering the property's requirements, Solar World recommended a 16 kW inverter "
-              "system paired with two 16 kWh lithium batteries and 20 solar panels.",
-              "The objective was not simply to provide backup electricity. The objective was to give the "
-              "property a dependable energy system capable of supporting the customer's Airbnb operations "
-              "and maintaining a comfortable environment for guests."]),
-            ("What We Installed",
-             ["16 kW inverter",
-              "2 × 16 kWh lithium batteries",
-              "20 units of 620 W solar panels",
-              "Complete installation and system configuration"], "list"),
-            ("The Result",
-             ["The system has been performing according to the property's present energy requirements, "
-              "with the customer reporting that it has not disappointed them since installation.",
-              "One of the biggest benefits for the property is the experience itself. There is no generator "
-              "noise disturbing guests. There is no need to interrupt the atmosphere of the property every "
-              "time the grid supply goes down. The customer also has a system with enough capacity for the "
-              "loads they currently need without immediately having to pursue another upgrade."]),
-            ("Why This Project Matters",
-             ["This installation demonstrates an important principle in residential solar: the right solar "
-              "system is designed around the customer's actual lifestyle and energy requirements.",
-              "For short-stay apartments, Airbnbs and serviced residences, reliable electricity directly "
-              "affects the customer experience."]),
-        ],
-        "quote": ("The biggest thing for me was knowing I could give my guests consistent power without the "
-                  "noise and inconvenience of a generator. Since we installed the system, it has performed "
-                  "exactly as we expected and is very easy to operate. I'm even looking at getting extra "
-                  "panels and another battery for more backup."),
-        "quote_status": "Suggested testimonial direction, to be replaced with the customer's actual wording.",
-        "keywords": ["solar system for Airbnb", "solar system for home", "residential solar installation",
-                     "solar inverter installation for home", "solar battery system",
-                     "lithium battery solar system", "solar installation in Nigeria"],
-    },
-    {
         "id": "8kw-family-home-port-harcourt",
         "cat": "residential", "type": "Family home", "verified": False,
         "title": "8 kW (10 kVA) Home Solar &amp; Inverter Installation in Port Harcourt",
@@ -891,4 +819,24 @@ CASES = [
         "keywords": ["solar EV charging Nigeria", "EV charger installation Nigeria",
                      "solar powered car charging", "home EV charge point", "renewable energy EV charging"],
     },
+]
+
+
+# ---------------------------------------------------------------------------
+# Merge in the verified case studies supplied by the business. They lead the
+# list, and any placeholder they supersede is dropped so the same project is
+# never told twice.
+# ---------------------------------------------------------------------------
+from verified_cases import VERIFIED
+
+SUPERSEDED = {
+    "50kw-hotel-installation",     # -> 50kw-bistro-hotel (verified)
+    "50kw-shopping-facility",      # -> 30kw-shopping-complex (verified)
+    "20kw-estate-residence",       # -> 20kw-high-consumption-home (verified)
+}
+
+_verified_ids = {c["id"] for c in VERIFIED}
+CASES = VERIFIED + [
+    c for c in CASES
+    if c["id"] not in _verified_ids and c["id"] not in SUPERSEDED
 ]
