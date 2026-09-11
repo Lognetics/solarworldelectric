@@ -447,8 +447,8 @@ CASES = [
         "cat": "commercial", "type": "Restaurant", "verified": False,
         "title": "16 kW (20 kVA) Solar Inverter Installation for a Restaurant",
         "location": "Lekki, Lagos", "client": None,
-        "img": "install-room-stack2.jpg",
-        "alt": "16kW 20kVA solar inverter installation for a restaurant in Lagos with lithium battery storage",
+        "img": "project-restaurant-16kw.jpg",
+        "alt": "Wall-mounted Deye inverter with two floor-standing lithium batteries for the restaurant installation",
         "specs": [("System", "16 kW / 48 V hybrid"), ("Battery storage", "2 × 16 kWh lithium"),
                   ("Solar panels", "20 × 620 W"), ("Property", "Restaurant")],
         "excerpt": ("Chillers, freezers, five air conditioners and a dining room that has to stay comfortable "
@@ -513,8 +513,8 @@ CASES = [
         "cat": "commercial", "type": "Retail business", "verified": False,
         "title": "12 kW (15 kVA) Solar Inverter Installation for a Retail Business",
         "location": "Port Harcourt, Rivers State", "client": None,
-        "img": "install-room-grey.jpg",
-        "alt": "12kW 15kVA solar inverter installation for a retail business in Port Harcourt",
+        "img": "project-retail-12kw.jpg",
+        "alt": "AlpSolar inverter with two BICODI lithium batteries for the retail business installation",
         "specs": [("System", "12 kW / 48 V hybrid"), ("Battery storage", "2 × 16 kWh lithium"),
                   ("Solar panels", "16 × 620 W"), ("Property", "Retail store")],
         "excerpt": ("A mid-size store running lighting, displays, POS, refrigeration and three air "
@@ -548,8 +548,8 @@ CASES = [
         "cat": "industrial", "type": "Factory", "verified": False, "featured": True,
         "title": "125 kW Solar &amp; Storage Installation for a Factory",
         "location": "Nigeria", "client": None,
-        "img": "install-deye-rack.jpg",
-        "alt": "125kW industrial solar and lithium storage installation for a factory in Nigeria",
+        "img": "project-factory-125kw.jpg",
+        "alt": "Industrial battery racks and power equipment beneath a green canopy at the factory installation",
         "specs": [("System", "125 kW PCS"), ("Battery storage", "15 × 16 kWh"),
                   ("Solar panels", "168 × 620 W"), ("Property", "Manufacturing plant")],
         "excerpt": ("Chillers, three-phase air conditioning, compressors and an industrial oven, the "
@@ -791,8 +791,8 @@ CASES = [
         "cat": "infrastructure", "type": "EV charging", "verified": False,
         "title": "Solar-Powered EV Charging Points for Homes and Businesses",
         "location": "Nationwide", "client": None,
-        "img": "install-room-dual.jpg",
-        "alt": "Hybrid inverter and lithium battery system supplying a solar powered EV charging point",
+        "img": "project-ev-charging.jpg",
+        "alt": "Electric vehicles parked beneath a solar-panel canopy at an EV charging station",
         "specs": [("Charger", "6–7 kW charge point"), ("Source", "Solar + lithium"),
                   ("Integration", "Hybrid inverter"), ("Application", "Homes &amp; offices")],
         "excerpt": ("EV charge points integrated into the same hybrid system that powers the building, so "
