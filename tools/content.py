@@ -420,23 +420,55 @@ FINANCE_STEPS = [
      "No more fuel costs and no more blackouts."),
 ]
 
+
 # ---------------------------------------------------------------------------
-# LEADERSHIP (profile pages 4–8)
+# TEAM: names, roles and photos from the "Solar World Teams" folder.
+# Each photo's filename carried the person's full name and role; the
+# headshots were face-detected and cropped square so every card is framed alike.
 # ---------------------------------------------------------------------------
+TEAM_GROUPS = [
+    ("leadership", "Leadership", "The people who set the direction of the group."),
+    ("executive", "Executive office", "Coordinating the chairman's and managing director's offices."),
+    ("regional", "Regional management", "Running our business regions across Abuja, Lagos and Port Harcourt."),
+    ("heads", "Heads of department", "Finance, legal, people, communications, media and technical."),
+    ("branch", "Branch &amp; area managers", "The teams you meet when you walk into a Solar World branch."),
+]
+
 TEAM = [
-    ("Mr. Charles Abia", "Chairman, Solar World Group", "team-charles-abia.jpg"),
-    ("Abigail Felix", "Managing Director", "team-abigail.jpg"),
-    ("Raphael Duru", "General Manager, Operations", "team-raphael.jpg"),
-    ("Ejike Okoli", "Head of Sales &amp; Business, Abuja Region", "team-ejike.jpg"),
-    ("Esther Olufunke", "Head of Sales &amp; Business, Lagos Region", "team-esther.jpg"),
-    ("Chioma Uga", "Head of Sales &amp; Business, Port Harcourt Region", "team-chioma.jpg"),
-    ("Maureen Okoli", "Head of Strategy &amp; Business Development", "team-maureen.jpg"),
-    ("Alexia Ilo", "Head of Business Coordination", "team-alexia.jpg"),
-    ("Esema Essienubong", "Head of Legal &amp; Administration", "team-esema.jpg"),
-    ("Favour Austine", "Head of Human Capital / HR", "team-favour.jpg"),
-    ("Ezeh Nmesoma", "Head of Corporate Sales, Abuja Region", "team-ezeh.jpg"),
-    ("Deborah Simeon", "Head of Media", "team-deborah.jpg"),
-    ("Monebi Rachael", "Head of Administration, Lagos Region", "team-monebi.jpg"),
-    ("Abidemi Owolabi", "Branch Manager, Lekki Phase 1, Lagos", "team-abidemi.jpg"),
-    ("Okpalaojimmadu Ogechi", "Branch Manager, Port Harcourt City Mall (SPAR)", "team-ogechi.jpg"),
+    ("Mr Charles Abia", "Chairman, Solar World Group", "team/charles-abia.jpg", "leadership"),
+    ("Adanna Felix", "Managing Director, Solar World Electric Technology Limited", "team/adanna-felix.jpg", "leadership"),
+    ("Chioma Uga", "Regional Director (Central)", "team/chioma-uga.jpg", "leadership"),
+    ("Enya Billy-Paul", "Technical Director, South West Zone", "team/enya-billy-paul.jpg", "leadership"),
+    ("Amina Addo Franka", "Executive Assistant to the Chairman", "team/amina-addo-franka.jpg", "executive"),
+    ("Asein Maria", "Executive Assistant to the Chairman; Head Business Coordinator &amp; Quality Control (Central)", "team/asein-maria.jpg", "executive"),
+    ("Ijeoma Judith Nnodum", "Executive Assistant to the MD; Head, Business Coordination, Lagos Island Region", "team/ijeoma-judith-nnodum.jpg", "executive"),
+    ("Favour Ogochukwu Ayozie", "Business Coordinator; Executive Assistant", "team/favour-ogochukwu-ayozie.jpg", "executive"),
+    ("Patience Alex", "Regional Manager, Abuja 1 Business Region", "team/patience-alex.jpg", "regional"),
+    ("Blessing Titus", "Regional Manager, Abuja 2 Business Region", "team/blessing-titus.jpg", "regional"),
+    ("Chioma Cecilia Uga", "Regional Manager, Port Harcourt Region", "team/chioma-cecilia-uga.jpg", "regional"),
+    ("Olufunke Esther", "Regional Manager, Lagos Island Region", "team/olufunke-esther.jpg", "regional"),
+    ("Maryann Imuesi", "Regional Manager, Mainland Region", "team/maryann-imuesi.jpg", "regional"),
+    ("Chiamaka Ukwuoma", "Head, Finance and Accounting Department", "team/chiamaka-ukwuoma.jpg", "heads"),
+    ("Favour Yiliye Austine", "Head, Human Capital and Administration, Solar World Group", "team/favour-yiliye-austine.jpg", "heads"),
+    ("Essien Esema Esq.", "Head, Legal &amp; Compliance Department", "team/essien-esema.jpg", "heads"),
+    ("Utsoritse Ejegi", "Head, Corporate Communications, Solar World Group, Port Harcourt Region", "team/utsoritse-ejegi.jpg", "heads"),
+    ("Faizat Temitope Abdulrauf", "Head, Human Capital and Administration, Abuja Region", "team/faizat-temitope-abdulrauf.jpg", "heads"),
+    ("Amaraezue Udo Ezeozue", "Head, Human Capital &amp; Administration, Lagos Region", "team/amaraezue-udo-ezeozue.jpg", "heads"),
+    ("Glory Ezinne Okoro", "Head, Human Resource &amp; Administration, Port Harcourt Region", "team/glory-ezinne-okoro.jpg", "heads"),
+    ("Nwankwo Kosisochukwu", "Head, Legal and Compliance, Lagos State", "team/nwankwo-kosisochukwu.jpg", "heads"),
+    ("Obi-Benson Somto", "Head, New Media and Strategy, Lagos Region", "team/obi-benson-somto.jpg", "heads"),
+    ("Majesty Michael Oko-Jaja", "Head, Media, Port Harcourt Region", "team/majesty-michael-oko-jaja.jpg", "heads"),
+    ("Wilcox Lawrence Miller", "Technical Team Lead, Port Harcourt", "team/wilcox-lawrence-miller.jpg", "heads"),
+    ("Linda Chinwendu Opurum", "Area Manager, Port Harcourt Region", "team/linda-chinwendu-opurum.jpg", "branch"),
+    ("Marvelous Chimezie", "Area Manager, Ceddi Branch", "team/marvelous-chimezie.jpg", "branch"),
+    ("Fatima Zahra Umar", "Branch Manager, Abuja 1 Branch", "team/fatima-zahra-umar.jpg", "branch"),
+    ("Nmesoma Eze", "Branch Manager, Jabi Lake Mall", "team/nmesoma-eze.jpg", "branch"),
+    ("Chidimma Nweke", "Branch Manager, Novare Mall (Abuja 2 Business Region)", "team/chidimma-nweke.jpg", "branch"),
+    ("Micheal Oveya", "Branch Manager, Lobito Mall", "team/micheal-oveya.jpg", "branch"),
+    ("Susan C. Ogar", "Branch Manager, Gwarinpa, Abuja", "team/susan-c-ogar.jpg", "branch"),
+    ("Maureen Okoli", "Branch Manager, Circle Mall, Lagos", "team/maureen-okoli.jpg", "branch"),
+    ("Rachael Temitope Monebi", "Branch Manager, Maryland Mall, Lagos", "team/rachael-temitope-monebi.jpg", "branch"),
+    ("Abidemi Olubayode Owolabi", "Branch Manager, Lekki Phase 1 Branch", "team/abidemi-olubayode-owolabi.jpg", "branch"),
+    ("Okpalaojimmadu Ogechi Splendour", "Branch Manager", "team/okpalaojimmadu-ogechi-splendour.jpg", "branch"),
+    ("Precious Barile Ikpah", "Branch Manager, Sani Abacha 2, Port Harcourt", "team/precious-barile-ikpah.jpg", "branch"),
 ]

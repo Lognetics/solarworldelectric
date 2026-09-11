@@ -1558,10 +1558,18 @@ h4{font-size:var(--t-h4);letter-spacing:-.015em}
 /* ---------------------------------------------------------------
    26d. TEAM GRID
    --------------------------------------------------------------- */
-.team{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
-  gap:clamp(16px,2vw,24px);grid-auto-rows:1fr}
+/* Flex rather than grid so a short last row is centred, not stranded on the left.
+   Column count is set per breakpoint; every card is the same width and height. */
+.team{
+  --cols:5;--tg:clamp(16px,2vw,24px);
+  display:flex;flex-wrap:wrap;justify-content:center;gap:var(--tg);
+}
+.team > .team__card{width:calc((100% - (var(--cols) - 1) * var(--tg)) / var(--cols))}
+@media (max-width:1180px){.team{--cols:4}}
+@media (max-width:820px){.team{--cols:3}}
+@media (max-width:560px){.team{--cols:2}}
 .team__card{
-  position:relative;display:flex;flex-direction:column;height:100%;
+  position:relative;display:flex;flex-direction:column;
   background:var(--paper);border:1px solid var(--hair);
   border-radius:var(--r-lg);overflow:hidden;text-align:center;
   transition:transform .45s var(--ease-out),box-shadow .45s var(--ease-out),border-color .3s;
@@ -1590,13 +1598,27 @@ h4{font-size:var(--t-h4);letter-spacing:-.015em}
 .team__body{
   padding:16px 14px 18px;flex:1 1 auto;
   display:flex;flex-direction:column;justify-content:center;
-  min-height:84px;
+  min-height:7.9rem;   /* fits the longest name + role (measured 7.68rem) */
 }
 .team__name{
   font-family:var(--f-display);font-weight:700;font-size:1rem;letter-spacing:-.02em;
   line-height:1.25;color:var(--fg);margin:0 0 5px;
 }
 .team__role{font-size:.8rem;color:var(--fg-muted);line-height:1.45;margin:0}
+
+/* Team groups: a labelled band per tier so thirty-odd people stay scannable */
+.team-group + .team-group{margin-top:clamp(40px,5vw,64px)}
+.team-group__head{
+  display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  padding-bottom:14px;margin-bottom:22px;border-bottom:1px solid var(--hair);
+}
+.team-group__head h3{margin:0;font-size:clamp(1.15rem,1.9vw,1.45rem)}
+.team-group__head p{margin:0;font-size:.9rem;color:var(--fg-muted)}
+.team-group__count{
+  font-family:var(--f-display);font-weight:700;font-size:.78rem;letter-spacing:.06em;
+  color:var(--gold-dp);background:rgba(249,176,0,.12);border:1px solid rgba(249,176,0,.28);
+  padding:.3em .75em;border-radius:99px;white-space:nowrap;
+}
 
 /* ---------------------------------------------------------------
    26e. INTERACTIVE MODULES

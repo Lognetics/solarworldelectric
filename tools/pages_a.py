@@ -2,7 +2,7 @@
 """Page bodies: home, about, solutions, products."""
 
 from data import COMPANY, STATS, CLIENTS, PACKAGES, CATEGORIES, OFFICES, OFFICE_COUNT
-from content import WHY_US, PROCESS, FAQ_GROUPS, WA_REVIEWS, TEAM
+from content import WHY_US, PROCESS, FAQ_GROUPS, WA_REVIEWS, TEAM, TEAM_GROUPS
 from case_studies import CASES
 from layout import ico, page_head, cta_band, naira, SITE
 from globe import globe_block, orbit_globe
@@ -564,16 +564,25 @@ def home():
 # ABOUT
 # ---------------------------------------------------------------------------
 def about():
-    team = "".join(
-        '<article class="team__card" data-reveal>'
-        '<div class="team__photo">'
-        '<img src="assets/img/%s" alt="%s, %s at Solar World Electric Technology Ltd" loading="lazy">'
-        '<span class="team__ring"></span></div>'
-        '<div class="team__body"><h3 class="team__name">%s</h3><p class="team__role">%s</p></div>'
-        '</article>'
-        % (img, name, role.replace("&amp;", "and"), name, role)
-        for name, role, img in TEAM
-    )
+    def _card(name, role, img):
+        return ('<article class="team__card" data-reveal>'
+                '<div class="team__photo">'
+                '<img src="assets/img/%s" alt="%s, %s at Solar World Electric Technology Ltd" loading="lazy">'
+                '<span class="team__ring"></span></div>'
+                '<div class="team__body"><h3 class="team__name">%s</h3><p class="team__role">%s</p></div>'
+                '</article>' % (img, name, role.replace("&amp;", "and"), name, role))
+
+    team = ""
+    for key, heading, blurb in TEAM_GROUPS:
+        people = [t for t in TEAM if t[3] == key]
+        if not people:
+            continue
+        team += ('<div class="team-group">'
+                 '<div class="team-group__head"><div><h3>%s</h3><p>%s</p></div>'
+                 '<span class="team-group__count">%d %s</span></div>'
+                 '<div class="team">%s</div></div>'
+                 % (heading, blurb, len(people), "person" if len(people) == 1 else "people",
+                    "".join(_card(n, r, i) for n, r, i, _ in people)))
     values = "".join(
         '<article class="card card--glass" data-reveal><div class="card__ico">%s</div><h3>%s</h3><p>%s</p></article>'
         % (ico(i), t, d) for t, d, i in [
@@ -660,10 +669,10 @@ def about():
     <div class="section-head center">
       <span class="eyebrow">Behind the scenes</span>
       <h2>Meet our team</h2>
-      <p>The people who design, sell, install and support every Solar World system. Fifteen of them,
-      across Abuja, Lagos and Port Harcourt.</p>
+      <p>The people who design, sell, install and support every Solar World system:
+      %(teamcount)s of them, across Abuja, Lagos and Port Harcourt.</p>
     </div>
-    <div class="team">%(team)s</div>
+    %(team)s
     <p class="center small muted" style="margin-top:34px">
       Every installation is carried out by our own engineers, never subcontracted.
     </p>
@@ -680,7 +689,7 @@ def about():
             "systems across Nigeria since 2015, for homes, businesses, industries and government.",
             [("Home", "index.html"), ("About", None)], bg="store-front-1.jpg"),
         "legal": COMPANY["legal"], "founded": COMPANY["founded"], "rc": COMPANY["rc"],
-        "values": values, "team": team, "spark": ico("spark"),
+        "values": values, "team": team, "teamcount": len(TEAM), "spark": ico("spark"),
         "bolt": ico("bolt"), "sun": ico("sun"), "wallet": ico("wallet"),
         "marquee": client_marquee(dark=True, title="Organisations that trust us"),
         "cta": cta_band("Ready to make the switch?",
