@@ -437,7 +437,6 @@ TEAM_GROUPS = [
 TEAM = [
     ("Mr Charles Abia", "Chairman, Solar World Group", "team/charles-abia.jpg", "leadership"),
     ("Adanna Felix", "Managing Director, Solar World Electric Technology Limited", "team/adanna-felix.jpg", "leadership"),
-    ("Chioma Uga", "Regional Director (Central)", "team/chioma-uga.jpg", "leadership"),
     ("Enya Billy-Paul", "Technical Director, South West Zone", "team/enya-billy-paul.jpg", "leadership"),
     ("Amina Addo Franka", "Executive Assistant to the Chairman", "team/amina-addo-franka.jpg", "executive"),
     ("Asein Maria", "Executive Assistant to the Chairman; Head Business Coordinator &amp; Quality Control (Central)", "team/asein-maria.jpg", "executive"),
