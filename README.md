@@ -16,7 +16,7 @@ python3 -m http.server 8080   # then visit http://localhost:8080
 | File | Purpose |
 |------|---------|
 | `index.html` | Home — hero, savings calculator, why-us, solutions, products, financing, projects, stats, testimonials, AI chat |
-| `about.html` | Story, timeline, vision/mission, values, 36 team profiles grouped by role |
+| `about.html` | Story, timeline, vision/mission, values, 37 team profiles grouped by role |
 | `solutions.html` | Residential / Commercial / Industrial / Government + delivery process |
 | `products.html` | Full-system explainer, product detail blocks, warranty table |
 | `financing.html` | 7-step process, live repayment simulator, packages, FAQ |
@@ -31,7 +31,7 @@ python3 -m http.server 8080   # then visit http://localhost:8080
 
 ## Notes
 - Team portraits, names and roles come from the uploaded `Solar World Teams ` folder.
-  The 36 profiles include Amina Addo Franka's PDF portrait and one entry for the two
+  The 37 profiles include Amina Addo Franka's PDF portrait and one entry for the two
   Favour Ogochukwu Ayozie photos. Profile details are maintained in `tools/content.py`;
   run `python3 tools/build.py` from `site/` after changing them.
 - Showroom shots were extracted from the brochure PDF.

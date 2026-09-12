@@ -450,6 +450,7 @@ TEAM = [
     ("Maryann Imuesi", "Regional Manager, Mainland Region", "team/maryann-imuesi.jpg", "regional"),
     ("Chiamaka Ukwuoma", "Head, Finance and Accounting Department", "team/chiamaka-ukwuoma.jpg", "heads"),
     ("Favour Yiliye Austine", "Head, Human Capital and Administration, Solar World Group", "team/favour-yiliye-austine.jpg", "heads"),
+    ("Gloria Iwuchukwu", "Head, Marketing and Corporate Communications, Solar World Group", "team/gloria-iwuchukwu.png", "heads"),
     ("Essien Esema Esq.", "Head, Legal &amp; Compliance Department", "team/essien-esema.jpg", "heads"),
     ("Utsoritse Ejegi", "Head, Corporate Communications, Solar World Group, Port Harcourt Region", "team/utsoritse-ejegi.jpg", "heads"),
     ("Faizat Temitope Abdulrauf", "Head, Human Capital and Administration, Abuja Region", "team/faizat-temitope-abdulrauf.jpg", "heads"),
