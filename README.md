@@ -16,13 +16,13 @@ python3 -m http.server 8080   # then visit http://localhost:8080
 | File | Purpose |
 |------|---------|
 | `index.html` | Home — hero, savings calculator, why-us, solutions, products, financing, projects, stats, testimonials, AI chat |
-| `about.html` | Story, timeline, vision/mission, values, 36 team profiles grouped by role |
+| `about.html` | Story, timeline, vision/mission, values, 39 team profiles grouped by role |
 | `solutions.html` | Residential / Commercial / Industrial / Government + delivery process |
 | `products.html` | Full-system explainer, product detail blocks, warranty table |
 | `financing.html` | 7-step process, live repayment simulator, packages, FAQ |
 | `projects.html` | Featured case studies + filterable project gallery |
 | `calculator.html` | Smart solar sizing tool (kVA / battery / panels / cost) |
-| `contact.html` | 9 office locations, map, booking form, WhatsApp |
+| `contact.html` | Branch locations across three cities, map, booking form, WhatsApp |
 
 ## Assets
 - `assets/css/styles.css` — full design system
@@ -30,11 +30,13 @@ python3 -m http.server 8080   # then visit http://localhost:8080
 - `assets/img/` — real installation, team and showroom photos (logo recreated as `logo-mark.svg`)
 
 ## Notes
-- Team portraits, names and roles come from the uploaded `Solar World Teams ` folder.
-  The 36 profiles include Amina Addo Franka's PDF portrait and one entry for the two
+- Team portraits, names and roles come from the uploaded `Solar World Teams ` folder and subsequent supplied corrections.
+  The 39 profiles include Amina Addo Franka's PDF portrait and one entry for the two
   Favour Ogochukwu Ayozie photos. Profile details are maintained in `tools/content.py`;
   run `python3 tools/build.py` from `site/` after changing them.
 - Showroom shots were extracted from the brochure PDF.
-- Calculator outputs are indicative estimates; tune the constants in `main.js` to match
-  current pricing before going live.
+- Calculator package data is audited in `tools/package_catalog.py` against all three PDFs.
+  `assets/js/package-matcher.js` matches chart appliance limits and estimated storage needs;
+  displayed equipment and prices always belong to the same published package. Runtime
+  remains an estimate for engineer confirmation. Run `node --test tests/package-matcher.test.cjs`.
 - The contact form is a front-end demo — connect it to your email/CRM endpoint to receive leads.

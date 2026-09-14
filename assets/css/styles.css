@@ -1988,3 +1988,23 @@ h4{font-size:var(--t-h4);letter-spacing:-.015em}
   body{color:#000;background:#fff}
   .section--dark,.section--deep,.phead{background:#fff !important;color:#000 !important}
 }
+
+/* Published charts stay visible and can be linked to individually. */
+.price-chart{scroll-margin-top:110px;margin:28px 0 64px}
+.package-details, .catalog-card details{margin:16px 0}
+.package-details summary, .catalog-card summary{cursor:pointer;font-weight:650}
+.package-details p, .catalog-card details p{font-size:.85rem;margin-top:12px}
+.catalog-card{display:flex;flex-direction:column;gap:12px}
+.catalog-card h3{font-size:1.05rem;margin:0}
+.catalog-card .catalog-price{font-weight:750;font-size:1.3rem;margin:0;color:var(--gold-dp)}
+.catalog-card .tlink{margin-top:auto}
+.package-result{min-width:0}
+.package-result .calc__pill dd{max-width:60%;overflow-wrap:anywhere;text-align:right}
+.cfab__foot .package-result .calc__hero .v{font-size:2rem}
+.cfab__foot .package-result p{font-size:.8rem}
+.package-line{margin-bottom:16px}
+.review-crop{display:block;width:100%;height:auto;border-radius:14px;overflow:hidden}
+/* Keep both appliance controls and a full package result reachable in the popup. */
+.cfab__panel{overflow-y:auto;overscroll-behavior:contain}
+.cfab__head{position:sticky;top:0;z-index:1}
+.cfab__body{flex:0 0 auto;overflow:visible}

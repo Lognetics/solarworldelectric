@@ -1,6 +1,6 @@
 # Solar World Electric Technology Ltd.
 
-> Nigerian solar energy company (RC 1684774, established 2015) specialising in the sales, installation and maintenance of solar power, hybrid inverter and lithium battery systems for residential, commercial, industrial and government customers. Over 60,000 homes, offices, hotels, businesses and communities powered. 21 offices across Abuja, Lagos and Port Harcourt; installs nationwide.
+> Nigerian solar energy company (RC 1684774, established 2015) specialising in the sales, installation and maintenance of solar power, hybrid inverter and lithium battery systems for residential, commercial, industrial and government customers. Over 60,000 homes, offices, hotels, businesses and communities powered. 21 operations across Abuja, Lagos and Port Harcourt; installs nationwide.
 
 ## Contact
 - Phone / WhatsApp: +234 906 331 5492
@@ -11,8 +11,8 @@
 ## Key facts
 - Founded: 2015. RC number: 1684774.
 - Customers powered: over 60,000 homes, offices, hotels, businesses and communities.
-- Offices: 21 across Abuja, Lagos and Port Harcourt. Installs nationwide.
-- System range: 3 kVA residential to 125 kW industrial.
+- Operations: 21 across Abuja, Lagos and Port Harcourt. Installs nationwide.
+- System range: residential packages through industrial projects of 1 MW and beyond.
 - Inverter brands supplied: Deye, Solis, ALP Solar, Bauman Energy, BICODI, SRNE.
 - Panels: 620 W and 460 W monocrystalline.
 - Batteries: lithium, 2.5 kWh to 16 kWh per module, stackable racks with battery management.
@@ -81,6 +81,7 @@ Prices are quoted as an *inverter package* (inverter + lithium battery + cables 
 - **15kVA / 48V Hybrid inverter only**: ₦10,150,000. Includes: 2 lithium batteries of 16kWh, electric cables, accessories & installation. Rated for: 70 bulbs, 10 fans, 3 fridges and freezers, washing machine, four 1.5HP ACs, pumping machine, microwave, electric blender.
 - **15kVA / 48V Solar package only**: ₦5,410,000. Includes: 24 × 620W monocrystalline solar panels, cables & installation. Rated for: Same as above.
 - **15kVA / 48V Hybrid inverter package only (17.6kWh cells)**: ₦11,450,000. Includes: 2 lithium batteries of 17.6kWh, electric cables, accessories & installation. Rated for: 70 bulbs, 10 fans, 3 fridges and freezers, washing machine, four 1.5HP ACs, pumping machine, microwave & electric blender.
+- **15kVA / 48V Solar package only (17.6kWh cells)**: ₦5,410,000. Includes: 24 × 620W monocrystalline solar panels, cables & installation. Rated for: Same as above.
 - **30kVA / 48V Hybrid inverter package only**: ₦22,900,000. Includes: 4 lithium batteries of 17.6kWh, electric cables, accessories & installation. Rated for: 90 bulbs, 15 fans, 5 fridges and freezers, washing machine, six 1.5HP ACs, pumping machine, microwave & electric blender.
 - **30kVA / 48V Solar package only**: ₦10,520,000. Includes: 48 × 620W monocrystalline solar panels, cables & installation. Rated for: Same as above.
 
@@ -103,7 +104,7 @@ Homeowners, estates, duplexes, apartments and family homes. Types served: Homeow
 - **10 kW (12.5 kVA) Duplex Solar & Inverter Installation in Abuja**: A duplex with three air conditioners, two fridges and two freezers needed a system that could hold overnight load without dropping. 16 kWh of lithium storage does it. Specification: System: 10 kW / 48 V hybrid; Battery storage: 1 × 16 kWh lithium; Solar panels: 8 × 620 W; Property: Detached duplex.
 - **12 kW (15 kVA) Home Solar & Inverter Installation in Lagos**: Sixteen panels and 32 kWh of lithium storage, enough to carry a large Lagos household through consecutive low-sun days without touching a generator. Specification: System: 12 kW / 48 V hybrid; Battery storage: 2 × 16 kWh lithium; Solar panels: 16 × 620 W; Property: Family home.
 - **5 kW (5 kVA) Apartment Solar & Inverter Installation**: The entry point into full solar for an apartment: lighting, entertainment, refrigeration and two 1 HP air conditioners, with no generator in the picture. Specification: System: 5 kW / 48 V hybrid; Battery storage: 2 × 5 kWh lithium; Solar panels: 8 × 620 W; Property: Apartment.
-- **11 kW ALP Solar Hybrid Installation for a Homeowner**: A 24-panel array paired with 32 kWh of storage, specified for a homeowner who wanted generation, not just backup. Specification: System: 11 kW / 48 V ALP hybrid; Battery storage: 2 × 16 kWh lithium; Solar panels: 24 × 620 W; Property: Detached home.
+- **11 kW Solar Hybrid Installation for a Homeowner**: A 24-panel array paired with 32 kWh of storage, specified for a homeowner who wanted generation, not just backup. Specification: System: 11 kW / 48 V hybrid; Battery storage: 2 × 16 kWh lithium; Solar panels: 24 × 620 W; Property: Detached home.
 - **30 kVA Home Solar / Inverter Installation in Port Harcourt**: The largest of our residential builds: 48 panels, 70 kWh of lithium storage and enough headroom for six air conditioners plus a full compound of lighting. Specification: System: 30 kVA / 48 V hybrid; Battery storage: 4 × 17.6 kWh lithium; Solar panels: 48 × 620 W; Property: Large family compound.
 
 ### Commercial
@@ -119,20 +120,20 @@ Offices, hotels, schools, hospitals, shopping facilities, restaurants, warehouse
 - **16 kW (20 kVA) Solar Inverter Installation for a Restaurant**: Chillers, freezers, five air conditioners and a dining room that has to stay comfortable through every service. Specification: System: 16 kW / 48 V hybrid; Battery storage: 2 × 16 kWh lithium; Solar panels: 20 × 620 W; Property: Restaurant.
 - **80 kW (100 kVA) High-Voltage Solar Installation for a Warehouse**: Large-span lighting, cold storage and handling equipment across a distribution facility, on a dual-inverter high-voltage bank. Specification: System: 80 kW / 48 V; Battery storage: 7 × 14.3 kWh; Solar panels: 78 × 620 W; Property: Warehouse / distribution.
 - **12 kW (15 kVA) Solar Inverter Installation for a Retail Business**: A mid-size store running lighting, displays, POS, refrigeration and three air conditioners through full trading hours. Specification: System: 12 kW / 48 V hybrid; Battery storage: 2 × 16 kWh lithium; Solar panels: 16 × 620 W; Property: Retail store.
+- **250 kW Solar & Battery System for Stratford Hotel, Owerri**: A 250 kW solar and battery system for Stratford Hotel in Owerri, combining 480 kWh of storage with a 138.88 kWp array for a large hospitality operation. Specification: System: 250 kW; Battery storage: 480 kWh; Solar panels: 224 × 620 W; Solar array: 138.88 kWp; Application: Large-scale hotel energy infrastructure.
 
 ### Industrial
 Factories, manufacturing plants, processing facilities and large-scale sites. Types served: Factory, Manufacturing, Processing facility, Large-scale facility.
 - **125 kW Solar & Storage Installation for a Factory**: Chillers, three-phase air conditioning, compressors and an industrial oven, the class of load that decides whether a plant runs or stops. Specification: System: 125 kW PCS; Battery storage: 15 × 16 kWh; Solar panels: 168 × 620 W; Property: Manufacturing plant.
 - **100 kW High-Voltage Solar Installation for a Manufacturing Facility**: 143 kWh of storage behind an 86.8 kWp array, sized for a facility that runs continuous process load across an extended shift. Specification: System: 100 kW / 48 V; Battery storage: 10 × 14.3 kWh; Solar panels: 140 × 620 W; Property: Manufacturing facility.
 - **60 kW (80 kVA) High-Voltage Solar Installation for a Processing Facility**: A dual-inverter high-voltage bank feeding continuous process load, with a stacked battery cabinet sized for overnight running. Specification: System: 60 kW / 80 kVA; Battery storage: HV lithium bank; Solar panels: 620 W array; Property: Processing facility.
-- **50 kW Solar Installation for a Large-Scale Facility**: A 39.68 kWp array with 71.5 kWh of storage, the workhorse configuration for large facilities that need reliability before they need scale. Specification: System: 50 kW / 48 V; Battery storage: 5 × 14.3 kWh; Solar panels: 64 × 620 W; Property: Large-scale facility.
 
 ### Energy & Infrastructure
 Solar streetlights, community projects, solar pumping and EV charging. Types served: Solar streetlights, Community projects, Solar pumping, EV charging.
 - **All-in-One Solar Street Lighting for Roads, Estates and Communities**: Self-contained street lights with integrated panel, battery and LED head, no trenching, no cabling, no metered supply. Specification: Type: All-in-one street light; Power: Integrated PV + lithium; Control: Dusk-to-dawn auto; Application: Roads &amp; communities.
 - **Solar Water Pumping Systems for Boreholes and Irrigation**: Submersible pumps driven directly from the array through an MPPT controller, water storage instead of battery storage. Specification: Type: Submersible pump; Drive: MPPT controller; Power: Direct PV array; Application: Boreholes &amp; irrigation.
 - **Community Solar Projects for Public and Government Institutions**: Ground-mounted arrays and centralised storage for institutions, agencies and community facilities, delivered end to end, including maintenance. Specification: Type: Ground-mounted array; Storage: Centralised lithium; Scope: End-to-end delivery; Application: Public institutions.
-- **Solar-Powered EV Charging Points for Homes and Businesses**: EV charge points integrated into the same hybrid system that powers the building, so the car charges on solar, not diesel. Specification: Charger: 6–7 kW charge point; Source: Solar + lithium; Integration: Hybrid inverter; Application: Homes &amp; offices.
+- **160 kW EV Charge Point**: A 160 kW charge point for electric vehicle charging infrastructure. Specification: Charger: 160 kW charge point; Application: Electric vehicle charging.
 
 ## Clients
 Woodhall Capital, The Brook Finance Company Limited, GIG Logistics, NDDC, ENERGYMATICS LTD., Garden City Hotel, Stratford Hotels, Flinx Realty Ltd, NEXT Cash & Carry, Maritime Academy of Nigeria, Oron, Hallel College, EngenderHealth, Riders for Health, National Malaria Elimination Programme, Nigerian Army, Rhythm FM, SSTV, The Redeemed Christian Church of God.
@@ -141,7 +142,7 @@ Woodhall Capital, The Brook Finance Company Limited, GIG Logistics, NDDC, ENERGY
 ### Cost & pricing
 **How much does a solar system cost in Nigeria?**
 
-A complete solar and inverter system from Solar World Electric Technology Ltd. ranges from about ₦1.49 million for a 3 kVA inverter package up to ₦147 million for a 125 kW industrial system. Typical Nigerian homes fall between ₦3.5 million and ₦16 million installed, depending on how many air conditioners and refrigeration units the system has to carry. Prices are quoted in two parts, the inverter package (inverter, lithium battery, cables, accessories and installation) and the solar package (the panel array, cables, accessories and installation). Many customers buy the inverter package first and add the solar array later. Our full published price charts are on the pricing page.
+Solar World Electric Technology Ltd. offers packages starting at ₦1.49 million for a 3 kVA inverter-only package. Complete solar packages start at ₦2.35 million. We also design custom commercial and industrial systems of 1 MW and beyond, quoted to the project requirements. Typical Nigerian homes fall between ₦3.5 million and ₦16 million installed, depending on how many air conditioners and refrigeration units the system has to carry. Prices are quoted in two parts, the inverter package (inverter, lithium battery, cables, accessories and installation) and the solar package (the panel array, cables, accessories and installation). Many customers buy the inverter package first and add the solar array later. Our full published price charts are on the pricing page.
 
 **How much does a 5kVA solar system cost in Nigeria?**
 
@@ -207,7 +208,7 @@ No. A hybrid solar installation integrates with your existing distribution board
 
 **Where in Nigeria do you install?**
 
-We operate 21 offices across Abuja, Lagos and Port Harcourt and install nationwide. Port Harcourt: Sani Abacha 1 & 2 (GRA Phase 3), Port Harcourt City Mall (SPAR) and Market Square GRA Phase 2. Abuja: Jabi Lake Mall, Wuse 2, Silverbird Entertainment Centre (first floor and basement), Ceddi Plaza and Primus Mall Gwarinpa. Lagos: Lekki Phase 1 and The Circle Mall, Jakande. Full addresses are on our contact page.
+We have 21 operations across Abuja, Lagos and Port Harcourt and install nationwide. Port Harcourt: Sani Abacha 1, 2 and 3 (GRA Phase 3), Port Harcourt City Mall (SPAR) and Market Square GRA Phase 2. Abuja: Jabi Lake Mall, Wuse 2, Silverbird Entertainment Centre (first floor and basement), Ceddi Plaza and Primus Mall Gwarinpa. Lagos: Lekki Phase 1 and The Circle Mall, Jakande. Full addresses are on our contact page.
 
 ### Equipment, warranty & maintenance
 **What warranty do you offer on solar panels, batteries and inverters?**
@@ -237,19 +238,19 @@ Yes. Alongside solar panels, hybrid inverters, lithium batteries and MPPT charge
 ### About Solar World
 **Who is Solar World Electric Technology Ltd.?**
 
-Solar World Electric Technology Limited (RC 1684774) is a Nigerian renewable energy company founded in 2015, specialising in the sales, installation and maintenance of solar power systems for residential, commercial, industrial and government customers. We have powered over 60,000 homes, offices, hotels, businesses and communities across Nigeria and operate 21 offices across Abuja, Lagos and Port Harcourt. Our clients include the NDDC, the Nigerian Army, GIG Logistics, Woodhall Capital, The Brook Finance Company, ENERGYMATICS, EngenderHealth, Riders for Health, the National Malaria Elimination Programme and the Maritime Academy of Nigeria, Oron.
+Solar World Electric Technology Limited (RC 1684774) is a Nigerian renewable energy company founded in 2015, specialising in the sales, installation and maintenance of solar power systems for residential, commercial, industrial and government customers. We have powered over 60,000 homes, offices, hotels, businesses and communities across Nigeria and have 21 operations across Abuja, Lagos and Port Harcourt. Our clients include the NDDC, the Nigerian Army, GIG Logistics, Woodhall Capital, The Brook Finance Company, ENERGYMATICS, EngenderHealth, Riders for Health, the National Malaria Elimination Programme and the Maritime Academy of Nigeria, Oron.
 
 **Why should I buy from Solar World rather than a cheaper supplier?**
 
-Because with solar, who you buy from matters as much as what you buy; that is our stated belief as a company. A solar system is a 25-year asset installed into your building. If it is undersized, badly configured or installed by a team that disappears afterwards, the components' warranties are worthless to you. We size against your actual load, publish our prices openly, install with our own teams, operate nine physical offices you can walk into, and back every installation with warranty coverage and a year of free after-sales support.
+Because with solar, who you buy from matters as much as what you buy; that is our stated belief as a company. A solar system is a 25-year asset installed into your building. If it is undersized, badly configured or installed by a team that disappears afterwards, the components' warranties are worthless to you. We size against your actual load, publish our prices openly, install with our own teams, operate branches you can visit, and back every installation with warranty coverage and a year of free after-sales support.
 
 **Do you work with businesses and government institutions?**
 
-Yes. We deliver commercial, industrial and public-sector projects from 20 kW up to 125 kW and beyond, including offices, hotels, schools, hospitals, warehouses, factories, community projects and street lighting schemes. Public and institutional clients we have worked with include the NDDC, the Nigerian Army, the National Malaria Elimination Programme (Federal Ministry of Health), the Maritime Academy of Nigeria (Oron), EngenderHealth and Riders for Health.
+Yes. We deliver commercial, industrial and public-sector projects, including systems of 1 MW and beyond, including offices, hotels, schools, hospitals, warehouses, factories, community projects and street lighting schemes. Public and institutional clients we have worked with include the NDDC, the Nigerian Army, the National Malaria Elimination Programme (Federal Ministry of Health), the Maritime Academy of Nigeria (Oron), EngenderHealth and Riders for Health.
 
 **How do I get a quote?**
 
-Message us on WhatsApp at +234 906 331 5492, email info@solarworldelectric.co, or walk into any of our 21 offices in Abuja, Lagos or Port Harcourt. Tell us what you want to power, the appliances, how many air conditioners and whether you need it day and night, and we will size the system and send a costed proposal with warranty terms and payment options. The consultation and load assessment are free.
+Message us on WhatsApp at +234 906 331 5492, email info@solarworldelectric.co, or walk into any of our 21 operations in Abuja, Lagos or Port Harcourt. Tell us what you want to power, the appliances, how many air conditioners and whether you need it day and night, and we will size the system and send a costed proposal with warranty terms and payment options. The consultation and load assessment are free.
 
 ### Solar myths
 **Is solar energy too expensive for the average Nigerian?**
@@ -278,4 +279,4 @@ Yes. A properly installed solar system with lithium storage is a permanent build
 - [Reviews](https://www.solarworldelectric.com/reviews.html): customer testimonials
 - [Financing](https://www.solarworldelectric.com/financing.html): 30% deposit payment plan
 - [Calculator](https://www.solarworldelectric.com/calculator.html): system sizing tool
-- [Contact](https://www.solarworldelectric.com/contact.html): all nine office addresses
+- [Contact](https://www.solarworldelectric.com/contact.html): branch addresses across three cities

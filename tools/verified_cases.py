@@ -101,7 +101,7 @@ VERIFIED = [
         "location": None,
         "client": None,
         "img": "cs-20kw-home.jpg",
-        "alt": "20 kW residential solar and battery installation with a Deye hybrid inverter and three 16 kWh lithium batteries",
+        "alt": "20 kW residential solar and battery installation with a hybrid inverter and three 16 kWh lithium batteries",
         "specs": [
             ("System", "20 kW inverter"),
             ("Battery storage", "3 x 16 kWh lithium"),
@@ -174,7 +174,7 @@ VERIFIED = [
         "location": "M.I Ahmad Plaza, Wuse 2, Abuja",
         "client": None,
         "img": "cs-30kw-shopping.jpg",
-        "alt": "30 kW high voltage solar and battery system with a Deye battery rack installed at a shopping complex in Wuse 2 Abuja",
+        "alt": "30 kW high voltage solar and battery system with a battery rack installed at a shopping complex in Wuse 2 Abuja",
         "specs": [
             ("System", "30 kW high-voltage"),
             ("Battery storage", "64 kWh"),

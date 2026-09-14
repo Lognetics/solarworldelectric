@@ -13,6 +13,7 @@ import os
 import re
 import sys
 import html
+import json
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -21,6 +22,7 @@ sys.path.insert(0, HERE)
 from data import COMPANY, OFFICE_COUNT, CATEGORIES, PACKAGES, PRICE_DEYE, PRICE_SOLIS, PRICE_STANDARD, CLIENTS
 from content import FAQ_GROUPS, WA_REVIEWS
 from case_studies import CASES
+from package_catalog import CATALOG
 import layout
 from layout import page, breadcrumbs, local_business_schema, SITE, naira
 import pages_a as A
@@ -151,11 +153,11 @@ POSTS = [
         "cat": "Pricing",
         "body": [
             ("The short answer",
-             ["A complete solar and inverter system in Nigeria costs between <b>₦1.49 million</b> and "
-              "<b>₦147 million</b>, depending on what you need to run. Most family homes land between "
-              "<b>₦3.5 million and ₦16 million</b> installed.",
-              "That range is wide because &lsquo;solar system&rsquo; covers everything from a 3 kVA package "
-              "running lights and a fridge to a 125 kW plant running chillers and industrial ovens."]),
+             ["Published inverter-only packages start at <b>₦1.49 million</b>, while complete solar and "
+              "inverter packages start at <b>₦2.35 million</b>. The total depends on the equipment and loads "
+              "selected from our Deye, Solis and Standard price charts.",
+              "We also design commercial and industrial projects of <b>1 MW and beyond</b>. These custom "
+              "systems are quoted separately after a site and load assessment."]),
             ("Why prices are quoted in two parts",
              ["Almost every quote you receive in Nigeria splits into an <b>inverter package</b> and a "
               "<b>solar package</b>. The inverter package is the inverter, the lithium battery, cables, "
@@ -336,7 +338,7 @@ def blog_post(p):
                         [("Home", "index.html"), ("Knowledge centre", "blog.html"), (p["cat"], None)]),
        p["img"], p["alt"], body,
        layout.cta_band("Ready to talk about your building?",
-                       "Free consultation and load assessment, at any of our 21 offices or over WhatsApp."))
+                       "Free consultation and load assessment, at any of our 21 operations or over WhatsApp."))
 
 
 # ---------------------------------------------------------------------------
@@ -414,7 +416,7 @@ def llms_txt():
     add("> Nigerian solar energy company (RC %s, established %s) specialising in the sales, installation and "
         "maintenance of solar power, hybrid inverter and lithium battery systems for residential, commercial, "
         "industrial and government customers. Over 60,000 homes, offices, hotels, businesses and communities "
-        "powered. 21 offices across Abuja, Lagos and Port Harcourt; installs nationwide."
+        "powered. 21 operations across Abuja, Lagos and Port Harcourt; installs nationwide."
         % (COMPANY["rc"], COMPANY["founded"]))
     add("")
     add("## Contact")
@@ -426,8 +428,8 @@ def llms_txt():
     add("## Key facts")
     add("- Founded: %s. RC number: %s." % (COMPANY["founded"], COMPANY["rc"]))
     add("- Customers powered: over 60,000 homes, offices, hotels, businesses and communities.")
-    add("- Offices: %d across Abuja, Lagos and Port Harcourt. Installs nationwide." % OFFICE_COUNT)
-    add("- System range: 3 kVA residential to 125 kW industrial.")
+    add("- Operations: %d across Abuja, Lagos and Port Harcourt. Installs nationwide." % OFFICE_COUNT)
+    add("- System range: residential packages through industrial projects of 1 MW and beyond.")
     add("- Inverter brands supplied: Deye, Solis, ALP Solar, Bauman Energy, BICODI, SRNE.")
     add("- Panels: 620 W and 460 W monocrystalline.")
     add("- Batteries: lithium, 2.5 kWh to 16 kWh per module, stackable racks with battery management.")
@@ -486,7 +488,7 @@ def llms_txt():
     add("- [Reviews](%s/reviews.html): customer testimonials" % SITE)
     add("- [Financing](%s/financing.html): 30%% deposit payment plan" % SITE)
     add("- [Calculator](%s/calculator.html): system sizing tool" % SITE)
-    add("- [Contact](%s/contact.html): all nine office addresses" % SITE)
+    add("- [Contact](%s/contact.html): branch addresses across three cities" % SITE)
     return "\n".join(lines) + "\n"
 
 
@@ -496,12 +498,14 @@ def llms_txt():
 def main():
     print("Building Solar World Electric site…\n")
 
+    write("assets/js/package-catalog.js", "// Generated from the supplied price PDFs. Edit tools/package_catalog.py.\nwindow.SOLAR_PACKAGE_CATALOG = " + json.dumps(CATALOG, ensure_ascii=False) + ";\n")
+
     write("index.html", page(
         slug="index.html",
         title="Solar World Electric: Solar, Inverter &amp; Battery Systems in Nigeria",
         description="Nigeria's solar energy company since 2015. Complete solar, hybrid inverter and lithium "
                     "battery systems for homes, offices, hotels, factories and communities. 60,000+ powered, "
-                    "21 offices, prices published openly, financing from 30%.",
+                    "21 operations, prices published openly, financing from 30%.",
         body=A.home(), over_hero=True,
         schema=[breadcrumbs([("Home", "")])] + local_business_schema() + product_schema()
                + [faq_schema(FAQ_GROUPS[:2]), review_schema()]))
@@ -517,7 +521,7 @@ def main():
     write("solutions.html", page(
         slug="solutions.html",
         title="Solar Solutions for Homes, Businesses &amp; Industry in Nigeria",
-        description="Residential (5–20 kVA), commercial (20–80 kW), industrial (80–125 kW+) and infrastructure "
+        description="Residential, commercial, industrial (1 MW and beyond) and infrastructure "
                     "solar solutions, street lighting, water pumping and EV charging. Sized to your load.",
         body=A.solutions(),
         schema=[breadcrumbs([("Home", ""), ("Solutions", "solutions.html")])] + service_schema()))
@@ -534,7 +538,7 @@ def main():
         slug="pricing.html",
         title="Solar System Prices in Nigeria: Full Price Charts | Solar World",
         description="Published Deye, Solis and standard solar price charts. From ₦1,490,000 for a 3 kVA "
-                    "package to ₦147,190,950 for a 125 kW industrial system. Installation included, "
+                    "inverter-only package, with custom projects of 1 MW and beyond quoted separately. "
                     "financing from 30% deposit.",
         body=B.pricing(), og_image="assets/img/pkg/pkg-25kw.jpg",
         schema=[breadcrumbs([("Home", ""), ("Pricing", "pricing.html")])] + product_schema()
@@ -584,9 +588,9 @@ def main():
 
     write("contact.html", page(
         slug="contact.html",
-        title="Contact Solar World Electric: 21 Offices in Abuja, Lagos &amp; Port Harcourt",
+        title="Contact Solar World Electric: 21 Operations in Abuja, Lagos &amp; Port Harcourt",
         description="Call or WhatsApp +234 906 331 5492, email info@solarworldelectric.co, or visit any of our "
-                    "21 offices across Abuja, Lagos and Port Harcourt for a free solar consultation.",
+                    "21 operations across Abuja, Lagos and Port Harcourt for a free solar consultation.",
         body=B.contact(), og_image="assets/img/store-front-2.jpg",
         schema=[breadcrumbs([("Home", ""), ("Contact", "contact.html")])] + local_business_schema()))
 

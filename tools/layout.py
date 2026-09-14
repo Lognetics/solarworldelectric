@@ -66,7 +66,7 @@ NAV_ITEMS = [
         ("about.html", "Our story", "Who we are, our vision and mission"),
         ("about.html#team", "Meet the team", "The people behind every installation"),
         ("reviews.html", "Customer reviews", "What customers say after installation"),
-        ("contact.html#offices", "Our offices", "21 locations across three cities"),
+        ("contact.html#offices", "Our locations", "21 operations across three cities"),
     ]),
     ("solutions.html", "Solutions", [
         ("solutions.html#residential", "Residential", "Homes, estates, duplexes and apartments"),
@@ -416,6 +416,8 @@ def page(*, slug, title, description, body, active=None, over_hero=True,
 %(body)s
 </main>
 %(footer)s
+<script src="assets/js/package-catalog.js" defer></script>
+<script src="assets/js/package-matcher.js" defer></script>
 <script src="assets/js/main.js" defer></script>
 </body>
 </html>

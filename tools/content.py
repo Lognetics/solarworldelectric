@@ -15,9 +15,9 @@ FAQ_GROUPS = [
         "label": "Cost &amp; pricing",
         "items": [
             ("How much does a solar system cost in Nigeria?",
-             ["A complete solar and inverter system from Solar World Electric Technology Ltd. ranges from "
-              "about <b>₦1.49 million</b> for a 3 kVA inverter package up to <b>₦147 million</b> for a 125 kW "
-              "industrial system. Typical Nigerian homes fall between <b>₦3.5 million and ₦16 million</b> "
+             ["Solar World Electric Technology Ltd. offers packages starting at "
+              "<b>₦1.49 million</b> for a 3 kVA inverter-only package. Complete solar packages start at "
+              "<b>₦2.35 million</b>. We also design custom commercial and industrial systems of <b>1 MW and beyond</b>, quoted to the project requirements. Typical Nigerian homes fall between <b>₦3.5 million and ₦16 million</b> "
               "installed, depending on how many air conditioners and refrigeration units the system has to carry.",
               "Prices are quoted in two parts, the <b>inverter package</b> (inverter, lithium battery, cables, "
               "accessories and installation) and the <b>solar package</b> (the panel array, cables, accessories and "
@@ -149,8 +149,8 @@ FAQ_GROUPS = [
               "During the site visit we check your existing wiring and flag anything that needs correcting before "
               "the system is connected."]),
             ("Where in Nigeria do you install?",
-             ["We operate <b>21 offices across Abuja, Lagos and Port Harcourt</b> and install nationwide.",
-              "Port Harcourt: Sani Abacha 1 &amp; 2 (GRA Phase 3), Port Harcourt City Mall (SPAR) and Market Square "
+             ["We have <b>21 operations across Abuja, Lagos and Port Harcourt</b> and install nationwide.",
+              "Port Harcourt: Sani Abacha 1, 2 and 3 (GRA Phase 3), Port Harcourt City Mall (SPAR) and Market Square "
               "GRA Phase 2. Abuja: Jabi Lake Mall, Wuse 2, Silverbird Entertainment Centre (first floor and "
               "basement), Ceddi Plaza and Primus Mall Gwarinpa. Lagos: Lekki Phase 1 and The Circle Mall, Jakande. "
               "Full addresses are on our <a href=\"contact.html\">contact page</a>."]),
@@ -210,7 +210,7 @@ FAQ_GROUPS = [
               "in <b>2015</b>, specialising in the sales, installation and maintenance of solar power systems for "
               "residential, commercial, industrial and government customers.",
               "We have powered <b>over 60,000 homes, offices, hotels, businesses and communities</b> across Nigeria "
-              "and operate 21 offices across Abuja, Lagos and Port Harcourt. Our clients include the NDDC, the "
+              "and have 21 operations across Abuja, Lagos and Port Harcourt. Our clients include the NDDC, the "
               "Nigerian Army, GIG Logistics, Woodhall Capital, The Brook Finance Company, ENERGYMATICS, "
               "EngenderHealth, Riders for Health, the National Malaria Elimination Programme and the Maritime "
               "Academy of Nigeria, Oron."]),
@@ -220,10 +220,10 @@ FAQ_GROUPS = [
               "A solar system is a 25-year asset installed into your building. If it is undersized, badly configured "
               "or installed by a team that disappears afterwards, the components' warranties are worthless to you. "
               "We size against your actual load, publish our prices openly, install with our own teams, operate "
-              "nine physical offices you can walk into, and back every installation with warranty coverage and a "
+              "branches you can visit, and back every installation with warranty coverage and a "
               "year of free after-sales support."]),
             ("Do you work with businesses and government institutions?",
-             ["Yes. We deliver commercial, industrial and public-sector projects from 20 kW up to 125 kW and beyond, "
+             ["Yes. We deliver commercial, industrial and public-sector projects, including systems of 1 MW and beyond, "
               "including offices, hotels, schools, hospitals, warehouses, factories, community projects and street "
               "lighting schemes.",
               "Public and institutional clients we have worked with include the NDDC, the Nigerian Army, the "
@@ -231,7 +231,7 @@ FAQ_GROUPS = [
               "(Oron), EngenderHealth and Riders for Health."]),
             ("How do I get a quote?",
              ["Message us on WhatsApp at <b>+234 906 331 5492</b>, email <b>info@solarworldelectric.co</b>, or walk into "
-              "any of our 21 offices in Abuja, Lagos or Port Harcourt.",
+              "any of our 21 operations in Abuja, Lagos or Port Harcourt.",
               "Tell us what you want to power, the appliances, how many air conditioners and whether you need it "
               "day and night, and we will size the system and send a costed proposal with warranty terms and "
               "payment options. The consultation and load assessment are free."]),
@@ -280,6 +280,7 @@ WA_REVIEWS = [
      "alt": "WhatsApp testimonial showing an AlpSolar inverter and BICODI lithium battery installed by Solar World Electric",
      "quote": "I appreciate the great service rendered. Everything looks good. You are a very good sales person."},
     {"cat": "commercial", "shot": "wa-mr-paul-office.jpg", "who": "Mr Paul", "where": "Office installation",
+     "viewport": (0, 140, 569, 604), "dimensions": (569, 1280),
      "alt": "WhatsApp review from an office customer two weeks after a Solar World Electric solar inverter installation",
      "quote": "About the system, nothing untoward has been reported to me so I can firmly say the office is "
               "enjoying your services. You have been a great help."},
@@ -345,7 +346,7 @@ WHY_US = [
      "our engineers guide every step, and install every system themselves.",
      "shield"),
     ("We are in your city, and growing",
-     "21 offices across Abuja, Lagos and Port Harcourt, with nationwide installation. Wherever you are, "
+     "21 operations across Abuja, Lagos and Port Harcourt, with nationwide installation. Wherever you are, "
      "a team is within reach for consultation, installation and support.",
      "pin"),
     ("Customised solutions for every need",
@@ -427,7 +428,7 @@ FINANCE_STEPS = [
 # headshots were face-detected and cropped square so every card is framed alike.
 # ---------------------------------------------------------------------------
 TEAM_GROUPS = [
-    ("leadership", "Leadership", "The people who set the direction of the group."),
+    ("leadership", "Central management", "The people who set the direction of the group."),
     ("executive", "Executive office", "Coordinating the chairman's and managing director's offices."),
     ("regional", "Regional management", "Running our business regions across Abuja, Lagos and Port Harcourt."),
     ("heads", "Heads of department", "Finance, legal, people, communications, media and technical."),
@@ -437,7 +438,8 @@ TEAM_GROUPS = [
 TEAM = [
     ("Mr Charles Abia", "Chairman, Solar World Group", "team/charles-abia.jpg", "leadership"),
     ("Adanna Felix", "Managing Director, Solar World Electric Technology Limited", "team/adanna-felix.jpg", "leadership"),
-    ("Enya Billy-Paul", "Technical Director, South West Zone", "team/enya-billy-paul.jpg", "leadership"),
+    ("Alexia Ilo", "Head of Business and Protocol", "team/alexia-ilo.png", "leadership"),
+    ("Ejike Okoli", "MD, 5Points Electric Technology Limited", "team/ejike-okoli.jpg", "leadership"),
     ("Amina Addo Franka", "Executive Assistant to the Chairman", "team/amina-addo-franka.jpg", "executive"),
     ("Asein Maria", "Executive Assistant to the Chairman; Head Business Coordinator &amp; Quality Control (Central)", "team/asein-maria.jpg", "executive"),
     ("Ijeoma Judith Nnodum", "Executive Assistant to the MD; Head, Business Coordination, Lagos Island Region", "team/ijeoma-judith-nnodum.jpg", "executive"),
@@ -447,10 +449,12 @@ TEAM = [
     ("Chioma Cecilia Uga", "Regional Manager, Port Harcourt Region", "team/chioma-cecilia-uga.jpg", "regional"),
     ("Olufunke Esther", "Regional Manager, Lagos Island Region", "team/olufunke-esther.jpg", "regional"),
     ("Maryann Imuesi", "Regional Manager, Mainland Region", "team/maryann-imuesi.jpg", "regional"),
+    ("Enya Billy-Paul", "Technical Director, South West Zone", "team/enya-billy-paul.jpg", "heads"),
     ("Chiamaka Ukwuoma", "Head, Finance and Accounting Department", "team/chiamaka-ukwuoma.jpg", "heads"),
-    ("Favour Yiliye Austine", "Head, Human Capital and Administration, Solar World Group", "team/favour-yiliye-austine.jpg", "heads"),
-    ("Gloria Iwuchukwu", "Head, Marketing and Corporate Communications, Solar World Group", "team/gloria-iwuchukwu.png", "heads"),
+    ("Favour Yiliye Austine", "Head, Human Capital and Administration, Solar World Group", "team/favour-yiliye-austine.jpg", "leadership"),
+    ("Gloria Iwuchukwu", "Head, Marketing and Corporate Communications, Solar World Group", "team/gloria-iwuchukwu.png", "leadership"),
     ("Essien Esema Esq.", "Head, Legal &amp; Compliance Department", "team/essien-esema.jpg", "heads"),
+    ("Kamsy Joe’Chubilo", "Assistant, Head Legal and Compliance", "team/kamsy-joe-chubilo.png", "heads"),
     ("Utsoritse Ejegi", "Head, Corporate Communications, Solar World Group, Port Harcourt Region", "team/utsoritse-ejegi.jpg", "heads"),
     ("Faizat Temitope Abdulrauf", "Head, Human Capital and Administration, Abuja Region", "team/faizat-temitope-abdulrauf.jpg", "heads"),
     ("Amaraezue Udo Ezeozue", "Head, Human Capital &amp; Administration, Lagos Region", "team/amaraezue-udo-ezeozue.jpg", "heads"),

@@ -794,14 +794,62 @@
     { k: 'pump',    n: 'Water pump',    w: 750,  dc: 0.1,  step: 1,  max: 4 },
     { k: 'office',  n: 'Office / ICT',  w: 150,  dc: 0.5,  step: 1,  max: 40 }
   ];
-  var SIZER_TIERS = [
-    { kw: 5,   price: 3940000 },   { kw: 8,   price: 8210000 },
-    { kw: 10,  price: 9290000 },   { kw: 12,  price: 14660000 },
-    { kw: 16,  price: 16360000 },  { kw: 20,  price: 22510000 },
-    { kw: 25,  price: 29120000 },  { kw: 30,  price: 35990000 },
-    { kw: 50,  price: 47660000 },  { kw: 80,  price: 68080000 },
-    { kw: 100, price: 107570950 }, { kw: 125, price: 147190950 }
-  ];
+  function htmlText(value) {
+    return String(value).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});
+  }
+  function packageLineChoice(parent, before, id, onChange) {
+    var box=document.createElement('div'); box.className='field package-line';
+    box.innerHTML='<label for="'+id+'">Price line</label><select id="'+id+'">'+
+      '<option value="all">Compare all three price lines</option><option value="standard">Standard systems</option>'+
+      '<option value="deye">Deye systems</option><option value="solis">Solis systems</option></select>';
+    parent.insertBefore(box,before);
+    var select=$('select',box);select.addEventListener('change',onChange);return select;
+  }
+  function renderPackageResult(out, state, items, hours, line, root) {
+    var result=window.SolarPackages.recommend(window.SOLAR_PACKAGE_CATALOG,state,{hours:Number(hours),line:line});
+    var parts=items.filter(function(a){return state[a.k]>0;}).map(function(a){return state[a.k]+' x '+a.n;});
+    var fmt=function(n){return '\u20a6'+Math.round(n).toLocaleString('en-NG');};
+    root.dataset.summary=parts.join(', '); root.dataset.spec='';
+    if(result.status==='empty') {
+      out.innerHTML='<p class="calc__empty">Add appliances to compare their documented package ratings, equipment and prices.</p>';return;
+    }
+    var request='Hello Solar World, please assess my solar requirements.\n\nAppliances: '+parts.join(', ')+
+      '\nRequested backup: '+hours+' hours\nPrice line: '+line;
+    if(!result.package) {
+      out.innerHTML='<div class="package-result"><h4>Engineer assessment needed</h4><p>'+htmlText(result.notes.join(' '))+'</p>'+
+        '<p class="small muted">We design residential, commercial and industrial systems of 1 MW and beyond. Custom configurations are quoted after assessment.</p>'+
+        '<a class="btn btn--primary btn--block" href="'+htmlText(wa(request))+'" target="_blank" rel="noopener">Send this to an engineer</a></div>';return;
+    }
+    var p=result.package, rating=p.inverter_rating+' '+p.inverter_unit;
+    var spec=rating+', '+p.battery_kwh+' kWh storage, '+p.panel_count+' x '+p.panel_watts+' W panels';
+    root.dataset.spec=p.name+': '+spec+'; published package '+fmt(p.price);
+    var months=Number(out.dataset.months || 6),deposit=p.price*.3,principal=p.price-deposit;
+    var monthly=principal*(1+.04*months)/months;
+    var sourceNames={deye:'Deye · 7 August 2026',solis:'Solis · 24 July 2026',standard:'Standard · 4 August 2026'};
+    var notes=result.notes.length?'<p class="form-note">'+result.notes.map(htmlText).join(' ')+'</p>':'';
+    out.innerHTML='<div class="package-result" data-package-id="'+p.id+'" data-status="'+result.status+'">'+
+      '<div class="calc__hero"><div class="k">'+(result.status==='review'?'Package to discuss with an engineer':'Matching published package')+'</div>'+
+      '<div class="v">'+rating+'</div><div class="s">'+htmlText(p.name)+'</div></div>'+
+      '<dl class="calc__pill"><dt>Included storage</dt><dd>'+p.battery_kwh+' kWh</dd></dl>'+
+      '<dl class="calc__pill"><dt>Included solar panels</dt><dd>'+p.panel_count+' × '+p.panel_watts+' W</dd></dl>'+
+      '<dl class="calc__pill"><dt>Solar array</dt><dd>'+p.solar_kwp+' kWp</dd></dl>'+
+      '<dl class="calc__pill"><dt>Published package price</dt><dd>'+fmt(p.price)+'</dd></dl>'+
+      (p.inverter_price!==null?'<p class="small muted">Inverter package '+fmt(p.inverter_price)+' + solar package '+fmt(p.solar_price)+'.</p>':'')+
+      '<details class="package-details"><summary>Included equipment &amp; rated appliances</summary><p>'+htmlText(p.includes)+'</p>'+
+      '<p><b>Chart appliance list:</b> '+htmlText(p.rated_appliances)+'</p></details>'+notes+
+      '<p class="form-note">For '+hours+' hours, estimated storage need is '+result.required_battery_kwh.toFixed(1)+' kWh. '+
+      'Runtime uses typical appliance watts, duty cycles and 90% usable storage; the price charts do not guarantee runtime or simultaneous operation. An engineer confirms actual loads, starting currents and solar recharge.</p>'+
+      '<p class="small"><a href="pricing.html#chart-'+p.line+'">View '+sourceNames[p.line]+' chart</a></p>'+
+      '<div class="calc__fin"><h4>Financing estimate</h4><div class="seg">'+[3,6,9,12].map(function(m){return '<button type="button" data-term="'+m+'"'+(m===months?' class="is-on"':'')+'>'+m+'m</button>';}).join('')+'</div>'+
+      '<dl class="calc__pill"><dt>30% deposit</dt><dd>'+fmt(deposit)+'</dd></dl>'+
+      '<dl class="calc__pill"><dt>Monthly payment</dt><dd>'+fmt(monthly)+'</dd></dl>'+
+      '<p class="form-note">4% flat monthly interest on the financed balance.</p></div>'+
+      '<a class="btn btn--primary btn--block package-send" target="_blank" rel="noopener">Send this to an engineer</a></div>';
+    $('.package-send',out).href=wa(request+'\nPublished package: '+root.dataset.spec+
+      '\nFinancing estimate: '+fmt(deposit)+' deposit, '+fmt(monthly)+' monthly over '+months+' months.\nPlease confirm suitability and the final quote.');
+    $$('[data-term]',out).forEach(function(b){b.addEventListener('click',function(){out.dataset.months=b.dataset.term;renderPackageResult(out,state,items,hours,line,root);});});
+  }
+
 
   function initSizer() {
     var root = $('#sizer');
@@ -832,41 +880,12 @@
 
     function fmtN(n) { return '\u20a6' + Math.round(n).toLocaleString('en-US'); }
 
+    var lineEl=packageLineChoice(root,picker,'sizerLine',calc);
     function calc() {
-      var peak = 0, daily = 0, parts = [];
-      SIZER_LOADS.forEach(function (a) {
-        var q = state[a.k];
-        if (!q) return;
-        peak += q * a.w;
-        daily += q * a.w * a.dc * 10 / 1000;
-        parts.push(q + ' x ' + a.n);
-      });
-      var hours = parseInt(hoursEl.value, 10);
-      var need = peak * 1.3 / 1000;
-      var tier = SIZER_TIERS.find(function (t) { return t.kw >= need; }) || SIZER_TIERS[SIZER_TIERS.length - 1];
-      var batt = Math.max(5, Math.ceil((peak / 1000) * 0.55 * hours / 0.9));
-      var panels = Math.max(4, Math.ceil((batt + daily) / (0.62 * 4.5)));
-
-      out.innerHTML =
-        '<div class="is-hot"><dt>Inverter</dt><dd>' + tier.kw + ' kW</dd></div>' +
-        '<div><dt>Battery</dt><dd>' + batt + ' kWh</dd></div>' +
-        '<div><dt>Panels</dt><dd>' + panels + '<small>x 620 W</small></dd></div>' +
-        '<div><dt>Peak demand</dt><dd>' + (peak / 1000).toFixed(1) + ' kW</dd></div>' +
-        '<div class="is-hot"><dt>Indicative</dt><dd>' + fmtN(tier.price) + '<small>installed, from</small></dd></div>';
-
-      root.dataset.summary = parts.join(', ') || 'nothing selected yet';
-      root.dataset.spec = tier.kw + ' kW inverter, ' + batt + ' kWh battery, ' + panels + ' x 620W panels';
+      renderPackageResult(out,state,SIZER_LOADS,hoursEl.value,lineEl.value,root);
     }
 
     hoursEl.addEventListener('change', calc);
-    var send = $('#sizerSend', root);
-    if (send) send.addEventListener('click', function (e) {
-      e.preventDefault();
-      window.open(wa('Hello Solar World, I used the sizer on your website.\n\nMy appliances: ' +
-        (root.dataset.summary || '') + '\nBackup needed: ' + hoursEl.value +
-        ' hours\nEstimated system: ' + (root.dataset.spec || '') +
-        '\n\nPlease confirm the right system and price for me.'), '_blank', 'noopener');
-    });
     calc();
   }
 
@@ -1017,22 +1036,6 @@
     ]}
   ];
 
-  // Installed package prices, straight from the published charts.
-  var CALC_TIERS = [
-    { kw: 3,   price: 2350000,   label: '3 kVA package' },
-    { kw: 5,   price: 3940000,   label: '5 kVA package' },
-    { kw: 8,   price: 8210000,   label: '8 kW package' },
-    { kw: 10,  price: 9290000,   label: '10 kW (12.5 kVA) package' },
-    { kw: 12,  price: 14660000,  label: '12 kW (15 kVA) package' },
-    { kw: 16,  price: 16360000,  label: '16 kW (20 kVA) package' },
-    { kw: 20,  price: 22510000,  label: '20 kW three-phase package' },
-    { kw: 25,  price: 29120000,  label: '25 kW high-voltage package' },
-    { kw: 30,  price: 35990000,  label: '30 kW high-voltage package' },
-    { kw: 50,  price: 47660000,  label: '50 kW high-voltage package' },
-    { kw: 80,  price: 68080000,  label: '80 kW high-voltage package' },
-    { kw: 100, price: 107570950, label: '100 kW high-voltage package' },
-    { kw: 125, price: 147190950, label: '125 kW industrial package' }
-  ];
 
   function initSmartCalc() {
     var root = $('#smartCalc');
@@ -1057,7 +1060,7 @@
         row.className = 'stepper';
         row.innerHTML =
           '<span class="stepper__label"><span class="stepper__name">' + a.n + '</span>' +
-          '<span class="stepper__w">' + a.w + ' W</span></span>' +
+          '<span class="stepper__w">' + a.w + ' W typical</span></span>' +
           '<span class="stepper__ctl">' +
             '<button class="stepper__btn" type="button" data-d="-1" aria-label="Remove one ' + a.n + '" disabled>&minus;</button>' +
             '<span class="stepper__n" aria-live="polite">0</span>' +
@@ -1083,87 +1086,11 @@
 
     function fmt(n) { return '\u20a6' + Math.round(n).toLocaleString('en-US'); }
 
+    var panel=$('.calc__panel',root);
+    var lineEl=packageLineChoice(panel,panel.firstChild,'calcLine',calc);
     function calc() {
-      var peak = 0, daily = 0, parts = [], any = false;
-      CALC_GROUPS.forEach(function (grp) {
-        grp.items.forEach(function (a) {
-          var q = state[a.k];
-          if (!q) return;
-          any = true;
-          peak += q * a.w;
-          daily += q * a.w * a.dc * 10 / 1000;   // kWh across a 10h active window
-          parts.push(q + ' x ' + a.n);
-        });
-      });
-
-      if (!any) {
-        out.innerHTML = '<p class="calc__empty">Add the appliances you want to run and your ' +
-          'recommended system will appear here.</p>';
-        root.dataset.summary = '';
-        return;
-      }
-
-      var hours = parseInt(hoursEl.value, 10);
-      var need = peak * 1.3 / 1000;                       // 30% surge headroom
-      var tier = CALC_TIERS.find(function (t) { return t.kw >= need; }) || CALC_TIERS[CALC_TIERS.length - 1];
-      var batt = Math.max(5, Math.ceil((peak / 1000) * 0.55 * hours / 0.9));
-      var panels = Math.max(4, Math.ceil((batt + daily) / (0.62 * 4.5)));
-      var deposit = tier.price * 0.30;
-      var principal = tier.price - deposit;
-      var monthly = (principal + principal * 0.04 * months) / months;
-
-      out.innerHTML =
-        '<div class="calc__hero">' +
-          '<div class="k">Recommended system</div>' +
-          '<div class="v">' + tier.kw + ' kW</div>' +
-          '<div class="s">' + tier.label + '<br>' + batt + ' kWh storage &middot; ' + panels + ' x 620 W panels</div>' +
-        '</div>' +
-        '<dl class="calc__pill"><dt>Peak demand</dt><dd>' + (peak / 1000).toFixed(1) + ' kW</dd></dl>' +
-        '<dl class="calc__pill"><dt>Daily energy use</dt><dd>' + daily.toFixed(1) + ' kWh</dd></dl>' +
-        '<dl class="calc__pill"><dt>Battery storage</dt><dd>' + batt + ' kWh</dd></dl>' +
-        '<dl class="calc__pill"><dt>Solar panels</dt><dd>' + panels + ' x 620 W</dd></dl>' +
-        '<dl class="calc__pill" style="background:var(--ink-100);border-color:var(--ink-100)">' +
-          '<dt style="color:rgba(255,255,255,.7)">Indicative cost</dt>' +
-          '<dd style="color:var(--gold)">' + fmt(tier.price) + '</dd></dl>' +
-
-        '<div class="calc__fin">' +
-          '<h4>Spread it with financing</h4>' +
-          '<div class="seg" id="calcTerms">' +
-            [3, 6, 9, 12].map(function (m) {
-              return '<button type="button" data-m="' + m + '"' +
-                (m === months ? ' class="is-on"' : '') + '>' + m + 'm</button>';
-            }).join('') +
-          '</div>' +
-          '<dl class="calc__pill" style="margin-bottom:8px"><dt>Deposit today (30%)</dt><dd>' + fmt(deposit) + '</dd></dl>' +
-          '<dl class="calc__pill"><dt>Then per month</dt><dd>' + fmt(monthly) + '</dd></dl>' +
-          '<p class="form-note" style="margin-top:10px">A flat 4% of the financed balance is added each ' +
-          'month, as published on our financing page.</p>' +
-        '</div>' +
-
-        '<a class="btn btn--primary btn--block" id="calcSend" href="#">Send this to an engineer</a>' +
-        '<p class="form-note">Indicative only. A free load assessment gives you the exact ' +
-        'specification and a firm price.</p>';
-
-      $$('#calcTerms button', out).forEach(function (b) {
-        b.addEventListener('click', function () {
-          months = parseInt(b.getAttribute('data-m'), 10);
-          calc();
-        });
-      });
-
-      root.dataset.summary = parts.join(', ');
-      root.dataset.spec = tier.kw + ' kW inverter (' + tier.label + '), ' + batt +
-        ' kWh battery, ' + panels + ' x 620W panels, indicative ' + fmt(tier.price);
-
-      $('#calcSend', out).addEventListener('click', function (e) {
-        e.preventDefault();
-        window.open(wa('Hello Solar World, I used the smart calculator on your website.\n\n' +
-          'My appliances: ' + root.dataset.summary + '\n' +
-          'Backup needed: ' + hours + ' hours\n' +
-          'Suggested system: ' + root.dataset.spec + '\n' +
-          'Financing: ' + fmt(deposit) + ' deposit, then ' + fmt(monthly) + ' a month for ' + months + ' months.\n\n' +
-          'Please confirm the right system and price for me.'), '_blank', 'noopener');
-      });
+      var items=CALC_GROUPS.reduce(function(all,g){return all.concat(g.items);},[]);
+      renderPackageResult(out,state,items,hoursEl.value,lineEl.value,root);
     }
 
     hoursEl.addEventListener('change', calc);
@@ -1224,7 +1151,7 @@
               '<option value="6">6 hours, night only</option>' +
               '<option value="10" selected>10 hours, evening and night</option>' +
               '<option value="16">16 hours, most of the day</option>' +
-              '<option value="24">24 hours, full independence</option>' +
+              '<option value="24">24 hours, subject to assessment</option>' +
             '</select></div>' +
           '<p class="cfab__hint">Add what you want running when the grid is off.</p>' +
           '<div class="qs" id="cfRows"></div>' +
@@ -1244,7 +1171,7 @@
       var row = document.createElement('div');
       row.className = 'qs__row';
       row.innerHTML =
-        '<span><span class="qs__nm">' + a.n + '</span><br><span class="qs__w">' + a.w + ' W</span></span>' +
+        '<span><span class="qs__nm">' + a.n + '</span><br><span class="qs__w">' + a.w + ' W typical</span></span>' +
         '<span class="qs__ctl">' +
           '<button class="qs__b" type="button" data-d="-1" aria-label="Remove one ' + a.n + '" disabled>&minus;</button>' +
           '<span class="qs__n" aria-live="polite">0</span>' +
@@ -1269,75 +1196,9 @@
 
     function fmt(n) { return '\u20a6' + Math.round(n).toLocaleString('en-US'); }
 
+    var lineEl=packageLineChoice(rows.parentNode,rows,'cfLine',calc);
     function calc() {
-      var peak = 0, daily = 0, parts = [];
-      CFAB_ITEMS.forEach(function (a) {
-        var q = state[a.k];
-        if (!q) return;
-        peak += q * a.w;
-        daily += q * a.w * a.dc * 10 / 1000;
-        parts.push(q + ' x ' + a.n);
-      });
-
-      if (!parts.length) {
-        foot.innerHTML =
-          '<p class="cfab__empty">Add an appliance above and your system size, cost and monthly ' +
-          'payment appear here.</p>' +
-          '<div class="cfab__acts"><a class="btn btn--outline" href="calculator.html">Open the full calculator</a></div>';
-        return;
-      }
-
-      var hours = parseInt(hoursEl.value, 10);
-      var need = peak * 1.3 / 1000;
-      var tier = CALC_TIERS.find(function (t) { return t.kw >= need; }) || CALC_TIERS[CALC_TIERS.length - 1];
-      var batt = Math.max(5, Math.ceil((peak / 1000) * 0.55 * hours / 0.9));
-      var panels = Math.max(4, Math.ceil((batt + daily) / (0.62 * 4.5)));
-      var deposit = tier.price * 0.30;
-      var principal = tier.price - deposit;
-      var monthly = (principal + principal * 0.04 * months) / months;
-
-      foot.innerHTML =
-        '<dl class="cfab__sum">' +
-          '<div><dt>Inverter</dt><dd>' + tier.kw + ' kW</dd></div>' +
-          '<div><dt>Battery</dt><dd>' + batt + ' kWh</dd></div>' +
-          '<div><dt>Panels</dt><dd>' + panels + '</dd></div>' +
-          '<div><dt>Peak</dt><dd>' + (peak / 1000).toFixed(1) + ' kW</dd></div>' +
-        '</dl>' +
-        '<div class="cfab__cost"><span>Indicative, installed</span><b>' + fmt(tier.price) + '</b></div>' +
-        '<div class="cfab__fin">' +
-          '<div class="seg" id="cfTerms">' +
-            [3, 6, 9, 12].map(function (m) {
-              return '<button type="button" data-m="' + m + '"' +
-                (m === months ? ' class="is-on"' : '') + '>' + m + 'm</button>';
-            }).join('') +
-          '</div>' +
-          '<div class="cfab__finrow"><span>Deposit today (30%)</span><b>' + fmt(deposit) + '</b></div>' +
-          '<div class="cfab__finrow"><span>Then per month</span><b>' + fmt(monthly) + '</b></div>' +
-        '</div>' +
-        '<div class="cfab__acts">' +
-          '<a class="btn btn--primary" id="cfSend" href="#">Send this to an engineer</a>' +
-          '<a class="btn btn--outline" href="calculator.html">Open the full calculator</a>' +
-        '</div>';
-
-      $$('#cfTerms button', foot).forEach(function (b) {
-        b.addEventListener('click', function () {
-          months = parseInt(b.getAttribute('data-m'), 10);
-          calc();
-        });
-      });
-
-      $('#cfSend', foot).addEventListener('click', function (e) {
-        e.preventDefault();
-        window.open(wa('Hello Solar World, I used the calculator on your website.\n\n' +
-          'My appliances: ' + parts.join(', ') + '\n' +
-          'Backup needed: ' + hours + ' hours\n' +
-          'Suggested system: ' + tier.kw + ' kW inverter, ' + batt + ' kWh battery, ' +
-          panels + ' x 620W panels\n' +
-          'Indicative cost: ' + fmt(tier.price) + '\n' +
-          'Financing: ' + fmt(deposit) + ' deposit, then ' + fmt(monthly) +
-          ' a month for ' + months + ' months.\n\nPlease confirm the right system and price for me.'),
-          '_blank', 'noopener');
-      });
+      renderPackageResult(foot,state,CFAB_ITEMS,hoursEl.value,lineEl.value,el);
     }
 
     hoursEl.addEventListener('change', calc);

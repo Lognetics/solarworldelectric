@@ -40,7 +40,7 @@ COMPANY = {
 
 STATS = [
     {"n": 60000, "suffix": "+", "label": "Homes, offices, hotels,<br>businesses &amp; communities powered"},
-    {"n": None,  "suffix": "",  "label": "Offices across Abuja,<br>Lagos &amp; Port Harcourt"},  # filled from OFFICE_COUNT below
+    {"n": None,  "suffix": "",  "label": "Operations across Abuja,<br>Lagos &amp; Port Harcourt"},  # filled from OFFICE_COUNT below
     {"n": 10,    "suffix": "+", "label": "Years designing and installing<br>solar in Nigeria"},
     {"n": 48,    "suffix": "hr", "label": "Typical installation turnaround<br>after payment confirmation"},
 ]
@@ -49,10 +49,16 @@ STATS = [
 # OFFICES  (from the company profile, page 27)
 # ---------------------------------------------------------------------------
 OFFICES = [
-    {"region": "Port Harcourt", "name": "Sani Abacha 1 & 2",
-     "address": "No 27 & 29 Sani Abacha Road, GRA Phase 3, Opposite the Autograph Mall, Port Harcourt",
+    {"region": "Port Harcourt", "name": "Sani Abacha 1",
+     "address": "Sani Abacha Road, GRA Phase 3, opposite the Autograph Mall, Port Harcourt",
      "phone": "09037933268"},
-    {"region": "Port Harcourt", "name": "SPA PH",
+    {"region": "Port Harcourt", "name": "Sani Abacha 2",
+     "address": "Sani Abacha Road, GRA Phase 3, opposite the Autograph Mall, Port Harcourt",
+     "phone": "09037933268"},
+    {"region": "Port Harcourt", "name": "Sani Abacha 3",
+     "address": "Sani Abacha Road, GRA Phase 3, Port Harcourt",
+     "phone": ""},
+    {"region": "Port Harcourt", "name": "SPAR PH",
      "address": "1st Floor, Port-Harcourt City Mall (SPAR), Old GRA, Port Harcourt",
      "phone": "07089970508"},
     {"region": "Port Harcourt", "name": "GRA PH",
@@ -322,6 +328,8 @@ PRICE_STANDARD = [
     ("15kVA / 48V Hybrid inverter package only (17.6kWh cells)",
      "2 lithium batteries of 17.6kWh, electric cables, accessories & installation",
      "70 bulbs, 10 fans, 3 fridges and freezers, washing machine, four 1.5HP ACs, pumping machine, microwave & electric blender", 11450000),
+    ("15kVA / 48V Solar package only (17.6kWh cells)",
+     "24 × 620W monocrystalline solar panels, cables & installation", "Same as above", 5410000),
     ("30kVA / 48V Hybrid inverter package only",
      "4 lithium batteries of 17.6kWh, electric cables, accessories & installation",
      "90 bulbs, 15 fans, 5 fridges and freezers, washing machine, six 1.5HP ACs, pumping machine, microwave & electric blender", 22900000),

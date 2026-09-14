@@ -27,7 +27,7 @@ CASES = [
         "title": "8 kW (10 kVA) Home Solar &amp; Inverter Installation in Port Harcourt",
         "location": "Port Harcourt, Rivers State", "client": None,
         "img": "pkg/pkg-8kw.jpg",
-        "alt": "8kW home solar and inverter installation in Port Harcourt with Deye hybrid inverter and lithium battery",
+        "alt": "8kW home solar and inverter installation in Port Harcourt with hybrid inverter and lithium battery",
         "specs": [("System", "8 kW / 48 V hybrid"), ("Battery storage", "1 × 12 kWh lithium"),
                   ("Solar panels", "8 × 620 W"), ("Property", "Family home")],
         "excerpt": ("A family home that wanted to retire the generator entirely. The 8 kW package "
@@ -135,7 +135,7 @@ CASES = [
         "title": "5 kW (5 kVA) Apartment Solar &amp; Inverter Installation",
         "location": "Abuja, FCT", "client": None,
         "img": "install-deye-3batt.jpg",
-        "alt": "5kW apartment solar and inverter installation with Deye hybrid inverter and three lithium batteries",
+        "alt": "5kW apartment solar and inverter installation with hybrid inverter and three lithium batteries",
         "specs": [("System", "5 kW / 48 V hybrid"), ("Battery storage", "2 × 5 kWh lithium"),
                   ("Solar panels", "8 × 620 W"), ("Property", "Apartment")],
         "excerpt": ("The entry point into full solar for an apartment: lighting, entertainment, refrigeration "
@@ -200,11 +200,11 @@ CASES = [
     {
         "id": "11kw-alp-hybrid-home",
         "cat": "residential", "type": "Homeowner", "verified": False,
-        "title": "11 kW ALP Solar Hybrid Installation for a Homeowner",
+        "title": "11 kW Solar Hybrid Installation for a Homeowner",
         "location": "Port Harcourt, Rivers State", "client": None,
         "img": "install-alp-11kw.jpg",
-        "alt": "11kW AlpSolar hybrid inverter with two BICODI lithium batteries installed by Solar World Electric for a homeowner in Port Harcourt",
-        "specs": [("System", "11 kW / 48 V ALP hybrid"), ("Battery storage", "2 × 16 kWh lithium"),
+        "alt": "11kW hybrid inverter with two lithium batteries installed by Solar World Electric for a homeowner in Port Harcourt",
+        "specs": [("System", "11 kW / 48 V hybrid"), ("Battery storage", "2 × 16 kWh lithium"),
                   ("Solar panels", "24 × 620 W"), ("Property", "Detached home")],
         "excerpt": ("A 24-panel array paired with 32 kWh of storage, specified for a homeowner who wanted "
                     "generation, not just backup."),
@@ -215,17 +215,17 @@ CASES = [
               "empties before morning and the generator comes back. They wanted the array oversized relative to the "
               "battery so the system would recharge fully even on an average day."]),
             ("Our Recommendation",
-             ["An 11 kW / 48 V ALP solar hybrid inverter, two 16 kWh lithium batteries and a 24-panel array totalling "
+             ["An 11 kW / 48 V solar hybrid inverter, two 16 kWh lithium batteries and a 24-panel array totalling "
               "14.88 kWp, deliberately generous generation for the storage behind it."]),
             ("What We Installed",
-             ["11 kW / 48 V ALP solar hybrid inverter", "2 × 16 kWh lithium batteries",
+             ["11 kW / 48 V solar hybrid inverter", "2 × 16 kWh lithium batteries",
               "24 × 620 W monocrystalline solar panels", "Cables, accessories and complete installation"], "list"),
             ("The Result",
              ["Rated for 50 lighting points, 10 fans, 6 television sets, 2 fridges, 2 freezers, a washing machine, "
               "three 1.5 HP air conditioners, a pumping machine, microwave and electric blender."]),
         ],
         "quote": None,
-        "keywords": ["solar system for home", "ALP solar hybrid inverter", "11kW solar system",
+        "keywords": ["solar system for home", "solar hybrid inverter", "11kW solar system",
                      "solar inverter installation for home", "solar panels Nigeria price"],
     },
     {
@@ -306,7 +306,7 @@ CASES = [
         "title": "50 kW Solar &amp; Inverter Installation for a Hotel",
         "location": "Port Harcourt, Rivers State", "client": None,
         "img": "pkg/pkg-50kw-a.jpg",
-        "alt": "50kW solar and inverter installation for a hotel in Nigeria with BOS-B lithium battery bank",
+        "alt": "50kW solar and inverter installation for a hotel in Nigeria with lithium battery bank",
         "specs": [("System", "50 kW / 48 V"), ("Battery storage", "5 × 14.3 kWh"),
                   ("Solar panels", "64 × 620 W"), ("Property", "Hotel")],
         "excerpt": ("Guest rooms, kitchen refrigeration, lifts and an EV charger on one system, because in "
@@ -319,12 +319,12 @@ CASES = [
               "Hotels also carry an unusual load shape: refrigeration and corridor lighting run continuously, room "
               "air conditioning spikes at night, and kitchen equipment peaks at service times."]),
             ("Our Recommendation",
-             ["A 50 kW / 48 V high-VAC package with five 14.3 kWh BOS-B lithium batteries (71.5 kWh) and a 64-panel "
+             ["A 50 kW / 48 V high-VAC package with five 14.3 kWh lithium batteries (71.5 kWh) and a 64-panel "
               "array rated at 39.68 kWp.",
               "High-voltage architecture keeps cable losses and copper cost down at this scale, and the battery "
               "management system gives the maintenance team visibility over every module."]),
             ("What We Installed",
-             ["50 kW / 48 V high-VAC inverter system", "5 × 14.3 kWh BOS-B lithium batteries",
+             ["50 kW / 48 V high-VAC inverter system", "5 × 14.3 kWh lithium batteries",
               "64 × 620 W monocrystalline solar panels",
               "Battery management system, combiner box, mounting rack, busbar and complete installation"], "list"),
             ("The Result",
@@ -448,7 +448,7 @@ CASES = [
         "title": "16 kW (20 kVA) Solar Inverter Installation for a Restaurant",
         "location": "Lekki, Lagos", "client": None,
         "img": "project-restaurant-16kw.jpg",
-        "alt": "Wall-mounted Deye inverter with two floor-standing lithium batteries for the restaurant installation",
+        "alt": "Wall-mounted inverter with two floor-standing lithium batteries for the restaurant installation",
         "specs": [("System", "16 kW / 48 V hybrid"), ("Battery storage", "2 × 16 kWh lithium"),
                   ("Solar panels", "20 × 620 W"), ("Property", "Restaurant")],
         "excerpt": ("Chillers, freezers, five air conditioners and a dining room that has to stay comfortable "
@@ -492,12 +492,12 @@ CASES = [
               "candidates, but the electrical design has to handle long cable runs and high current without "
               "unacceptable losses."]),
             ("Our Recommendation",
-             ["An 80 kW / 48 V high-VAC package built on a dual-inverter bank with 100.1 kWh of BOS-B lithium storage "
+             ["An 80 kW / 48 V high-VAC package built on a dual-inverter bank with 100.1 kWh of lithium storage "
               "and a 78-panel array rated at 48.36 kWp.",
               "High-voltage battery architecture is what makes this economical at scale: lower current for the same "
               "power means smaller conductors and lower losses across a large building."]),
             ("What We Installed",
-             ["80 kW / 48 V high-VAC dual inverter bank", "7 × 14.3 kWh BOS-B lithium batteries",
+             ["80 kW / 48 V high-VAC dual inverter bank", "7 × 14.3 kWh lithium batteries",
               "78 × 620 W monocrystalline solar panels",
               "Battery management system, combiner box, mounting rack, busbar and complete installation"], "list"),
             ("The Result",
@@ -514,7 +514,7 @@ CASES = [
         "title": "12 kW (15 kVA) Solar Inverter Installation for a Retail Business",
         "location": "Port Harcourt, Rivers State", "client": None,
         "img": "project-retail-12kw.jpg",
-        "alt": "AlpSolar inverter with two BICODI lithium batteries for the retail business installation",
+        "alt": "Hybrid inverter with two lithium batteries for the retail business installation",
         "specs": [("System", "12 kW / 48 V hybrid"), ("Battery storage", "2 × 16 kWh lithium"),
                   ("Solar panels", "16 × 620 W"), ("Property", "Retail store")],
         "excerpt": ("A mid-size store running lighting, displays, POS, refrigeration and three air "
@@ -562,13 +562,13 @@ CASES = [
               "Plants of this size also run motor loads, compressors, chillers, pumps, whose starting current is "
               "several times their running current. Any system that ignores that fails on the first cold start."]),
             ("Our Recommendation",
-             ["A 125 kW power conversion system with 240 kWh of BOS-B Pro lithium storage across fifteen modules and "
+             ["A 125 kW power conversion system with 240 kWh of lithium storage across fifteen modules and "
               "a 168-panel array rated at 104.16 kWp.",
               "Industrial-grade components throughout, specified to withstand heavy continuous duty. The design leaves "
               "room for expansion: additional battery modules and array strings can be added without replacing the "
               "conversion equipment."]),
             ("What We Installed",
-             ["125 kW power conversion system", "15 × 16 kWh BOS-B Pro lithium batteries on stackable racks",
+             ["125 kW power conversion system", "15 × 16 kWh lithium batteries on stackable racks",
               "168 × 620 W monocrystalline solar panels",
               "Battery management system, circuit protection, mounting infrastructure and complete installation"], "list"),
             ("The Result",
@@ -599,12 +599,12 @@ CASES = [
               "does not just interrupt production; voltage sags and surges shorten the life of motors, drives and "
               "control electronics."]),
             ("Our Recommendation",
-             ["A 100 kW / 48 V high-VAC package with 143 kWh of BOS-B lithium storage and a 140-panel array rated at "
+             ["A 100 kW / 48 V high-VAC package with 143 kWh of lithium storage and a 140-panel array rated at "
               "86.8 kWp.",
               "The inverter conditions supply continuously, which removes the surge and sag exposure as well as the "
               "outages."]),
             ("What We Installed",
-             ["100 kW / 48 V high-VAC inverter system", "10 × 14.3 kWh BOS-B lithium batteries",
+             ["100 kW / 48 V high-VAC inverter system", "10 × 14.3 kWh lithium batteries",
               "140 × 620 W monocrystalline solar panels",
               "Battery management system, combiner box, mounting rack, busbar and complete installation"], "list"),
             ("The Result",
@@ -647,35 +647,177 @@ CASES = [
                      "60kW solar system", "80kVA solar inverter", "large scale solar Nigeria"],
     },
     {
+        # Preserve the published anchor so existing inbound links still resolve.
+        # Business corrections: IMG_4620.PNG, IMG_4630.PNG and IMG_4631.PNG.
         "id": "50kw-large-scale-facility",
-        "cat": "industrial", "type": "Large-scale facility", "verified": False,
-        "title": "50 kW Solar Installation for a Large-Scale Facility",
-        "location": "Nigeria", "client": None,
-        "img": "install-room-stack3.jpg",
-        "alt": "50kW solar installation with lithium battery bank for a large-scale facility in Nigeria",
-        "specs": [("System", "50 kW / 48 V"), ("Battery storage", "5 × 14.3 kWh"),
-                  ("Solar panels", "64 × 620 W"), ("Property", "Large-scale facility")],
-        "excerpt": ("A 39.68 kWp array with 71.5 kWh of storage, the workhorse configuration for large "
-                    "facilities that need reliability before they need scale."),
-        "loads": "120 lighting points, 20 displays, 4 fridges, 4 freezers, pumping machine, EV charger and five 2.5 HP air conditioners",
-        "sections": [
-            ("The Challenge",
-             ["Large facilities often start their solar journey wanting to cover critical load rather than total "
-              "load. The design question is which circuits go on the system first, and how to leave room for the rest."]),
-            ("Our Recommendation",
-             ["A 50 kW / 48 V high-VAC package with 71.5 kWh of BOS-B lithium storage and a 64-panel array. "
-              "Critical circuits are moved onto the system first, with capacity reserved for a second phase."]),
-            ("What We Installed",
-             ["50 kW / 48 V high-VAC inverter system", "5 × 14.3 kWh BOS-B lithium batteries",
-              "64 × 620 W monocrystalline solar panels",
-              "Battery management system, combiner box, mounting rack, busbar and complete installation"], "list"),
-            ("The Result",
-             ["Rated for 120 lighting points, 20 displays, 4 fridges, 4 freezers, a pumping machine, an EV charger "
-              "and five 2.5 HP air conditioners, with a clear expansion path."]),
-        ],
+        "cat": "commercial", "type": "Hospitality", "industry": "Hospitality", "verified": True,
+        "title": "250 kW Solar &amp; Battery System for Stratford Hotel, Owerri",
+        "location": "Owerri, Nigeria", "client": "Stratford Hotel",
+        "img": "install-room-stack2.jpg",
+        "alt": "Solar inverter equipment and battery banks for the 250 kW system at Stratford Hotel in Owerri",
+        "specs": [("System", "250 kW"), ("Battery storage", "480 kWh"),
+                  ("Solar panels", "224 × 620 W"), ("Solar array", "138.88 kWp"),
+                  ("Application", "Large-scale hotel energy infrastructure")],
+        "excerpt": ("A 250 kW solar and battery system for Stratford Hotel in Owerri, combining 480 kWh "
+                    "of storage with a 138.88 kWp array for a large hospitality operation."),
+        "loads": "Air conditioning, lighting, refrigeration, water systems, entertainment, communications and essential hotel services",
+        "sections": [('The Challenge',
+          ['For a hotel, electricity is not simply an operating expense.',
+           'It is part of the experience the hotel sells.',
+           'Guests expect their rooms to be comfortable. They expect air conditioning to work. They expect '
+           'lighting, refrigeration, water systems, entertainment, communications and other essential '
+           'services to remain available throughout their stay.',
+           'Behind all of this is an energy requirement that continues whether the grid is available or '
+           'not.',
+           'For Stratford Hotel, the scale of its operations required an energy solution capable of '
+           'supporting substantial electrical loads while providing greater resilience against '
+           'interruptions in conventional power supply.',
+           'The challenge was therefore not simply to provide backup power.',
+           'It was to develop an energy system capable of becoming a meaningful part of the hotel’s wider '
+           'power infrastructure.']),
+         ('Designing for a Large Hospitality Facility',
+          ['Solar World Electric Technology designed and deployed a 250kW solar energy system supported by '
+           '480kWh of battery storage and 224 × 620W solar panels.',
+           'The solar array provides a total installed capacity of 138.88kWp, while the substantial '
+           'battery bank provides significant energy storage for periods when solar generation is '
+           'unavailable.',
+           'The scale of the installation reflects the scale of the hotel’s energy requirements.',
+           'This was not approached as a conventional residential solar installation or a small backup '
+           'system.',
+           'It was engineered as a large-scale commercial energy solution for a hospitality environment, '
+           'where reliability, system capacity and continuity of operations are critical.']),
+         ('What We Installed',
+          ['250kW solar inverter system',
+           '480kWh battery storage',
+           '224 × 620W solar panels',
+           '138.88kWp solar PV array',
+           'Large-scale commercial energy infrastructure',
+           'System integration',
+           'Installation and commissioning'],
+          'list'),
+         ('Why Energy Reliability Matters in Hospitality',
+          ['A hotel cannot simply tell a guest:',
+           '“There is no light.”',
+           'The guest has already paid for the room.',
+           'They have paid for comfort.',
+           'They have paid for an experience.',
+           'When electricity becomes unreliable, the consequences can extend beyond inconvenience. Air '
+           'conditioning, lighting, refrigeration, water pumping, food service, communications, security '
+           'and other hotel operations can all be affected.',
+           'For a large hospitality facility, therefore, energy reliability becomes a business continuity '
+           'issue.',
+           'The objective is not merely to keep the lights on.',
+           'It is to ensure that the hotel’s operations can continue with as little disruption as '
+           'possible.']),
+         ('The Solar World Solution',
+          ['Solar World approached Stratford Hotel’s requirements from an energy infrastructure '
+           'perspective.',
+           'The resulting system combines 138.88kWp of solar generation, a 250kW inverter system and '
+           '480kWh of battery storage.',
+           'During periods of solar production, the solar array contributes energy to the hotel’s '
+           'requirements while also supporting battery charging.',
+           'The battery storage provides an additional energy resource when solar generation is '
+           'unavailable, helping create a more flexible and resilient power system.',
+           'The combination of generation, conversion and storage allows the hotel to manage its energy '
+           'requirements through a more structured system rather than relying entirely on a single source '
+           'of power.']),
+         ('Built Around Real Hotel Loads',
+          ['A hotel is a particularly demanding environment for an energy system.',
+           'Its electrical requirements are not limited to lighting and basic appliances.',
+           'Depending on the facility, significant loads can include:']),
+         ('',
+          ['Air-conditioning systems',
+           'Refrigeration',
+           'Water pumping',
+           'Kitchen and catering equipment',
+           'Guest-room loads',
+           'Lighting',
+           'Security systems',
+           'ICT and communications',
+           'Entertainment systems',
+           'Administrative operations',
+           'Other essential hotel infrastructure'],
+          'list'),
+         ('',
+          ['This is why commercial solar design has to go beyond simply calculating how many panels can '
+           'fit on a roof.',
+           'The system has to be considered around how the facility actually operates.']),
+         ('A Significant Battery Bank',
+          ['One of the defining features of the Stratford Hotel installation is its 480kWh battery storage '
+           'capacity.',
+           'For a large commercial facility, battery storage can play an important role in managing energy '
+           'availability beyond periods of direct solar generation.',
+           'Rather than treating the battery as simply an emergency backup, it forms part of the hotel’s '
+           'broader energy ecosystem.',
+           'The result is a system designed around three fundamental components:']),
+         ('',
+          ['Generate: 138.88kWp of solar generation',
+           'Convert: 250kW inverter capacity',
+           'Store: 480kWh of battery storage'],
+          'list'),
+         ('',
+          ['Together, these components form an integrated energy system designed for a substantial '
+           'hospitality operation.']),
+         ('More Than an Installation',
+          ['Projects of this scale demonstrate an important shift in the way businesses should think about '
+           'solar energy.',
+           'Solar is no longer simply about installing panels on a roof.',
+           'For large facilities, it becomes a question of:']),
+         ('',
+          ['How much energy does the facility require?',
+           'When is that energy required?',
+           'How much should be generated?',
+           'How much should be stored?',
+           'What happens when solar generation is unavailable?',
+           'How can the entire system work together?'],
+          'list'),
+         ('',
+          ['These questions require engineering, system design and proper integration.',
+           'That is where Solar World Electric Technology’s role goes beyond equipment supply.']),
+         ('The Result',
+          ['The completed Stratford Hotel project provides the facility with a substantial combination of '
+           'solar generation and battery storage, comprising:']),
+         ('',
+          ['250kW of inverter capacity',
+           '480kWh of battery storage',
+           '138.88kWp of solar generation',
+           '224 × 620W solar panels'],
+          'list'),
+         ('',
+          ['The installation gives Stratford Hotel access to a significantly more structured energy '
+           'infrastructure, designed to support its substantial operational requirements and improve '
+           'resilience against conventional power interruptions.']),
+         ('Why This Project Matters',
+          ['Stratford Hotel represents the point at which solar energy moves beyond being a simple '
+           'alternative power source and becomes part of a company’s energy strategy.',
+           'For a facility operating at this scale, the question is no longer simply:',
+           '“What can we use when the power goes off?”',
+           'The more important question becomes:',
+           '“How do we build a more reliable and intelligent energy infrastructure around the way our '
+           'business operates?”',
+           'That is the thinking behind large-scale solar and battery projects.',
+           'And it is exactly the type of challenge Solar World Electric Technology is built to solve.']),
+         ('Project Snapshot', ['STRATFORD HOTEL']),
+         ('',
+          ['250kW Solar Inverter Capacity',
+           '480kWh Battery Storage',
+           '138.88kWp Solar PV Capacity',
+           '224 × 620W Solar Panels',
+           'Commercial / Hospitality Application'],
+          'list'),
+         ('', ['Solar World Electric Technology', 'Redefining the Limits.'])],
+        # Full article supplied by the business; no customer quote was provided.
         "quote": None,
-        "keywords": ["large scale solar installation Nigeria", "industrial solar system",
-                     "50kW solar installation", "commercial and industrial solar", "solar energy storage Nigeria"],
+        "keywords": ['250kW solar system Nigeria',
+         'Stratford Hotel solar installation',
+         'hotel solar system Nigeria',
+         '480kWh battery storage Nigeria',
+         '138.88kWp solar installation',
+         'commercial solar installation Nigeria',
+         'large-scale solar battery system',
+         'solar power for hotels',
+         'hotel energy infrastructure Nigeria',
+         'high-capacity solar inverter Nigeria'],
     },
 
     # ======================================================================
@@ -787,37 +929,26 @@ CASES = [
                      "public institution solar power", "rural electrification Nigeria", "solar energy company Nigeria"],
     },
     {
+        # IMG_4620.PNG confirms charger capacity only; do not infer storage,
+        # electrical topology, connector type, charging times or package sizing.
         "id": "ev-charging-infrastructure",
         "cat": "infrastructure", "type": "EV charging", "verified": False,
-        "title": "Solar-Powered EV Charging Points for Homes and Businesses",
-        "location": "Nationwide", "client": None,
+        "title": "160 kW EV Charge Point",
+        "location": "Nigeria", "client": None,
         "img": "project-ev-charging.jpg",
         "alt": "Electric vehicles parked beneath a solar-panel canopy at an EV charging station",
-        "specs": [("Charger", "6–7 kW charge point"), ("Source", "Solar + lithium"),
-                  ("Integration", "Hybrid inverter"), ("Application", "Homes &amp; offices")],
-        "excerpt": ("EV charge points integrated into the same hybrid system that powers the building, so "
-                    "the car charges on solar, not diesel."),
-        "loads": "Electric vehicle charging alongside building load",
+        "specs": [("Charger", "160 kW charge point"), ("Application", "Electric vehicle charging")],
+        "excerpt": "A 160 kW charge point for electric vehicle charging infrastructure.",
+        "loads": "Electric vehicle charging",
         "sections": [
-            ("The Challenge",
-             ["An electric vehicle charged from a diesel generator has simply moved the emissions and the fuel bill. "
-              "Charging from an unstable grid is also hard on the vehicle's onboard charger."]),
-            ("Our Recommendation",
-             ["Integrating a 6–7 kW EV charge point into the property's hybrid solar system rather than treating it "
-              "as a separate installation.",
-              "The charge point draws from the same array and battery bank as the building, so vehicle charging is "
-              "scheduled around available solar. Our 25 kW, 30 kW, 50 kW and 125 kW packages already include an EV "
-              "charger in their rated load."]),
+            ("The Project",
+             ["This project features a 160 kW EV charge point for electric vehicle charging."]),
             ("What We Installed",
-             ["6–7 kW EV charge point", "Integration into the existing hybrid inverter and lithium battery system",
-              "Dedicated circuit protection and metering", "Commissioning and user handover"], "list"),
-            ("The Result",
-             ["Vehicle charging that runs on stored solar energy, with the building's own supply protected from the "
-              "charging load."]),
+             ["160 kW EV charge point"], "list"),
         ],
         "quote": None,
-        "keywords": ["solar EV charging Nigeria", "EV charger installation Nigeria",
-                     "solar powered car charging", "home EV charge point", "renewable energy EV charging"],
+        "keywords": ["160kW EV charge point", "160 kW EV charger", "EV charger installation Nigeria",
+                     "electric vehicle charging infrastructure", "EV charging station Nigeria"],
     },
 ]
 

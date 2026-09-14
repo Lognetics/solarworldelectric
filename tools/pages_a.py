@@ -4,6 +4,8 @@
 from data import COMPANY, STATS, CLIENTS, PACKAGES, CATEGORIES, OFFICES, OFFICE_COUNT
 from content import WHY_US, PROCESS, FAQ_GROUPS, WA_REVIEWS, TEAM, TEAM_GROUPS
 from case_studies import CASES
+from package_catalog import CATALOG
+from html import escape
 from layout import ico, page_head, cta_band, naira, SITE
 from globe import globe_block, orbit_globe
 
@@ -54,6 +56,14 @@ def faq_block(groups, single=False, limit=None):
 
 
 def wa_card(r):
+    if r.get("viewport"):
+        x, y, width, height = r["viewport"]
+        image_width, image_height = r["dimensions"]
+        shot = ('<svg class="review-crop" viewBox="%s %s %s %s" role="img" aria-label="%s">'
+                '<image href="assets/img/reviews/%s" width="%s" height="%s"/></svg>'
+                % (x, y, width, height, escape(r["alt"], quote=True), r["shot"], image_width, image_height))
+    else:
+        shot = '<img src="assets/img/reviews/%s" alt="%s" loading="lazy">' % (r["shot"], r["alt"])
     return """
 <figure class="wa-card" data-cat="%s" data-reveal>
   <figcaption class="wa-card__bar">
@@ -61,9 +71,9 @@ def wa_card(r):
     <span><span class="wa-card__who">%s</span><span class="wa-card__where">%s</span></span>
     <span class="wa-card__verified">%s Verified</span>
   </figcaption>
-  <div class="wa-card__shot"><img src="assets/img/reviews/%s" alt="%s" loading="lazy"></div>
+  <div class="wa-card__shot">%s</div>
   <blockquote class="wa-card__quote">“%s”</blockquote>
-</figure>""" % (r.get("cat", "residential"), ico("wa"), r["who"], r["where"], ico("check"), r["shot"], r["alt"], r["quote"])
+</figure>""" % (r.get("cat", "residential"), ico("wa"), r["who"], r["where"], ico("check"), shot, r["quote"])
 
 
 def pkg_card(p):
@@ -87,6 +97,19 @@ def pkg_card(p):
   </div>
 </article>""" % (p["img"], p["alt"], p["tag"], p["title"], p["kw"], specs, p["loads"],
                  naira(p["price"]), p["note"], p["title"].replace("&amp;", "and"), ico("arrow"))
+
+
+def catalog_card(p):
+    return ('<article class="card catalog-card" id="package-%s">'
+            '<span class="chip chip--gold">%s systems</span><h3>%s</h3>'
+            '<p class="catalog-price">%s</p>'
+            '<p>%s kWh storage · %s × %s W panels</p>'
+            '<details><summary>Equipment and appliances</summary>'
+            '<p><b>Included:</b> %s</p><p><b>Rated appliances:</b> %s</p></details>'
+            '<a class="tlink" href="pricing.html#chart-%s">View full price chart %s</a></article>'
+            % (p["id"], p["line"].title(), escape(p["name"]), naira(p["price"]),
+               p["battery_kwh"], p["panel_count"], p["panel_watts"], escape(p["includes"]),
+               escape(p["rated_appliances"]), p["line"], ico("arrow")))
 
 
 def case_card(c):
@@ -129,14 +152,11 @@ def sizer_block():
       <option value="6">6 hours, night only</option>
       <option value="10" selected>10 hours, evening and night</option>
       <option value="16">16 hours, most of the day</option>
-      <option value="24">24 hours, full independence</option>
+      <option value="24">24 hours, subject to assessment</option>
     </select>
   </div>
-  <dl class="readout readout--total" id="sizerOut" style="margin-top:16px"></dl>
-  <a class="btn btn--primary btn--block" id="sizerSend" style="margin-top:16px" href="#">
-    Send this to an engineer %s</a>
-  <p class="form-note">Indicative only. A free load assessment gives you the exact specification.</p>
-</div>""" % ico("wa")
+  <div id="sizerOut" style="margin-top:16px"></div>
+</div>"""
 
 
 def versus_block(dark=True):
@@ -195,7 +215,7 @@ HERO_SLIDES = [
      "businesses and institutions. Over 60,000 powered since 2015."),
     ("pkg/pkg-80kw.jpg",
      "Industrial power<br>that <span class=\"grad-text\">never stops</span>",
-     "From 20 kW offices to 125 kW factories, high-voltage solar and lithium storage engineered for "
+     "From business installations to industrial projects of 1 MW and beyond, solar and storage engineered for "
      "continuous duty in Nigerian conditions."),
     ("project-rooftop-lekki.jpg",
      "Your home, off the<br><span class=\"grad-text\">generator</span> for good",
@@ -294,7 +314,7 @@ def home():
           <span class="ticker__l">Homes, offices and businesses powered</span>
           <span class="ticker__v"><span data-count="60000" data-suf="+">0</span></span></div>
         <div class="ticker__row"><span class="ticker__dot"></span>
-          <span class="ticker__l">Offices across three cities</span>
+          <span class="ticker__l">Operations across three cities</span>
           <span class="ticker__v"><span data-count="%(offices)s">0</span></span></div>
         <div class="ticker__row"><span class="ticker__dot"></span>
           <span class="ticker__l">Typical install after payment</span>
@@ -320,7 +340,7 @@ def home():
         <span class="answer__k">%(spark)s Quick answer</span>
         <p><b>What does Solar World Electric do?</b> We size, supply, install and maintain complete solar power
         systems in Nigeria, solar panels, hybrid inverters and lithium battery storage, from 3 kVA home
-        packages to 125 kW industrial systems. We operate 21 offices across Abuja, Lagos and Port Harcourt,
+        packages to industrial projects of 1 MW and beyond. We have 21 operations across Abuja, Lagos and Port Harcourt,
         install nationwide, publish our prices openly, and back every installation with up to 25 years of panel
         warranty and a year of free after-sales support.</p>
       </div>
@@ -363,7 +383,7 @@ def home():
         <div><div class="kpi__n" style="color:var(--gold)"><span data-count="60000" data-suf="+">0</span></div>
              <div class="kpi__l" style="color:var(--d-fg-muted)">Homes, offices, hotels, businesses and communities powered</div></div>
         <div><div class="kpi__n" style="color:var(--gold)"><span data-count="%(offices)s">0</span></div>
-             <div class="kpi__l" style="color:var(--d-fg-muted)">Offices across three cities, installing nationwide</div></div>
+             <div class="kpi__l" style="color:var(--d-fg-muted)">Operations across three cities, installing nationwide</div></div>
         <div><div class="kpi__n" style="color:var(--gold)"><span data-count="25" data-suf="yr">0</span></div>
              <div class="kpi__l" style="color:var(--d-fg-muted)">Panel warranty on our Deye and Solis lines</div></div>
       </div>
@@ -398,6 +418,7 @@ def home():
       installation. Full Deye, Solis and standard price charts are on the pricing page.</p>
     </div>
     <div class="grid grid-4">%(pkgs)s</div>
+    <p class="center small" style="margin-top:24px"><a href="pricing.html#chart-deye">Deye prices</a> · <a href="pricing.html#chart-solis">Solis prices</a> · <a href="pricing.html#chart-standard">Standard prices</a></p>
     <div class="btn-row" style="margin-top:38px;justify-content:center">
       <a class="btn btn--dark btn--lg" href="pricing.html">See all packages &amp; prices %(arrow)s</a>
       <a class="btn btn--outline btn--lg" href="calculator.html">Size my system</a>
@@ -555,7 +576,7 @@ def home():
         "faqcount": sum(len(g["items"]) for g in FAQ_GROUPS),
         "cta": cta_band(
             "Tell us what you want to power. We will size it, price it and install it.",
-            "Free consultation and load assessment at any of our 21 offices in Abuja, Lagos and Port Harcourt "
+            "Free consultation and load assessment at any of our 21 operations in Abuja, Lagos and Port Harcourt "
             ", or over WhatsApp, wherever you are in Nigeria."),
     }
 
@@ -595,7 +616,7 @@ def about():
 %(head)s
 
 <section class="section">
-  <div class="container split">
+  <div class="container container--narrow">
     <div data-reveal="left">
       <span class="eyebrow">Who we are</span>
       <h2>Transforming how Nigerian homes and businesses access energy</h2>
@@ -611,12 +632,9 @@ def about():
       <div class="facts" style="margin-top:28px">
         <div><dt>Established</dt><dd>%(founded)s</dd></div>
         <div><dt>RC number</dt><dd>%(rc)s</dd></div>
-        <div><dt>Offices</dt><dd>9 across 3 cities</dd></div>
+        <div><dt>Operations</dt><dd>21 across 3 cities</dd></div>
         <div><dt>Powered</dt><dd>60,000+ customers</dd></div>
       </div>
-    </div>
-    <div class="media" data-reveal="right">
-      <img src="assets/img/team-group.jpg" alt="The Solar World Electric Technology Ltd team outside the Solar World showroom in Nigeria" loading="lazy">
     </div>
   </div>
 </section>
@@ -718,7 +736,7 @@ SOLUTION_BLOCKS = [
      ["Homeowners", "Estates", "Duplexes", "Apartments", "Family homes"]),
 
     ("commercial", "office", "Commercial solar systems",
-     "20 kW – 80 kW",
+     "Commercial systems · sized to your operations",
      "pkg/pkg-50kw-a.jpg",
      "Commercial solar and inverter installation for an office building in Nigeria",
      ["Offices, hotels, schools, hospitals, shopping facilities, restaurants, warehouses and retail businesses "
@@ -733,7 +751,7 @@ SOLUTION_BLOCKS = [
      ["Offices", "Hotels", "Schools", "Hospitals", "Shopping facilities", "Restaurants", "Warehouses", "Retail"]),
 
     ("industrial", "factory", "Industrial solar systems",
-     "80 kW – 125 kW+",
+     "Industrial systems · 1 MW and beyond",
      "install-deye-rack.jpg",
      "Industrial solar system with stacked lithium battery racks and dual inverters in Nigeria",
      ["These systems are designed for high-demand environments where consistent, uninterrupted power is "
@@ -795,8 +813,8 @@ def solutions():
     <div class="answer" data-reveal>
       <span class="answer__k">%(spark)s Quick answer</span>
       <p><b>What solar solutions does Solar World provide?</b> Four: residential and small commercial systems
-      from 5 kVA to 20 kVA; commercial systems from 20 kW to 80 kW for offices, hotels, schools, hospitals and
-      retail; industrial systems from 80 kW to 125 kW and beyond for factories and processing plants; and
+      from 5 kVA to 20 kVA; commercial systems tailored to offices, hotels, schools, hospitals and
+      retail; industrial systems from 80 kW to 1 MW and beyond for factories and processing plants; and
       energy infrastructure, solar street lighting, solar water pumping, EV charging and community projects.
       Every system is sized against the building&rsquo;s actual measured load.</p>
     </div>
@@ -866,7 +884,7 @@ def solutions():
 # PRODUCTS
 # ---------------------------------------------------------------------------
 def products():
-    pkgs = "".join(pkg_card(p) for p in PACKAGES)
+    pkgs = "".join(catalog_card(p) for p in CATALOG)
     gallery_imgs = [
         ("install-room-stack1.jpg", "Bauman Energy hybrid inverters with lithium battery storage installed by Solar World Electric"),
         ("install-room-stack2.jpg", "Wall-mounted hybrid inverter and BICODI lithium batteries in a Nigerian installation"),
@@ -910,6 +928,7 @@ def products():
       and installation. Prices are the current published rates.</p>
     </div>
     <div class="grid grid-4">%(pkgs)s</div>
+    <p class="center small" style="margin-top:24px"><a href="pricing.html#chart-deye">Deye prices</a> · <a href="pricing.html#chart-solis">Solis prices</a> · <a href="pricing.html#chart-standard">Standard prices</a></p>
     <p class="small muted center" style="margin-top:26px">Package prices combine the inverter package and the
     matching solar package from our current charts. See the <a href="pricing.html">full pricing page</a> for
     every configuration, including inverter-only options.</p>
@@ -969,7 +988,7 @@ def products():
             % (ico(i), t, d) for t, d, i in [
                 ("Monocrystalline solar panels", "620 W and 460 W monocrystalline modules, the panels behind every "
                  "array we install, carrying up to a 25-year warranty.", "sun"),
-                ("Hybrid solar inverters", "Deye, Solis and ALP Solar hybrid inverters from 3 kVA to 125 kW, "
+                ("Hybrid solar inverters", "Hybrid inverters for homes, businesses and custom industrial systems, "
                  "single-phase and three-phase, with 5-year warranty on our Deye and Solis lines.", "bolt"),
                 ("Lithium battery storage", "Modules from 2.5 kWh to 16 kWh, stackable into racks with battery "
                  "management. 10-year warranty and a 10–15 year service life.", "battery"),

@@ -5,25 +5,28 @@ from data import (COMPANY, OFFICES, CATEGORIES, PACKAGES, WARRANTY,
                   PRICE_DEYE, PRICE_SOLIS, PRICE_STANDARD, PRICE_UPDATED)
 from content import FAQ_GROUPS, WA_REVIEWS, PHOTO_REVIEWS, FINANCE_STEPS, PROCESS
 from case_studies import CASES
+from package_catalog import CATALOG
+from html import escape
 from layout import ico, page_head, cta_band, naira
-from pages_a import client_marquee, faq_block, wa_card, case_card, pkg_card
+from pages_a import client_marquee, faq_block, wa_card, case_card, pkg_card, catalog_card
 
 
 # ---------------------------------------------------------------------------
 # PRICING
 # ---------------------------------------------------------------------------
 def _ptable(rows):
-    body = "".join(
-        '<tr><td class="cap">%s</td><td>%s</td><td>%s</td><td class="amt">%s</td></tr>'
-        % (cap, inc, app, naira(price)) for cap, inc, app, price in rows
-    )
-    return """
-<div class="ptable-wrap">
-  <table class="ptable">
-    <thead><tr><th>System capacity</th><th>What is included</th><th>Rated appliances</th><th>Price</th></tr></thead>
-    <tbody>%s</tbody>
-  </table>
-</div>""" % body
+    body = ""
+    previous_appliances = ""
+    for cap, inc, app, price in rows:
+        if app == "Same as above":
+            app = previous_appliances
+        else:
+            previous_appliances = app
+        body += ('<tr><td class="cap">%s</td><td>%s</td><td>%s</td><td class="amt">%s</td></tr>'
+                 % (escape(cap), escape(inc), escape(app), naira(price)))
+    return ('<div class="ptable-wrap" tabindex="0" role="region" aria-label="Scrollable package price table">'
+            '<table class="ptable"><thead><tr><th>System capacity</th><th>What is included</th>'
+            '<th>Rated appliances</th><th>Price</th></tr></thead><tbody>%s</tbody></table></div>' % body)
 
 
 def pricing():
@@ -32,16 +35,13 @@ def pricing():
         ("solis", "Solis systems", PRICE_SOLIS, PRICE_UPDATED["solis"], WARRANTY["deye_solis"]),
         ("standard", "Standard systems", PRICE_STANDARD, PRICE_UPDATED["standard"], WARRANTY["standard"]),
     ]
-    tabs = "".join(
-        '<button class="tab%s" type="button" role="tab" data-tab="chart-%s" aria-selected="%s">%s</button>'
-        % (" is-active" if i == 0 else "", key, "true" if i == 0 else "false", label)
-        for i, (key, label, _, _, _) in enumerate(charts)
-    )
+    tabs = "".join('<a class="tab" href="#chart-%s">%s</a>' % (key, label)
+                   for key, label, _, _, _ in charts)
     panels = ""
     for i, (key, label, rows, updated, warranty) in enumerate(charts):
         wl = "".join('<li>%s<span>%s</span></li>' % (ico("check"), w) for w in warranty)
         panels += """
-<div class="tabpanel" id="chart-%s"%s>
+<section class="price-chart" id="chart-%s"%s>
   <div class="row" style="justify-content:space-between;margin-bottom:18px">
     <h3 style="margin:0">%s price chart</h3>
     <span class="chip">Updated %s</span>
@@ -51,7 +51,8 @@ def pricing():
     <h4>Warranty on this line</h4>
     <ul class="pkg__list" style="margin:0">%s</ul>
   </div>
-</div>""" % (key, "" if i == 0 else " hidden", label, updated, _ptable(rows), wl)
+  <p><a class="tlink" href="assets/docs/%s-price-chart.pdf" download>Download the original %s price chart</a></p>
+</section>""" % (key, "", label, updated, _ptable(rows), wl, key, label)
 
     return """
 %(head)s
@@ -60,8 +61,9 @@ def pricing():
   <div class="container container--narrow">
     <div class="answer" data-reveal>
       <span class="answer__k">%(spark)s Quick answer</span>
-      <p><b>How much does a solar system cost in Nigeria?</b> Solar World Electric systems range from
-      <b>₦1,490,000</b> for a 3 kVA inverter package to <b>₦147,190,950</b> for a 125 kW industrial system.
+      <p><b>How much does a solar system cost in Nigeria?</b> Solar World Electric inverter-only packages start at
+      <b>₦1,490,000</b>; complete solar packages start at <b>₦2,350,000</b>. Custom commercial and industrial
+      projects of <b>1 MW and beyond</b> are quoted to your requirements.
       A typical Nigerian family home lands between <b>₦3.5m and ₦16m</b> installed. Prices are quoted in two
       parts, the <b>inverter package</b> (inverter, lithium battery, cables, accessories and installation) and
       the <b>solar package</b> (the panel array, cables, accessories and installation), so you can buy the
@@ -79,7 +81,7 @@ def pricing():
       Naira and include installation. Prices are reviewed periodically, confirm the current rate with our team
       before ordering.</p>
     </div>
-    <div class="tabs" data-tabs="#charts" role="tablist">%(tabs)s</div>
+    <nav class="tabs" aria-label="Choose a price chart">%(tabs)s</nav>
     <div id="charts">%(panels)s</div>
   </div>
 </section>
@@ -129,10 +131,10 @@ def pricing():
         "head": page_head(
             "Solar system prices in Nigeria",
             "Our full published price charts for Deye, Solis and standard solar and inverter systems, "
-            "from ₦1.49m starter packages to ₦147m industrial installations. All prices include installation.",
+            "from ₦1.49m inverter-only packages. Custom projects of 1 MW and beyond are quoted separately.",
             [("Home", "index.html"), ("Pricing", None)], bg="pkg/pkg-25kw.jpg"),
         "spark": ico("spark"), "tabs": tabs, "panels": panels,
-        "pkgs": "".join(pkg_card(p) for p in PACKAGES[:4]),
+        "pkgs": "".join(catalog_card(next(p for p in CATALOG if p["line"] == line)) for line in ("standard", "deye", "solis")),
         "factors": "".join('<li>%s<span>%s</span></li>' % (ico("check"), f) for f in [
             "How many air conditioners you run, and their horsepower, almost always the deciding factor",
             "Whether you need power overnight or only during outages (battery capacity)",
@@ -157,7 +159,8 @@ def _case_article(c):
     for sec in c["sections"]:
         title, paras = sec[0], sec[1]
         kind = sec[2] if len(sec) > 2 else "p"
-        body += "<h3>%s</h3>" % title
+        if title:
+            body += "<h3>%s</h3>" % title
         if kind == "list":
             body += '<ul class="pkg__list">%s</ul>' % "".join(
                 '<li>%s<span>%s</span></li>' % (ico("check"), p) for p in paras)
@@ -173,7 +176,7 @@ def _case_article(c):
     cat_label = next(x["label"] for x in CATEGORIES if x["key"] == c["cat"])
     meta = " · ".join(filter(None, [cat_label, c["type"], c.get("client"), c.get("location")]))
 
-    return """
+    article = """
 <article class="cs-article" id="cs-%s" data-reveal>
   <span class="eyebrow">%s</span>
   <h2>%s</h2>
@@ -184,6 +187,7 @@ def _case_article(c):
   %s
   <div class="cs-keywords"><b>Related searches</b>%s</div>
 </article>""" % (c["id"], meta, c["title"], c["excerpt"], specs, c["loads"], body, quote, kws)
+    return "\n".join(line.rstrip() for line in article.split("\n"))
 
 
 def projects():
@@ -233,8 +237,8 @@ def projects():
       <b>residential</b> (homeowners, estates, duplexes, apartments and family homes), <b>commercial</b>
       (offices, hotels, schools, hospitals, shopping facilities, restaurants, warehouses and retail),
       <b>industrial</b> (factories, manufacturing and processing facilities) and <b>energy infrastructure</b>
-      (solar streetlights, community projects, solar pumping and EV charging). Systems range from 5 kVA to
-      125 kW.</p>
+      (solar streetlights, community projects, solar pumping and EV charging). Our work spans residential systems through commercial and industrial projects of
+      1 MW and beyond.</p>
     </div>
   </div>
 </section>
@@ -367,7 +371,7 @@ def reviews():
                  "“How long do the batteries actually last?”"),
             ]),
         "cta": cta_band("Join 60,000+ powered homes and businesses",
-                        "Book a free consultation and load assessment at any of our 21 offices, or send us "
+                        "Book a free consultation and load assessment at any of our 21 operations, or send us "
                         "your appliance list on WhatsApp."),
     }
 
@@ -409,7 +413,7 @@ def faq():
     <nav class="pagenav" aria-label="FAQ sections">%(chips)s</nav>
     <div class="answer" data-reveal>
       <span class="answer__k">%(spark)s The three questions everyone starts with</span>
-      <p><b>How much?</b> ₦1.49m for a 3 kVA starter package up to ₦147m for a 125 kW industrial system;
+      <p><b>How much?</b> Inverter-only packages start at ₦1.49m and complete solar packages at ₦2.35m; projects of 1 MW and beyond are quoted separately;
       most Nigerian homes fall between ₦3.5m and ₦16m installed.</p>
       <p><b>What will it run?</b> Every package from 5 kVA up is rated for air conditioning. A 16 kW system
       runs five 1.5 HP ACs alongside a full household load.</p>
@@ -454,7 +458,7 @@ def financing():
       <p><b>Does Solar World offer solar financing in Nigeria?</b> Yes. Pay a <b>30%% deposit</b> and spread the
       balance over <b>3, 6, 9 or 12 months</b> through our financing partner, with a fixed <b>4%% monthly
       interest</b> added to the principal and no hidden charges. Applications are handled in-house at any of our
-      21 offices, no bank queues, and approved financing is disbursed within <b>24 to 48 hours</b>, with
+      21 operations, no bank queues, and approved financing is disbursed within <b>24 to 48 hours</b>, with
       installation following immediately.</p>
     </div>
   </div>
@@ -595,7 +599,7 @@ def calculator():
       <span class="eyebrow">Smart solar calculator</span>
       <h2>Add your appliances. Get your system.</h2>
       <p>Tap the plus and minus buttons for everything you want running when the grid is off.
-      Every number on the right updates as you go.</p>
+      See the documented package equipment and price for your selection, or request an assessment for a custom system.</p>
     </div>
 
     <div class="calc" id="smartCalc">
@@ -607,7 +611,7 @@ def calculator():
               <option value="6">6 hours, night only</option>
               <option value="10" selected>10 hours, evening and night</option>
               <option value="16">16 hours, most of the day</option>
-              <option value="24">24 hours, full independence</option>
+              <option value="24">24 hours, subject to assessment</option>
             </select>
           </div>
           <button class="btn btn--outline btn--sm" type="button" id="calcReset"
@@ -644,19 +648,18 @@ def calculator():
   <div class="container split" style="align-items:center">
     <div data-reveal="left">
       <span class="eyebrow">How the sizing works</span>
-      <h2>Three numbers, not one</h2>
-      <p class="lead" style="color:var(--d-fg-muted)">Getting one right and the others wrong is why
-      undersized systems fail at three in the morning.</p>
+      <h2>Documented packages, explained</h2>
+      <p class="lead" style="color:var(--d-fg-muted)">Equipment and prices come from the same package. Backup duration is an estimate to discuss with an engineer.</p>
       <div class="steps" style="margin-top:26px">
         <div class="step"><div class="step__n"></div><div>
           <h4>Inverter size</h4>
-          <p>Set by peak simultaneous demand plus 30%% headroom for compressor start-up surge.</p></div></div>
+          <p>Matched against the appliance quantities in the supplied Deye, Solis and Standard charts. kVA and kW ratings retain their original units.</p></div></div>
         <div class="step"><div class="step__n"></div><div>
           <h4>Battery capacity</h4>
-          <p>Set by your overnight energy use, at 90%% usable depth of discharge on lithium.</p></div></div>
+          <p>The package contains the exact storage shown in its price chart. A runtime estimate uses typical watts, duty cycles and 90%% usable storage; an engineer confirms actual demand and starting loads.</p></div></div>
         <div class="step"><div class="step__n"></div><div>
           <h4>Panel count</h4>
-          <p>Set by how much energy has to be replaced the next day, at roughly 4.5 peak sun hours.</p></div></div>
+          <p>The panel count and wattage are those included in the priced package. Solar recharge depends on site conditions and needs an engineer assessment.</p></div></div>
       </div>
     </div>
     <div data-reveal="right">
@@ -678,8 +681,8 @@ def calculator():
 """ % {
         "head": page_head(
             "Smart solar calculator: what size system do I need?",
-            "Add your air conditioners, fridges, freezers and other appliances. We estimate the inverter "
-            "size, battery capacity, panel count, installed cost and your monthly payment if you finance it.",
+            "Add your appliances and compare Deye, Solis and Standard packages. We show the documented inverter "
+            "rating, battery capacity, panel count, installed package price and financing estimate.",
             [("Home", "index.html"), ("Calculator", None)], bg="project-rooftop-garden.jpg"),
         "spark": ico("spark"),
         "ref": "".join(
@@ -719,7 +722,7 @@ def contact():
             for o in items
         )
         office_cards += ('<div style="margin-bottom:40px"><h3 style="margin-bottom:20px">%s '
-                         '<span class="muted" style="font-size:.6em;font-weight:500">(%d offices)</span></h3>'
+                         '<span class="muted" style="font-size:.6em;font-weight:500">(%d branches)</span></h3>'
                          '<div class="grid grid-3">%s</div></div>' % (region, len(items), cards))
 
     return """
@@ -794,7 +797,7 @@ def contact():
 <section class="section section--alt" id="offices">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow">Our offices</span>
+      <span class="eyebrow">Our locations</span>
       <h2>Visit any of our locations</h2>
       <p>Our showrooms and branches across Abuja, Lagos and Port Harcourt, with nationwide
       installation. Call ahead on the number for the branch nearest you.</p>
