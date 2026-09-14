@@ -40,7 +40,7 @@ const base=process.env.SOLAR_TEST_URL || 'http://127.0.0.1:8080/';
     assert.equal(await page.locator('.cs-article h3').filter({hasText:/^$/}).count(),0);
    }
    if(filename==='reviews.html'){
-    const crop=page.locator('svg.review-crop');assert.equal(await crop.count(),1);
+    const crops=page.locator('svg.review-crop');assert.equal(await crops.count(),7);const crop=crops.first();
     await crop.scrollIntoViewIfNeeded();await crop.screenshot({path:'/private/tmp/solar-review-crop-'+width+'.png'});
    }
    if(filename==='calculator.html'){

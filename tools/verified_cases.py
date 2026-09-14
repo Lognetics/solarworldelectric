@@ -326,7 +326,7 @@ VERIFIED = [
         "specs": [
             ("System", "80 kW inverter"),
             ("Battery storage", "169 kWh"),
-            ("Solar panels", "128 x 725 W"),
+            ("Solar panels", "128 × 620 W"),
             ("Application", "Corporate office"),
         ],
         "excerpt": ("A finance company that runs the numbers for a living looked at what generator fuel "
@@ -353,7 +353,7 @@ VERIFIED = [
             ("What We Installed",
              ["80 kW inverter system",
               "169 kWh battery bank",
-              "128 units of 725 W solar panels",
+              "128 units of 620 W solar panels",
               "Commercial electrical integration",
               "System configuration and commissioning"], "list"),
             ("Why Battery Storage Was Important",

@@ -269,14 +269,14 @@ FAQ_GROUPS = [
 # `shot` files live in assets/img/reviews/
 # ---------------------------------------------------------------------------
 WA_REVIEWS = [
-    {"cat": "residential", "shot": "wa-seun-oniru.jpg", "who": "Mr Seun O.", "where": "Residential customer",
+    {"cat": "residential", "shot": "wa-seun-oniru.jpg", "viewport": (0, 132, 498, 848), "dimensions": (498, 1080), "who": "Mr Seun O.", "where": "Residential customer",
      "alt": "WhatsApp review from a Solar World Electric customer praising the professionalism of the installation team",
      "quote": "On a more serious note… Thanks for your professionalism. Much appreciated. I liked the way you "
               "handled every part of the process."},
-    {"cat": "longterm", "shot": "wa-two-years.jpg", "who": "Long-term customer", "where": "Two years after installation",
+    {"cat": "longterm", "shot": "wa-two-years.jpg", "viewport": (0, 450, 498, 224), "dimensions": (498, 1080), "who": "Long-term customer", "where": "Two years after installation",
      "alt": "WhatsApp message from a Solar World Electric customer two years after their solar system installation",
      "quote": "It's been almost two years since I got my system and I can't complain."},
-    {"cat": "residential", "shot": "wa-wolerus.jpg", "who": "Mr Wolerus A.", "where": "Residential customer",
+    {"cat": "residential", "shot": "wa-wolerus.jpg", "viewport": (0, 195, 591, 970), "dimensions": (591, 1280), "who": "Mr Wolerus A.", "where": "Residential customer",
      "alt": "WhatsApp testimonial showing an AlpSolar inverter and BICODI lithium battery installed by Solar World Electric",
      "quote": "I appreciate the great service rendered. Everything looks good. You are a very good sales person."},
     {"cat": "commercial", "shot": "wa-mr-paul-office.jpg", "who": "Mr Paul", "where": "Office installation",
@@ -284,11 +284,11 @@ WA_REVIEWS = [
      "alt": "WhatsApp review from an office customer two weeks after a Solar World Electric solar inverter installation",
      "quote": "About the system, nothing untoward has been reported to me so I can firmly say the office is "
               "enjoying your services. You have been a great help."},
-    {"cat": "residential", "shot": "wa-prof-isaac.jpg", "who": "Prof. Isaac", "where": "Residential customer",
+    {"cat": "residential", "shot": "wa-prof-isaac.jpg", "viewport": (0, 165, 498, 820), "dimensions": (498, 1080), "who": "Prof. Isaac", "where": "Residential customer",
      "alt": "WhatsApp testimonial from a professor who installed a solar system with Solar World Electric",
      "quote": "For now, there's no issue and I wish it will remain so for a reasonable period. I'm committed to "
               "doing business with Solar World and we'll keep our mutual trust."},
-    {"cat": "residential", "shot": "wa-mr-wole.jpg", "who": "Mr Wole", "where": "Residential customer",
+    {"cat": "residential", "shot": "wa-mr-wole.jpg", "viewport": (0, 142, 571, 898), "dimensions": (571, 1280), "who": "Mr Wole", "where": "Residential customer",
      "alt": "WhatsApp review of a completed AlpSolar and BICODI solar inverter installation by Solar World Electric",
      "quote": "I appreciate the great service rendered. You have an excellent team. The installation was completed "
               "today. All indications show that the equipment is working satisfactorily."},
@@ -298,7 +298,7 @@ WA_REVIEWS = [
     {"cat": "residential", "shot": "wa-can-attest.jpg", "who": "Verified customer", "where": "Home installation",
      "alt": "WhatsApp message praising Solar World Electric's service delivery and confirming the home solar system is performing",
      "quote": "I can attest! The solar at home here is really serving its purpose."},
-    {"cat": "longterm", "shot": "wa-mrs-ijeoma.jpg", "who": "Mrs Ijeoma", "where": "Residential customer",
+    {"cat": "longterm", "shot": "wa-mrs-ijeoma.jpg", "viewport": (0, 112, 502, 553), "dimensions": (502, 1080), "who": "Mrs Ijeoma", "where": "Residential customer",
      "alt": "WhatsApp check-in showing a satisfied Solar World Electric solar installation customer",
      "quote": "No complaints so far. Thanks a lot."},
 ]

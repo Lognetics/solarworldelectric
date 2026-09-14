@@ -22,11 +22,11 @@ def _ptable(rows):
             app = previous_appliances
         else:
             previous_appliances = app
-        body += ('<tr><td class="cap">%s</td><td>%s</td><td>%s</td><td class="amt">%s</td></tr>'
+        body += ('<tr role="row"><td role="cell" class="cap" data-label="System capacity">%s</td><td role="cell" data-label="What is included">%s</td><td role="cell" data-label="Rated appliances">%s</td><td role="cell" class="amt" data-label="Price">%s</td></tr>'
                  % (escape(cap), escape(inc), escape(app), naira(price)))
-    return ('<div class="ptable-wrap" tabindex="0" role="region" aria-label="Scrollable package price table">'
-            '<table class="ptable"><thead><tr><th>System capacity</th><th>What is included</th>'
-            '<th>Rated appliances</th><th>Price</th></tr></thead><tbody>%s</tbody></table></div>' % body)
+    return ('<div class="ptable-wrap" tabindex="0" role="region" aria-label="Package prices, included equipment and rated appliances">'
+            '<table class="ptable" role="table"><thead role="rowgroup"><tr role="row"><th scope="col">System capacity</th><th scope="col">What is included</th>'
+            '<th scope="col">Rated appliances</th><th scope="col">Price</th></tr></thead><tbody role="rowgroup">%s</tbody></table></div>' % body)
 
 
 def pricing():
