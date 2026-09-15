@@ -357,6 +357,7 @@ PAGES_FOR_SITEMAP = [
     ("about.html", "0.7", "yearly"),
     ("contact.html", "0.7", "yearly"),
     ("blog.html", "0.6", "monthly"),
+    ("refund-policy.html", "0.4", "yearly"),
 ] + [(p["slug"] + ".html", "0.55", "yearly") for p in POSTS]
 
 
@@ -489,6 +490,7 @@ def llms_txt():
     add("- [Financing](%s/financing.html): 30%% deposit payment plan" % SITE)
     add("- [Calculator](%s/calculator.html): system sizing tool" % SITE)
     add("- [Contact](%s/contact.html): branch addresses across three cities" % SITE)
+    add("- [Refund policy](%s/refund-policy.html): refunds, cancellations and equipment returns" % SITE)
     return "\n".join(lines) + "\n"
 
 
@@ -593,6 +595,15 @@ def main():
                     "21 operations across Abuja, Lagos and Port Harcourt for a free solar consultation.",
         body=B.contact(), og_image="assets/img/store-front-2.jpg",
         schema=[breadcrumbs([("Home", ""), ("Contact", "contact.html")])] + local_business_schema()))
+
+    write("refund-policy.html", page(
+        slug="refund-policy.html",
+        title="Refund, Cancellation &amp; Return Policy | Solar World Electric",
+        description="Solar World Electric Technology Limited's refund, cancellation and return policy: "
+                    "10% minimum retention, 7-day return window on unused equipment, written requests, "
+                    "and refunds processed within 14 working days.",
+        body=B.policy(),
+        schema=[breadcrumbs([("Home", ""), ("Refund policy", "refund-policy.html")])]))
 
     write("blog.html", page(
         slug="blog.html",

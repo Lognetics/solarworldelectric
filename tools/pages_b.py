@@ -821,3 +821,157 @@ def contact():
                         "Send your number on WhatsApp and a member of our team will call you back.",
                         wa_text="Hello Solar World, please call me back. My number is:"),
     }
+
+
+# ---------------------------------------------------------------------------
+# REFUND, CANCELLATION & RETURN POLICY
+# Transcribed verbatim from the company's signed policy document. Only the
+# contact block is updated, to the address the rest of the site uses.
+# ---------------------------------------------------------------------------
+POLICY_SECTIONS = [
+ ("1. Introduction and scope", [
+  "This Refund, Cancellation &amp; Return Policy (&ldquo;Policy&rdquo;) governs all transactions entered into with "
+  "Solar World Electric Technology Limited (&ldquo;Solar World&rdquo;, &ldquo;the Company&rdquo;, &ldquo;we&rdquo;, "
+  "&ldquo;us&rdquo;, or &ldquo;our&rdquo;) in respect of the sale, supply, design, installation, commissioning, "
+  "maintenance, and support of solar energy systems, components, accessories, and related services.",
+  "This Policy applies to all customers, including individuals, corporate bodies, institutions, and government "
+  "entities, unless expressly varied by a written agreement signed by the Company.",
+  "By making any payment (whether deposit, installment, or full payment) the customer acknowledges, accepts, and "
+  "agrees to be bound by this Policy."]),
+ ("2. General policy position", [
+  "<b>2.1. No automatic right to refund.</b> All payments made to the Company are not automatically refundable. "
+  "Refunds, where applicable, are strictly governed by this Policy and are subject to managerial review, approval, "
+  "and applicable deductions.",
+  "<b>2.2. Nature of solar projects.</b> The customer acknowledges that solar projects involve:",
+  ["Advance procurement of equipment;", "Engineering design and system configuration;",
+   "Technical assessments and project planning;", "Fluctuating foreign exchange rates;",
+   "Logistics, mobilization, and professional services."],
+  "Accordingly, once a transaction has commenced, costs are immediately incurred, whether or not installation is "
+  "completed."]),
+ ("3. Deposits and installment payments", [
+  "<b>3.1. Non-refundable commitment component.</b> All payments, whether described as a deposit, initial payment, "
+  "mobilization fee, or installment, include a non-refundable commitment component covering administrative, "
+  "technical, and operational costs.",
+  "<b>3.2. Refund cap.</b> In all circumstances where a refund is approved, the Company shall retain a minimum of "
+  "ten percent (10%) of the total amount paid, and no refund shall exceed ninety percent (90%) of the total payment.",
+  "<b>3.3. Minimum retention.</b> The Company shall retain a minimum of ten percent (10%) of the total amount paid "
+  "in all refund scenarios, without exception, to cover:",
+  ["Administrative processing;", "Engineering review;", "Documentation;",
+   "Banking, transaction, and operational costs."]]),
+ ("4. Cancellation by customer", [
+  "<b>4.1. Pre-procurement cancellation.</b> Where a customer cancels before procurement of equipment or "
+  "commencement of site work, the refund (if approved) shall be:",
+  ["Subject to a 10% non-refundable deduction, and", "Subject to managerial review and written approval."],
+  "<b>4.2. Post-procurement cancellation.</b> Where cancellation occurs after procurement has commenced, the "
+  "customer shall:",
+  ["Bear the full cost of procured items;", "Bear logistics, handling, and supplier penalties;",
+   "Only receive a refund (if any) of any residual balance after deductions."],
+  "<b>4.3. Post-installation or partial installation.</b> No refunds shall be granted where:",
+  ["Installation has commenced;", "Equipment has been delivered to site;",
+   "Civil, electrical, or mounting works have begun;",
+   "System components have been configured or customized."]]),
+ ("5. Customized and specialized systems", [
+  "<b>5.1. Non-refundable by nature.</b> All custom-designed, engineered, or specially procured systems including "
+  "but not limited to:",
+  ["Lithium battery banks;", "Hybrid or off-grid systems;", "Customized inverters;",
+   "Special mounting structures;", "Imported or made-to-order components"],
+  "are strictly non-refundable once procurement begins.",
+  "<b>5.2. Foreign exchange exposure.</b> The Company shall not be liable for refunds arising from:",
+  ["Exchange rate fluctuations;", "Import cost variations;", "Supplier price changes."]]),
+ ("6. Returns of equipment", [
+  "<b>6.1. Eligibility for return.</b> Equipment may only be considered for return where:",
+  ["It is unused;", "It remains in its original packaging;",
+   "It has not been installed, configured, or energized;", "It is returned within 7 days of delivery."],
+  "<b>Please note:</b> no return or refund shall apply to equipment damaged as a result of customer negligence, "
+  "misuse, improper handling, over or undercharging of batteries, unauthorized modifications, or use outside "
+  "manufacturer specifications. All return or refund requests must be supported by valid proof of purchase issued "
+  "by the Company.",
+  "<b>6.2. Inspection and approval.</b> All returned items are subject to:",
+  ["Technical inspection;", "Supplier acceptance (where applicable);", "Restocking and handling charges."],
+  "Where a return is approved, the customer shall be solely responsible for the cost and risk of returning the "
+  "equipment to the Company."]),
+ ("7. Delays and force majeure", [
+  "<b>7.1. Non-refundable delays.</b> Delays caused by:",
+  ["Weather conditions;", "Access restrictions;", "The customer&rsquo;s failure to provide site readiness;",
+   "Power utility issues;", "Regulatory or security issues;", "Acts of God or force majeure"],
+  "shall not entitle the customer to a refund.",
+  "<b>7.2. Rescheduling as remedy.</b> In such circumstances, the Company&rsquo;s obligation shall be limited to "
+  "rescheduling performance, not refunding payments."]),
+ ("8. Refund request procedure", [
+  "<b>8.1. Formal application required.</b> All refund requests must be:",
+  ["Made in writing;", "Addressed to Management;", "Clearly stating reasons for the request;",
+   "Submitted via official Company communication channels."],
+  "<b>8.2. Managerial review.</b> All refund requests are:",
+  ["Subject to internal review;", "Assessed on a case-by-case basis;",
+   "Determined at the sole discretion of Management."],
+  "<b>8.3. No verbal commitments.</b> No staff member, agent, or contractor is authorized to promise or guarantee "
+  "a refund outside this Policy."]),
+ ("9. Refund timeline", [
+  "<b>9.1. Processing period.</b> Approved refunds shall be processed within 14 working days, subject to:",
+  ["Completion of internal reviews;", "Availability of funds;", "Banking and regulatory timelines."],
+  "<b>9.2. Method of refund.</b> Refunds shall be made:",
+  ["Only to the original payer;", "Via the original payment channel or bank transfer;",
+   "Net of all applicable deductions."]]),
+ ("10. Third-party costs", [
+  "The Company shall not refund:",
+  ["Bank charges;", "Payment gateway fees;", "Foreign supplier penalties;",
+   "Logistics, customs, or clearing charges."],
+  "Such costs shall be borne entirely by the customer."]),
+ ("11. No waiver", [
+  "Any refund granted in one instance shall not constitute a precedent or waiver of the Company&rsquo;s rights in "
+  "any other transaction."]),
+ ("12. Amendment and review", [
+  "Solar World Electric Technology Limited reserves the right to:",
+  ["Amend this Policy at any time;", "Update terms without prior notice;",
+   "Apply the version in force at the time payment was made."]]),
+ ("13. Governing law", [
+  "This Policy shall be governed by and construed in accordance with the laws of the Federal Republic of Nigeria.",
+  "<b>Take notice:</b> any refund granted outside the strict terms of this Policy shall be deemed a goodwill "
+  "concession and shall not be construed as an admission of liability."]),
+]
+
+
+def policy():
+    body = ""
+    for title, items in POLICY_SECTIONS:
+        body += "<h3>" + title + "</h3>"
+        for it in items:
+            if isinstance(it, list):
+                body += '<ul class="pkg__list">' + "".join(
+                    "<li>" + ico("check") + "<span>" + li + "</span></li>" for li in it) + "</ul>"
+            else:
+                body += "<p>" + it + "</p>"
+
+    head = page_head(
+        "Refund, Cancellation &amp; Return Policy",
+        "How refunds, cancellations and equipment returns work at Solar World Electric Technology Limited, "
+        "and what to do if you need to make a request.",
+        [("Home", "index.html"), ("Refund policy", None)])
+
+    summary = (
+        '<section class="section section--tight"><div class="container container--narrow">'
+        '<div class="answer" data-reveal>'
+        '<span class="answer__k">' + ico("spark") + " In short</span>"
+        "<p>Payments to Solar World are <b>not automatically refundable</b>. Where a refund is approved, the "
+        "Company retains a minimum of <b>10%</b> of the total paid, so no refund exceeds <b>90%</b>. Unused "
+        "equipment may be considered for return within <b>7 days of delivery</b> if it is still in its original "
+        "packaging and has not been installed or energized. No refund is granted once installation has begun. "
+        "All requests must be made <b>in writing</b>, and approved refunds are processed within "
+        "<b>14 working days</b>.</p>"
+        "<p>The full policy is below. It is the version in force at the time your payment was made.</p>"
+        "</div></div></section>")
+
+    article = (
+        '<section class="section" style="padding-top:0"><div class="container container--narrow">'
+        '<article class="cs-article" data-reveal>' + body +
+        '<h3>Contact</h3><p>For inquiries regarding this Policy, please contact:</p>'
+        '<p><b>' + COMPANY["legal"] + "</b><br>"
+        'Email: <a href="mailto:' + COMPANY["email"] + '">' + COMPANY["email"] + "</a><br>"
+        'Phone: <a href="tel:' + COMPANY["phone"] + '">' + COMPANY["phone_display"] + "</a><br>"
+        "Corporate office: 2nd Floor, Silverbird Entertainment Centre, Central Business District, Abuja.</p>"
+        "</article></div></section>")
+
+    return head + summary + article + cta_band(
+        "Questions about a refund or return?",
+        "Send us the details on WhatsApp and our team will walk you through the process.",
+        wa_text="Hello Solar World, I have a question about your refund and return policy.")

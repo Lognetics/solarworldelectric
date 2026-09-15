@@ -249,6 +249,7 @@ def footer():
       <nav>
         <a href="faq.html">FAQ</a>
         <a href="contact.html">Contact</a>
+        <a href="refund-policy.html">Refund policy</a>
         <a href="sitemap.xml">Sitemap</a>
       </nav>
     </div>

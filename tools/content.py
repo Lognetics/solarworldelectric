@@ -460,6 +460,7 @@ TEAM = [
     ("Amaraezue Udo Ezeozue", "Head, Human Capital &amp; Administration, Lagos Region", "team/amaraezue-udo-ezeozue.jpg", "heads"),
     ("Glory Ezinne Okoro", "Head, Human Resource &amp; Administration, Port Harcourt Region", "team/glory-ezinne-okoro.jpg", "heads"),
     ("Nwankwo Kosisochukwu", "Head, Legal and Compliance, Lagos State", "team/nwankwo-kosisochukwu.jpg", "heads"),
+    ("Deborah Gbemigho Simeon", "Head, New Media Department", "team/deborah-gbemigho-simeon.jpg", "heads"),
     ("Obi-Benson Somto", "Head, New Media and Strategy, Lagos Region", "team/obi-benson-somto.jpg", "heads"),
     ("Oko-Jaja, Majesty Michael", "Head, Media, Port Harcourt Region", "team/majesty-michael-oko-jaja.jpg", "heads"),
     ("Wilcox Lawrence Miller", "Technical Team Lead, Port Harcourt", "team/wilcox-lawrence-miller.jpg", "heads"),
