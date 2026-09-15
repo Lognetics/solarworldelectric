@@ -1991,6 +1991,15 @@ h4{font-size:var(--t-h4);letter-spacing:-.015em}
 
 /* Published charts stay visible and can be linked to individually. */
 .price-chart{scroll-margin-top:110px;margin:28px 0 64px}
+/* The last chart's bottom margin stacked on the section's own padding-bottom,
+   leaving a large empty band on phones after the Standard chart. */
+.price-chart:last-child{margin-bottom:0}
+/* charts-section-trim: the charts block and the catalog note already carry their
+   own trailing space, so the section's 64px padding-bottom stacked on top of it
+   and read as a large empty band on phones. */
+#charts{margin-bottom:-28px}
+#charts + *{margin-top:0}
+.catalog-note{margin-bottom:-18px}
 .package-details, .catalog-card details{margin:16px 0}
 .package-details summary, .catalog-card summary{cursor:pointer;font-weight:650}
 .package-details p, .catalog-card details p{font-size:.85rem;margin-top:12px}
@@ -2016,6 +2025,7 @@ h4{font-size:var(--t-h4);letter-spacing:-.015em}
   .ptable thead{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
   .ptable tbody{display:block}
   .ptable tbody tr{display:block;margin-bottom:18px;border:1px solid var(--hair);border-radius:var(--r);background:var(--paper);overflow:hidden}
+  .ptable tbody tr:last-child{margin-bottom:0}
   .ptable td{display:block;width:100%;box-sizing:border-box;padding:13px 18px;overflow-wrap:anywhere}
   .ptable td::before{content:attr(data-label);display:block;margin-bottom:5px;font-size:var(--t-xs);font-weight:650;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-muted)}
   .ptable .cap{white-space:normal;border-top:0;background:var(--ink-100);color:#fff;font-size:1.05rem}

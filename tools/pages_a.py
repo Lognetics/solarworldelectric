@@ -929,7 +929,7 @@ def products():
     </div>
     <div class="grid grid-4">%(pkgs)s</div>
     <p class="center small" style="margin-top:24px"><a href="pricing.html#chart-deye">Deye prices</a> · <a href="pricing.html#chart-solis">Solis prices</a> · <a href="pricing.html#chart-standard">Standard prices</a></p>
-    <p class="small muted center" style="margin-top:26px">Package prices combine the inverter package and the
+    <p class="small muted center catalog-note" style="margin-top:26px">Package prices combine the inverter package and the
     matching solar package from our current charts. See the <a href="pricing.html">full pricing page</a> for
     every configuration, including inverter-only options.</p>
   </div>
