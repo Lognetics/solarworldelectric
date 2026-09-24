@@ -420,6 +420,8 @@ def page(*, slug, title, description, body, active=None, over_hero=True,
 <script src="assets/js/package-catalog.js" defer></script>
 <script src="assets/js/package-matcher.js" defer></script>
 <script src="assets/js/main.js" defer></script>
+<script src="https://business.neticsai.com/embed/netics-agent.js" async></script>
+<netics-agent agent-id="agent_6qHq3Lmx59GqNbEFB6uGMuis"></netics-agent>
 </body>
 </html>
 """ % {
