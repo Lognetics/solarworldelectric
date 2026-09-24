@@ -1475,7 +1475,6 @@ h4{font-size:var(--t-h4);letter-spacing:-.015em}
   will-change:opacity,transform;
 }
 .sec-motion.sec-in{opacity:1;transform:none}
-.sec-motion.sec-out{opacity:.4;transform:translate3d(0,-22px,0) scale(.995)}
 
 /* Depth parallax on decorative media */
 [data-parallax]{will-change:transform}

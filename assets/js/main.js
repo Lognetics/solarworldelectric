@@ -176,7 +176,7 @@
           io.unobserve(en.target);
         }
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    }, { threshold: 0, rootMargin: '0px 0px -6% 0px' });
     els.forEach(function (el) { io.observe(el); });
   }
 
@@ -690,20 +690,28 @@
       return;
     }
 
+    // threshold must stay 0: a section taller than the viewport can never show a
+    // given *fraction* of itself, so any non-zero threshold leaves tall sections
+    // (the price charts run to ~20,000px on a phone) stuck at opacity 0.
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
-        var el = en.target;
-        if (en.isIntersecting) {
-          el.classList.add('sec-in');
-          el.classList.remove('sec-out');
-        } else if (el.classList.contains('sec-in')) {
-          // only drift out upward, never when scrolling back down past it
-          var above = en.boundingClientRect.top < 0;
-          el.classList.toggle('sec-out', above);
-        }
+        if (en.isIntersecting) en.target.classList.add('sec-in');
       });
-    }, { threshold: 0.04, rootMargin: '0px 0px -4% 0px' });
+    }, { threshold: 0, rootMargin: '200px 0px 200px 0px' });
     motion.forEach(function (el) { io.observe(el); });
+
+    // Safety net: anything still hidden after load gets shown regardless, so a
+    // missed observer callback can never leave a blank band on the page.
+    function failsafe() {
+      motion.forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight + 300 && r.bottom > -300) el.classList.add('sec-in');
+      });
+    }
+    window.addEventListener('scroll', failsafe, { passive: true });
+    window.addEventListener('resize', failsafe);
+    window.addEventListener('load', failsafe);
+    failsafe();
   }
 
   function initParallax() {
