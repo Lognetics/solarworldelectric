@@ -541,8 +541,9 @@ h4{font-size:var(--t-h4);letter-spacing:-.015em}
 .hero__arrows button:hover{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.5);transform:scale(1.08)}
 .hero__arrows svg{width:19px;height:19px}
 
+/* Raised clear of the assistant launcher, which is fixed at bottom-left. */
 .hero__scroll{
-  position:absolute;left:var(--gut);bottom:28px;z-index:5;
+  position:absolute;left:var(--gut);bottom:96px;z-index:5;
   display:flex;align-items:center;gap:10px;font-size:var(--t-xs);
   letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6);font-weight:600;
 }
