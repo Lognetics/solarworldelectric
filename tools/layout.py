@@ -216,8 +216,8 @@ def footer():
         <p class="small" style="color:rgba(255,255,255,.42)">RC %(rc)s · Established %(founded)s</p>
         <div class="footer__social">
           <a href="https://wa.me/%(wa)s" target="_blank" rel="noopener" aria-label="WhatsApp">%(wa_ico)s</a>
-          <a href="https://www.facebook.com/solarworldelectric" target="_blank" rel="noopener" aria-label="Facebook">%(fb)s</a>
-          <a href="https://www.instagram.com/solarworldelectric" target="_blank" rel="noopener" aria-label="Instagram">%(ig)s</a>
+          <a href="https://www.facebook.com/profile.php?id=100076712847552" target="_blank" rel="noopener" aria-label="Facebook">%(fb)s</a>
+          <a href="https://www.instagram.com/solarworldelectrictech" target="_blank" rel="noopener" aria-label="Instagram">%(ig)s</a>
           <a href="https://www.linkedin.com/company/solar-world-electric-technology" target="_blank" rel="noopener" aria-label="LinkedIn">%(in)s</a>
           <a href="https://www.tiktok.com/@solarworldelectric" target="_blank" rel="noopener" aria-label="TikTok">%(tt)s</a>
         </div>
@@ -288,8 +288,8 @@ def org_schema():
         "telephone": COMPANY["phone"],
         "email": COMPANY["email"],
         "sameAs": [
-            "https://www.facebook.com/solarworldelectric",
-            "https://www.instagram.com/solarworldelectric",
+            "https://www.facebook.com/profile.php?id=100076712847552",
+            "https://www.instagram.com/solarworldelectrictech",
             "https://www.linkedin.com/company/solar-world-electric-technology",
             "https://www.tiktok.com/@solarworldelectric",
         ],
