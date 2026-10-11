@@ -359,6 +359,43 @@ def home():
 
 %(stats)s
 
+<!-- ========== PROMO ========== -->
+<section class="section promo" id="promo">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">Promo &middot; For a limited time</span>
+      <h2>Solar / Inverter special package offers</h2>
+      <p>Complete packages with Solis hybrid inverter, lithium battery, 620W panels, cables, installation and commissioning. Offer ends Friday, 23 October 2026.</p>
+    </div>
+    <div class="promo__grid">
+      <a class="promo__card" href="assets/img/promo-6kw-5kwh-3-95m.jpg" target="_blank" rel="noopener" data-reveal>
+        <img src="assets/img/promo-6kw-5kwh-3-95m.jpg" width="1280" height="906" loading="lazy"
+          alt="Solar/Inverter special package offer: 6kW Solis hybrid inverter, 5kWh lithium battery, 4 x 620W solar panels, installation included, ₦3,950,000, offer ends Friday 23 October 2026">
+      </a>
+      <a class="promo__card" href="assets/img/promo-6kw-12kwh-4-95m.jpg" target="_blank" rel="noopener" data-reveal>
+        <img src="assets/img/promo-6kw-12kwh-4-95m.jpg" width="1280" height="906" loading="lazy"
+          alt="Solar/Inverter special package offer: 6kW Solis hybrid inverter, 12kWh lithium battery, 6 x 620W solar panels, installation included, ₦4,950,000, offer ends Friday 23 October 2026">
+      </a>
+      <a class="promo__card" href="assets/img/promo-8kw-12kwh-6-25m.jpg" target="_blank" rel="noopener" data-reveal>
+        <img src="assets/img/promo-8kw-12kwh-6-25m.jpg" width="1280" height="906" loading="lazy"
+          alt="Solar/Inverter special package offer: 8kW Solis hybrid inverter, 12kWh lithium battery, 8 x 620W solar panels, installation included, ₦6,250,000, offer ends Friday 23 October 2026">
+      </a>
+      <a class="promo__card" href="assets/img/promo-10kw-15kwh-7-35m.jpg" target="_blank" rel="noopener" data-reveal>
+        <img src="assets/img/promo-10kw-15kwh-7-35m.jpg" width="1280" height="906" loading="lazy"
+          alt="Solar/Inverter special package offer: 10kW Solis hybrid inverter, 15kWh lithium battery, 12 x 620W solar panels, installation included, ₦7,350,000, offer ends Friday 23 October 2026">
+      </a>
+      <a class="promo__card" href="assets/img/promo-12kw-16kwh-8-25m.jpg" target="_blank" rel="noopener" data-reveal>
+        <img src="assets/img/promo-12kw-16kwh-8-25m.jpg" width="1280" height="906" loading="lazy"
+          alt="Solar/Inverter special package offer: 12kW Solis hybrid inverter, 16kWh lithium battery, 12 x 620W solar panels, installation included, ₦8,250,000, offer ends Friday 23 October 2026">
+      </a>
+    </div>
+    <div class="btn-row" style="justify-content:center;margin-top:34px">
+      <a class="btn btn--primary" href="https://wa.me/2349063315492" target="_blank" rel="noopener">Claim an offer on WhatsApp</a>
+      <a class="btn btn--outline" href="tel:+2349063315492">Call +234 906 331 5492</a>
+    </div>
+  </div>
+</section>
+
 <!-- ========== WHY US ========== -->
 <section class="section section--alt">
   <div class="container">
