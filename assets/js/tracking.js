@@ -14,7 +14,7 @@
     whatsapp_click:  'KhJaCM_wsJ8dEODDi-s_',   // any WhatsApp button/link, chat widget or calculator "send to engineer"
     phone_click:     '',   // any tap on a phone number (click-to-call)
     lead_form:       'FN2OCOzAqZ8dEODDi-s_',   // consultation popup, contact form, financing application sent
-    ai_chat_lead:    '',   // visitor sent a message to the NETICS AI assistant
+    ai_chat_lead:    'Y4LECKGsqp8dEODDi-s_',   // visitor sent a message to the NETICS AI assistant
     // Secondary / observation conversions: interest, not contact.
     email_click:     '',
     calculator_use:  ''
