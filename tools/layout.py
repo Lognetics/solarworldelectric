@@ -410,6 +410,7 @@ def page(*, slug, title, description, body, active=None, over_hero=True,
 <link rel="stylesheet" href="assets/css/styles.css">
 %(schema)s
 %(extra)s
+<script src="assets/js/tracking.js"></script>
 </head>
 <body>
 %(nav)s

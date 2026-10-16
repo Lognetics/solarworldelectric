@@ -12,7 +12,7 @@
   var CFG = {
     phone: '2349063315492',
     phoneDisplay: '+234 906 331 5492',
-    email: 'solarworldes@gmail.com',
+    email: 'info@solarworldelectric.com',
     waText: 'Hello Solar World, I am interested in getting your solar and inverter package. Please may I know how to proceed?',
     popupDelay: 30000,          // 30 seconds, per brief
     popupCooldownDays: 7,       // don't re-nag a visitor who closed it
@@ -654,6 +654,7 @@
         });
         lines.push('', '(Sent from solarworldelectric.com)');
         window.open(wa(lines.join('\n')), '_blank', 'noopener');
+        document.dispatchEvent(new CustomEvent('swe:lead', { detail: { source: 'contact_form' } }));
         var ok = f.querySelector('[data-wa-ok]');
         if (ok) { ok.hidden = false; f.reset(); }
       });
@@ -1005,6 +1006,7 @@
       e.preventDefault();
       window.open(wa('Hello Solar World, I would like to apply for solar financing.\n\n' +
         (root.dataset.msg || '') + '\n\nPlease tell me what I need to get started.'), '_blank', 'noopener');
+      document.dispatchEvent(new CustomEvent('swe:lead', { detail: { source: 'finance_calculator' } }));
     });
     calc();
   }
