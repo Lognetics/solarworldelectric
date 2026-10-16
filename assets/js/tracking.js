@@ -8,7 +8,7 @@
 (function () {
   'use strict';
 
-  var GOOGLE_ADS_ID = 'AW-XXXXXXXXXX';          // e.g. 'AW-123456789'
+  var GOOGLE_ADS_ID = 'AW-17136017888';       // the Google tag itself is inlined in every page's <head>
   var LABELS = {
     // Primary conversions: a real person reaching us.
     whatsapp_click:  '',   // any WhatsApp button/link, chat widget or calculator "send to engineer"
@@ -24,15 +24,6 @@
   window.dataLayer = window.dataLayer || [];
   function gtag() { window.dataLayer.push(arguments); }
   window.gtag = window.gtag || gtag;
-
-  if (live) {
-    var s = document.createElement('script');
-    s.async = true;
-    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GOOGLE_ADS_ID;
-    document.head.appendChild(s);
-    gtag('js', new Date());
-    gtag('config', GOOGLE_ADS_ID);
-  }
 
   var once = {};
   var lastLead = 0;
