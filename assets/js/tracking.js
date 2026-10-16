@@ -11,7 +11,7 @@
   var GOOGLE_ADS_ID = 'AW-17136017888';       // the Google tag itself is inlined in every page's <head>
   var LABELS = {
     // Primary conversions: a real person reaching us.
-    whatsapp_click:  '',   // any WhatsApp button/link, chat widget or calculator "send to engineer"
+    whatsapp_click:  'KhJaCM_wsJ8dEODDi-s_',   // any WhatsApp button/link, chat widget or calculator "send to engineer"
     phone_click:     '',   // any tap on a phone number (click-to-call)
     lead_form:       '',   // consultation popup, contact form, financing application sent
     ai_chat_lead:    '',   // visitor sent a message to the NETICS AI assistant
