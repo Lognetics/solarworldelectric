@@ -2033,3 +2033,12 @@ h4{font-size:var(--t-h4);letter-spacing:-.015em}
   .ptable .amt,.ptable td:last-child{text-align:left;white-space:normal;font-size:1.2rem}
 }
 
+
+/* Promo */
+.promo__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2.2vw,28px)}
+.promo__card{display:flex;flex-direction:column;gap:14px}
+.promo__img{display:block;border-radius:var(--r-lg,18px);overflow:hidden;box-shadow:0 14px 40px rgba(0,0,0,.18);transition:transform .25s ease,box-shadow .25s ease}
+.promo__img:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.26)}
+.promo__img img{display:block;width:100%;height:auto}
+@media(max-width:900px){.promo__grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.promo__grid{grid-template-columns:1fr}}
