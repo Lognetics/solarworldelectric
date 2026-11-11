@@ -519,33 +519,41 @@
   function initLeadPopup() {
     if ($('.leadpop')) return;
 
-    var snooze = parseInt(store.get('swe_lead_snooze') || '0', 10);
-    var done = store.get('swe_lead_done');
-    if (done || (snooze && Date.now() < snooze)) return;
+    // Black Friday: opens the moment the page loads, once per browser session, and stops
+    // by itself after the offer ends (Friday 27 Nov 2026, Lagos time).
+    if (Date.now() > Date.parse('2026-11-27T23:59:59+01:00')) return;
+    if (store.get('swe_bf_done')) return;
+    try { if (sessionStorage.getItem('swe_bf_seen')) return; } catch (e) { /* private mode */ }
 
     var el = document.createElement('div');
     el.className = 'leadpop';
     el.setAttribute('role', 'dialog');
     el.setAttribute('aria-modal', 'true');
-    el.setAttribute('aria-label', 'Get a free solar consultation');
+    el.setAttribute('aria-label', 'Black Friday promo sales ongoing');
     el.hidden = false;
     el.innerHTML =
       '<div class="leadpop__scrim"></div>' +
       '<div class="leadpop__box">' +
         '<button class="leadpop__close" type="button" aria-label="Close">' + ICON.close + '</button>' +
         '<aside class="leadpop__aside">' +
-          '<h3>Get a free solar plan for your property</h3>' +
-          '<p>Tell us what you want to power. Our engineers will size the system and send you a costed proposal — no obligation.</p>' +
+          '<span class="leadpop__tag">Black Friday &middot; Ends 27 Nov 2026</span>' +
+          '<h3>Black Friday promo sales is ongoing</h3>' +
+          '<p>Free installation and free inverter air conditioners on every system of 20kW and above, plus complete Sungrow packages from ₦3,600,000.</p>' +
           '<ul>' +
-            '<li>' + ICON.check + '<span>Free load assessment &amp; system sizing</span></li>' +
-            '<li>' + ICON.check + '<span>Transparent pricing, no hidden charges</span></li>' +
+            '<li>' + ICON.check + '<span>Free installation &amp; free inverter ACs on 20kW and above</span></li>' +
+            '<li>' + ICON.check + '<span>7 complete packages, ₦3.6m to ₦12.68m</span></li>' +
+            '<li>' + ICON.check + '<span>Offer ends Friday, 27 November 2026</span></li>' +
             '<li>' + ICON.check + '<span>Financing from 30% deposit</span></li>' +
-            '<li>' + ICON.check + '<span>Installation typically within 48 hours</span></li>' +
           '</ul>' +
+          '<div class="leadpop__cta">' +
+            '<a class="btn btn--primary btn--block" href="index.html#promo" data-bf-go>See the promo packages' + ICON.arrow + '</a>' +
+            '<a class="btn btn--ghost btn--block" href="tel:+' + CFG.phone + '">Call ' + CFG.phoneDisplay + '</a>' +
+            '<a class="btn btn--green btn--block" data-wa="Hello Solar World, I saw your Black Friday promo and I want to take advantage of it. Please tell me how to proceed.">' + ICON.wa + ' Chat on WhatsApp</a>' +
+          '</div>' +
         '</aside>' +
         '<div class="leadpop__main">' +
           '<form class="leadpop__form" novalidate>' +
-            '<h4>Tell us what you want to achieve</h4>' +
+            '<h4>Claim your Black Friday offer</h4>' +
             '<p class="small muted" style="margin-bottom:18px">Takes 30 seconds. We reply the same working day.</p>' +
             '<div class="field-row">' +
               '<div class="field"><label for="ld-name">Full name <span class="req">*</span></label><input id="ld-name" name="name" required autocomplete="name" placeholder="Your name"></div>' +
@@ -563,7 +571,7 @@
             '</div>' +
             '<div class="field"><label for="ld-goal">What do you want to achieve? <span class="req">*</span></label>' +
               '<textarea id="ld-goal" name="goal" required placeholder="e.g. I want to run 3 ACs, a fridge, freezer, TVs and lights 24/7 without a generator."></textarea></div>' +
-            '<div class="field"><label for="ld-budget">Budget range (optional)</label><select id="ld-budget" name="budget">' +
+            '<div class="field"><label for="ld-budget">Choose your package or budget (optional)</label><select id="ld-budget" name="budget">' +
               '<option value="">Not sure yet</option>' +
               '<optgroup label="Black Friday promo packages (ends 27 Nov 2026)">' +
                 '<option>Premium Economy Package: ₦3,600,000</option><option>Silver Package: ₦5,870,000</option>' +
@@ -590,10 +598,12 @@
 
     document.body.appendChild(el);
 
-    function close(snoozeIt) {
+    $$('[data-wa]', el).forEach(function (a) { a.href = wa(a.getAttribute('data-wa')); a.target = '_blank'; a.rel = 'noopener'; });
+
+    function close() {
       el.classList.remove('is-open');
       document.body.style.overflow = '';
-      if (snoozeIt) store.set('swe_lead_snooze', String(Date.now() + CFG.popupCooldownDays * 864e5));
+      try { sessionStorage.setItem('swe_bf_seen', '1'); } catch (e) { /* private mode */ }
     }
     function open() {
       if (document.body.classList.contains('leadpop-suppressed')) return;
@@ -602,6 +612,11 @@
       var f = $('#ld-name', el); if (f) setTimeout(function () { f.focus(); }, 420);
     }
 
+    $('[data-bf-go]', el).addEventListener('click', function (e) {
+      var target = $('#promo');
+      close();
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' }); }
+    });
     $('.leadpop__close', el).addEventListener('click', function () { close(true); });
     $('.leadpop__scrim', el).addEventListener('click', function () { close(true); });
     document.addEventListener('keydown', function (e) {
@@ -621,30 +636,23 @@
 
       var v = function (n) { return (f.elements[n] && f.elements[n].value.trim()) || '—'; };
       var msg =
-        'Hello Solar World, I would like a solar consultation.\n\n' +
+        'Hello Solar World, I saw your Black Friday promo and I would like to take advantage of it.\n\n' +
         'Name: ' + v('name') + '\n' +
         'Phone: ' + v('phone') + '\n' +
         'Email: ' + v('email') + '\n' +
         'Property: ' + v('property') + '\n' +
         'Location: ' + v('city') + '\n' +
-        'Budget: ' + v('budget') + '\n\n' +
+        'Package / budget: ' + v('budget') + '\n\n' +
         'What I want to achieve:\n' + v('goal') + '\n\n' +
         '(Sent from solarworldelectric.com)';
 
       window.open(wa(msg), '_blank', 'noopener');
-      store.set('swe_lead_done', '1');
+      store.set('swe_bf_done', '1');
       el.classList.add('is-done');
       document.dispatchEvent(new CustomEvent('swe:lead', { detail: { source: 'popup' } }));
     });
 
-    // Fire after the configured delay, or on strong exit intent — whichever first.
-    var fired = false;
-    var t = setTimeout(function () { if (!fired) { fired = true; open(); } }, CFG.popupDelay);
-    document.addEventListener('mouseout', function (e) {
-      if (fired || e.clientY > 8 || e.relatedTarget) return;
-      if (performance.now() < 8000) return; // don't ambush an immediate bounce
-      fired = true; clearTimeout(t); open();
-    });
+    open();
   }
 
   /* ------------------------------------------------------------------
@@ -1247,55 +1255,6 @@
   /* ------------------------------------------------------------------
      Boot
      ------------------------------------------------------------------ */
-  /* ------------------------------------------------------------------
-     Black Friday popup: shown as soon as the page opens, once per browser session,
-     and stops by itself after the offer ends (Friday 27 Nov 2026, Lagos time).
-     ------------------------------------------------------------------ */
-  function initPromoPopup() {
-    if ($('.promopop')) return;
-    if (Date.now() > Date.parse('2026-11-27T23:59:59+01:00')) return;
-    try { if (sessionStorage.getItem('swe_bf_seen')) return; } catch (e) { /* private mode */ }
-
-    var el = document.createElement('div');
-    el.className = 'promopop';
-    el.setAttribute('role', 'dialog');
-    el.setAttribute('aria-modal', 'true');
-    el.setAttribute('aria-label', 'Black Friday promo sales ongoing');
-    el.innerHTML =
-      '<div class="promopop__scrim"></div>' +
-      '<div class="promopop__box">' +
-        '<button class="promopop__close" type="button" aria-label="Close">' + ICON.close + '</button>' +
-        '<img class="promopop__img" src="assets/img/bf-mega-sales.jpg" width="1600" height="1066" fetchpriority="high" ' +
-          'alt="Black Friday Mega Sales ongoing: free installation and free inverter air conditioners on 20kW and above, ends Friday 27 November 2026">' +
-        '<div class="promopop__bar">' +
-          '<a class="btn btn--primary btn--lg" href="index.html#promo" data-promopop-go>See all Black Friday packages</a>' +
-          '<a class="btn btn--green btn--lg" data-wa="Hello Solar World, I saw your Black Friday promo and I want to take advantage of it. Please tell me how to proceed.">' + ICON.wa + ' Chat on WhatsApp</a>' +
-        '</div>' +
-      '</div>';
-    document.body.appendChild(el);
-    $$('[data-wa]', el).forEach(function (a) { a.href = wa(a.getAttribute('data-wa')); a.target = '_blank'; a.rel = 'noopener'; });
-
-    function close() {
-      el.classList.remove('is-open');
-      document.body.style.overflow = '';
-      document.body.classList.remove('leadpop-suppressed');
-      try { sessionStorage.setItem('swe_bf_seen', '1'); } catch (e) { /* private mode */ }
-    }
-    $('.promopop__close', el).addEventListener('click', close);
-    $('.promopop__scrim', el).addEventListener('click', close);
-    $('[data-promopop-go]', el).addEventListener('click', function (e) {
-      var target = $('#promo');
-      close();
-      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' }); }
-    });
-    el.addEventListener('click', function (e) { if (e.target.closest('a[data-wa]')) close(); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && el.classList.contains('is-open')) close(); });
-
-    document.body.classList.add('leadpop-suppressed');
-    document.body.style.overflow = 'hidden';
-    el.classList.add('is-open');
-  }
-
   function boot() {
     initNav();
     initProgress();
@@ -1320,7 +1279,6 @@
     initWhatsApp();
     initCalcFab();
     initLeadPopup();
-    initPromoPopup();
   }
 
   if (document.readyState === 'loading') {

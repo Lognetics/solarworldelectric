@@ -47,8 +47,7 @@
   function where(el) {
     if (!el || !el.closest) return 'page';
     if (el.closest('.wa')) return 'whatsapp_widget';
-    if (el.closest('.leadpop')) return 'consultation_popup';
-    if (el.closest('.promopop')) return 'black_friday_popup';
+    if (el.closest('.leadpop')) return 'black_friday_popup';
     if (el.closest('#smartCalc, #sizer, .package-result, .package-send')) return 'calculator';
     if (el.closest('#repay, [id^="rp"]')) return 'finance_calculator';
     if (el.closest('.hero')) return 'hero';
