@@ -564,8 +564,17 @@
             '<div class="field"><label for="ld-goal">What do you want to achieve? <span class="req">*</span></label>' +
               '<textarea id="ld-goal" name="goal" required placeholder="e.g. I want to run 3 ACs, a fridge, freezer, TVs and lights 24/7 without a generator."></textarea></div>' +
             '<div class="field"><label for="ld-budget">Budget range (optional)</label><select id="ld-budget" name="budget">' +
-              '<option value="">Not sure yet</option><option>Under ₦3m</option><option>₦3m – ₦6m</option>' +
-              '<option>₦6m – ₦12m</option><option>₦12m – ₦30m</option><option>Above ₦30m</option>' +
+              '<option value="">Not sure yet</option>' +
+              '<optgroup label="Black Friday promo packages (ends 27 Nov 2026)">' +
+                '<option>Premium Economy Package: ₦3,600,000</option><option>Silver Package: ₦5,870,000</option>' +
+                '<option>Gold Package: ₦6,690,000</option><option>Platinum Package: ₦7,600,000</option>' +
+                '<option>Diamond Package: ₦7,950,000</option><option>Emerald Package: ₦8,910,000</option>' +
+                '<option>Business Class Package: ₦12,680,000</option>' +
+              '</optgroup>' +
+              '<optgroup label="Other budgets">' +
+                '<option>Under ₦3m</option><option>₦3m – ₦6m</option>' +
+                '<option>₦6m – ₦12m</option><option>₦12m – ₦30m</option><option>Above ₦30m</option>' +
+              '</optgroup>' +
             '</select></div>' +
             '<button class="btn btn--primary btn--block btn--lg" type="submit">Send my details on WhatsApp' + ICON.arrow + '</button>' +
             '<p class="form-note">By sending, your details open in WhatsApp addressed to our team on ' + CFG.phoneDisplay + '. We never share your information.</p>' +
