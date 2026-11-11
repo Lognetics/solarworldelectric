@@ -2042,3 +2042,21 @@ h4{font-size:var(--t-h4);letter-spacing:-.015em}
 .promo__img img{display:block;width:100%;height:auto}
 @media(max-width:900px){.promo__grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.promo__grid{grid-template-columns:1fr}}
+
+.promo__mega{display:block;max-width:1100px;margin:0 auto;border-radius:var(--r-lg,18px);overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.24)}
+.promo__mega img{display:block;width:100%;height:auto}
+.promo__card:last-child:nth-child(3n+1){grid-column:2}
+@media(max-width:900px){.promo__card:last-child:nth-child(3n+1){grid-column:auto}.promo__card:last-child:nth-child(odd){grid-column:1 / -1;width:calc(50% - 10px);justify-self:center}}
+@media(max-width:560px){.promo__card:last-child:nth-child(odd){width:auto}}
+
+/* Black Friday popup */
+.promopop{position:fixed;inset:0;z-index:300;display:grid;place-items:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .25s ease}
+.promopop.is-open{opacity:1;pointer-events:auto}
+.promopop__scrim{position:absolute;inset:0;background:rgba(5,5,10,.82)}
+.promopop__box{position:relative;width:min(100%,860px);max-height:94svh;overflow:auto;border-radius:18px;background:#14070a;box-shadow:0 40px 110px rgba(0,0,0,.6);transform:scale(.96);transition:transform .3s ease}
+.promopop.is-open .promopop__box{transform:none}
+.promopop__img{display:block;width:100%;height:auto}
+.promopop__bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;padding:16px 18px 20px}
+.promopop__bar .btn{flex:1 1 220px}
+.promopop__close{position:absolute;top:10px;right:10px;z-index:2;width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:#111;cursor:pointer;display:grid;place-items:center}
+.promopop__close svg{width:16px;height:16px}

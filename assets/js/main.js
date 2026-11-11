@@ -1238,6 +1238,55 @@
   /* ------------------------------------------------------------------
      Boot
      ------------------------------------------------------------------ */
+  /* ------------------------------------------------------------------
+     Black Friday popup: shown as soon as the page opens, once per browser session,
+     and stops by itself after the offer ends (Friday 27 Nov 2026, Lagos time).
+     ------------------------------------------------------------------ */
+  function initPromoPopup() {
+    if ($('.promopop')) return;
+    if (Date.now() > Date.parse('2026-11-27T23:59:59+01:00')) return;
+    try { if (sessionStorage.getItem('swe_bf_seen')) return; } catch (e) { /* private mode */ }
+
+    var el = document.createElement('div');
+    el.className = 'promopop';
+    el.setAttribute('role', 'dialog');
+    el.setAttribute('aria-modal', 'true');
+    el.setAttribute('aria-label', 'Black Friday promo sales ongoing');
+    el.innerHTML =
+      '<div class="promopop__scrim"></div>' +
+      '<div class="promopop__box">' +
+        '<button class="promopop__close" type="button" aria-label="Close">' + ICON.close + '</button>' +
+        '<img class="promopop__img" src="assets/img/bf-mega-sales.jpg" width="1600" height="1066" fetchpriority="high" ' +
+          'alt="Black Friday Mega Sales ongoing: free installation and free inverter air conditioners on 20kW and above, ends Friday 27 November 2026">' +
+        '<div class="promopop__bar">' +
+          '<a class="btn btn--primary btn--lg" href="index.html#promo" data-promopop-go>See all Black Friday packages</a>' +
+          '<a class="btn btn--green btn--lg" data-wa="Hello Solar World, I saw your Black Friday promo and I want to take advantage of it. Please tell me how to proceed.">' + ICON.wa + ' Chat on WhatsApp</a>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(el);
+    $$('[data-wa]', el).forEach(function (a) { a.href = wa(a.getAttribute('data-wa')); a.target = '_blank'; a.rel = 'noopener'; });
+
+    function close() {
+      el.classList.remove('is-open');
+      document.body.style.overflow = '';
+      document.body.classList.remove('leadpop-suppressed');
+      try { sessionStorage.setItem('swe_bf_seen', '1'); } catch (e) { /* private mode */ }
+    }
+    $('.promopop__close', el).addEventListener('click', close);
+    $('.promopop__scrim', el).addEventListener('click', close);
+    $('[data-promopop-go]', el).addEventListener('click', function (e) {
+      var target = $('#promo');
+      close();
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' }); }
+    });
+    el.addEventListener('click', function (e) { if (e.target.closest('a[data-wa]')) close(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && el.classList.contains('is-open')) close(); });
+
+    document.body.classList.add('leadpop-suppressed');
+    document.body.style.overflow = 'hidden';
+    el.classList.add('is-open');
+  }
+
   function boot() {
     initNav();
     initProgress();
@@ -1262,6 +1311,7 @@
     initWhatsApp();
     initCalcFab();
     initLeadPopup();
+    initPromoPopup();
   }
 
   if (document.readyState === 'loading') {
